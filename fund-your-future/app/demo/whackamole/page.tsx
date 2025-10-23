@@ -43,9 +43,6 @@ export default function WhackamolePage() {
           />
         </div>
       </main>
-
-      {/* Bottom Navigation */}
-      <GameNavigation />
     </div>
   );
 }
