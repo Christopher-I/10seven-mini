@@ -10,6 +10,7 @@ import { User, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { getUserProfile, updateUserStreak } from '@/lib/firestore';
 import type { UserProfile } from '@/lib/firestore';
+import { shouldSkipAuth, getDemoUser } from '@/lib/demoMode';
 
 interface AuthContextType {
   user: User | null;
@@ -79,16 +80,27 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // Auth state listener
   useEffect(() => {
+    // Check demo mode first
+    if (shouldSkipAuth()) {
+      console.log('Demo mode - bypassing authentication');
+      const demoUserData = getDemoUser();
+      setUser(demoUserData as any);
+      setUserProfile(null); // Demo users don't have profiles
+      setLoading(false);
+      return;
+    }
+
+    // Normal Firebase auth flow
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       console.log('Auth state changed:', user?.email || 'No user');
       setUser(user);
-      
+
       if (user) {
         await loadUserProfile(user);
       } else {
         setUserProfile(null);
       }
-      
+
       setLoading(false);
     });
 

@@ -6,6 +6,7 @@
 
 import { AnalyticsEvent } from '@/core/types';
 import * as FirebaseAnalytics from '@/lib/analytics';
+import { shouldSkipAnalytics } from '@/lib/demoMode';
 
 // Generate a session ID that persists for the browser session
 const SESSION_ID = generateSessionId();
@@ -17,6 +18,12 @@ export function trackEvent(
   eventType: AnalyticsEvent['eventType'],
   eventData: AnalyticsEvent['eventData']
 ): void {
+  // Skip analytics in demo mode
+  if (shouldSkipAnalytics()) {
+    console.log('[Demo Mode] Analytics skipped:', eventType, eventData);
+    return;
+  }
+
   const event: AnalyticsEvent = {
     eventType,
     eventData,
@@ -41,6 +48,12 @@ export function trackPageView(
   unitId: string,
   page: number
 ): void {
+  // Skip analytics in demo mode
+  if (shouldSkipAnalytics()) {
+    console.log('[Demo Mode] Page view skipped:', moduleId, unitId, page);
+    return;
+  }
+
   // Track in legacy system
   trackEvent('page_view', {
     moduleId,

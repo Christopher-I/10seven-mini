@@ -14,11 +14,14 @@ import { AnnouncementBar } from '@/core/components/AnnouncementBar';
 import { DashboardCard, TrackSection } from '@/core/design-system';
 import { useAuth } from '@/contexts/AuthContext';
 import type { UserProgress } from '@/core/types';
+import { useDemoMode } from '@/hooks/useDemoMode';
+import { DemoCard } from '@/components/demo/DemoCard';
 
 export default function HomePage() {
   const [userProgress, setUserProgress] = useState<UserProgress | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { user, userProfile } = useAuth();
+  const { isDemoMode } = useDemoMode();
 
   useEffect(() => {
     const progress = loadProgress();
@@ -75,6 +78,31 @@ export default function HomePage() {
     );
   }
 
+  // Demo mode - show single demo card
+  if (isDemoMode) {
+    return (
+      <div className="min-h-screen bg-brand-light">
+        <AppHeader variant="dashboard" />
+
+        <main className="mx-auto w-[90%] max-w-none px-4 py-6">
+          {/* Announcement Bar */}
+          <div className="mb-6">
+            <AnnouncementBar />
+          </div>
+
+          {/* Demo Section */}
+          <TrackSection trackNumber={1} title="Interactive Demo">
+            <DemoCard />
+          </TrackSection>
+        </main>
+
+        {/* Floating Question Button */}
+        <FloatingQuestionButton />
+      </div>
+    );
+  }
+
+  // Full app mode - show all modules
   return (
     <div className="min-h-screen bg-brand-light">
       <AppHeader variant="dashboard" />

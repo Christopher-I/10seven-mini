@@ -9,6 +9,9 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { QuestionSubmissionModal } from './QuestionSubmissionModal';
+import { isNavItemVisible } from '@/lib/demoMode';
+import { DemoModeIndicator } from '@/components/demo/DemoModeIndicator';
+import { useDemoMode } from '@/hooks/useDemoMode';
 
 interface NavigationItem {
   id: string;
@@ -94,6 +97,7 @@ export function MainNavigation() {
   const [supportDropdownOpen, setSupportDropdownOpen] = useState(false);
   const [questionModalOpen, setQuestionModalOpen] = useState(false);
   const { user, signOut, loading } = useAuth();
+  const { isDemoMode } = useDemoMode();
   
   // Debug logging
   console.log('MainNavigation - User:', user?.email || 'Not logged in');
@@ -159,26 +163,29 @@ export function MainNavigation() {
       {/* Desktop navigation */}
       <nav className="hidden lg:flex lg:items-center lg:space-x-4">
         {/* Primary navigation items */}
-        {primaryNavItems.map((item) => (
-          <Link
-            key={item.id}
-            href={item.href}
-            className="flex items-center gap-1 rounded-md px-2 py-1 text-sm text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900"
-          >
-            {item.icon}
-            <span>{item.label}</span>
-          </Link>
-        ))}
+        {primaryNavItems
+          .filter((item) => isNavItemVisible(item.id))
+          .map((item) => (
+            <Link
+              key={item.id}
+              href={item.href}
+              className="flex items-center gap-1 rounded-md px-2 py-1 text-sm text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900"
+            >
+              {item.icon}
+              <span>{item.label}</span>
+            </Link>
+          ))}
 
-        {/* Support dropdown */}
-        <div className="relative">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setSupportDropdownOpen(!supportDropdownOpen);
-            }}
-            className="flex items-center gap-1 rounded-md px-2 py-1 text-sm text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
-          >
+        {/* Support dropdown - hide in demo mode */}
+        {!isDemoMode && (
+          <div className="relative">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setSupportDropdownOpen(!supportDropdownOpen);
+              }}
+              className="flex items-center gap-1 rounded-md px-2 py-1 text-sm text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
+            >
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -217,13 +224,17 @@ export function MainNavigation() {
               ))}
             </div>
           )}
-        </div>
+          </div>
+        )}
+
+        {/* Demo Mode Indicator */}
+        <DemoModeIndicator />
 
         {/* Don't show buttons while loading */}
         {!loading && (
           <>
-            {/* Account section - only show when logged in */}
-            {user && (
+            {/* Account section - only show when logged in and not in demo mode */}
+            {!isDemoMode && user && (
               <div className="flex items-center gap-2">
                 {accountNavItems.map((item) => (
                   <Link
@@ -249,8 +260,8 @@ export function MainNavigation() {
               </div>
             )}
 
-            {/* Sign In Button - only when NOT logged in */}
-            {!user && (
+            {/* Sign In Button - only when NOT logged in and not in demo mode */}
+            {!isDemoMode && !user && (
               <button
                 onClick={handleAuthToggle}
                 className="flex items-center gap-1 rounded-md px-3 py-1 text-sm font-medium text-white transition-colors cursor-pointer font-red-hat"
@@ -305,21 +316,24 @@ export function MainNavigation() {
               <div className="flex-1 overflow-y-auto px-4 py-4">
                 <div className="space-y-1">
                   {/* Primary items */}
-                  {primaryNavItems.map((item) => (
-                    <Link
-                      key={item.id}
-                      href={item.href}
-                      onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-3 rounded-lg p-3 text-gray-700 transition-colors hover:bg-gray-50"
-                    >
-                      {item.icon}
-                      <span>{item.label}</span>
-                    </Link>
-                  ))}
-                  
-                  {/* Support section */}
-                  <div className="border-t pt-2 mt-2">
-                    <p className="px-3 py-2 text-xs font-medium text-gray-500 uppercase">Support</p>
+                  {primaryNavItems
+                    .filter((item) => isNavItemVisible(item.id))
+                    .map((item) => (
+                      <Link
+                        key={item.id}
+                        href={item.href}
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center gap-3 rounded-lg p-3 text-gray-700 transition-colors hover:bg-gray-50"
+                      >
+                        {item.icon}
+                        <span>{item.label}</span>
+                      </Link>
+                    ))}
+
+                  {/* Support section - hide in demo mode */}
+                  {!isDemoMode && (
+                    <div className="border-t pt-2 mt-2">
+                      <p className="px-3 py-2 text-xs font-medium text-gray-500 uppercase">Support</p>
                     {supportNavItems.map((item) => (
                       item.href ? (
                         <Link
@@ -345,9 +359,11 @@ export function MainNavigation() {
                         </button>
                       )
                     ))}
-                  </div>
+                    </div>
+                  )}
 
-                  {/* Account section */}
+                  {/* Account section - hide in demo mode */}
+                  {!isDemoMode && (
                   <div className="border-t pt-2 mt-2">
                     <p className="px-3 py-2 text-xs font-medium text-gray-500 uppercase">Account</p>
                     {accountNavItems.map((item) => (
@@ -362,12 +378,13 @@ export function MainNavigation() {
                       </Link>
                     ))}
                   </div>
+                  )}
                 </div>
               </div>
 
-              {/* Footer */}
+              {/* Footer - hide sign in/out in demo mode */}
               <div className="space-y-3 border-t px-4 py-4">
-                {user ? (
+                {!isDemoMode && user ? (
                   <button
                     onClick={() => {
                       handleAuthToggle();
@@ -380,7 +397,7 @@ export function MainNavigation() {
                   >
                     Sign Out
                   </button>
-                ) : (
+                ) : !isDemoMode && (
                   <button
                     onClick={() => {
                       handleAuthToggle();

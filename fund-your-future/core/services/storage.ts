@@ -3,6 +3,7 @@
  */
 
 import { UserProgress, Progress } from '@/core/types';
+import { shouldSkipProgressTracking } from '@/lib/demoMode';
 
 const STORAGE_KEY = 'smith_conway_progress';
 const CURRENT_VERSION = '1.0.0';
@@ -11,6 +12,12 @@ const CURRENT_VERSION = '1.0.0';
  * Load user progress from localStorage
  */
 export function loadProgress(): UserProgress | null {
+  // Skip progress loading in demo mode
+  if (shouldSkipProgressTracking()) {
+    console.log('[Demo Mode] Progress loading skipped');
+    return null;
+  }
+
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (!stored) return null;
@@ -34,6 +41,12 @@ export function loadProgress(): UserProgress | null {
  * Save user progress to localStorage
  */
 export function saveProgress(progress: UserProgress): boolean {
+  // Skip progress saving in demo mode
+  if (shouldSkipProgressTracking()) {
+    console.log('[Demo Mode] Progress saving skipped');
+    return true; // Return true to avoid errors
+  }
+
   try {
     const data = {
       ...progress,
