@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-red-hat);
+  --font-display: var(--font-playfair);
+
+  /* Dashboard brand colors */
+  --color-brand-primary: #2E1E72;
+  --color-brand-secondary: #8577B7;
+  --color-brand-accent: #DBE250;
+  --color-brand-dark: #0F2D52;
+  --color-brand-light: #E5DEEF;
+  --color-brand-white: #FFFFFF;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-red-hat), system-ui, sans-serif;
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-none {
+  overflow: visible;
+  display: block;
+  -webkit-box-orient: initial;
+  -webkit-line-clamp: none;
+}
+
+/* Safe area utilities for mobile devices */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+  }
+  
+  .safe-top {
+    padding-top: calc(0.5rem + env(safe-area-inset-top));
+  }
+}
+
+/* Touch feedback */
+.touch-feedback {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Smooth scrolling for better mobile experience */
+html {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.5);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.8);
+}
+
+/* Dashboard Typography Utilities */
+.font-playfair {
+  font-family: var(--font-playfair), serif;
+}
+
+.font-red-hat {
+  font-family: var(--font-red-hat), sans-serif;
+}
+
+/* Dashboard Color Utilities */
+.bg-brand-light {
+  background-color: var(--color-brand-light);
+}
+
+.text-brand-dark {
+  color: var(--color-brand-dark);
+}
+
+.bg-brand-secondary {
+  background-color: var(--color-brand-secondary);
+}
+
+.bg-brand-primary {
+  background-color: var(--color-brand-primary);
+}

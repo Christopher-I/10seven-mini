@@ -1,0 +1,142 @@
+Smith College / 10 Seven
+GWI Course Development 
+Track 1 / Module 2: What’s in a Bank?
+Notes before diving in:
+
+	•	Key
+	•	[Platform experience notes]
+	•	[Indicates a source is needed]
+	•	Black bold text is a new page/screen that students will see 
+	•	Blue bold/underline text indicates a link that will need to be created 
+	•	Pink bold text indicates a key definition 
+	•	[Internal team notes]
+What’s in a Bank?: Introduction
+
+	•	[New Page] What’s in a Bank? A lot, actually! 
+	•	This unit will focus specifically on how to navigate the US banking system and provide you with the information you need to make more informed decisions in how you select and manage a relationship with a banking institution, should you choose to have one. We will cover: 
+	•	Why banking institutions exist and how they operate 
+	•	What you can expect to encounter as a customer
+	•	Banking practices that could cause socioeconomic harm and how to handle them 
+	•	[New Page] You might be thinking, “I already know how to bank!” 
+	•	Yes! A lot of you may have had your own bank accounts, debit cards, and credit cards for a while now. This module is meant to provide you with the information you may not know or that is not always mentioned when you sign up for your first checking account. 
+	•	[Legally Blonde gif] 
+	•	In order to participate in the US economy, it is likely you will have to, at the very least, open a checking account that will allow you to deposit the money that you earn. The day we open a bank account marks a transitional moment in each of our lives. Many of us open our first checking account with our first job and our first time away from home. 
+	•	[Give option to hover over definition of checking account and show definition - checking account: an account meant for everyday transactions and withdrawals]
+	•	Maintaining a relationship with a bank seems simple in theory–open an account, put money in, and take it out when you need it. 
+	•	That’s it, right? 
+	•	[New Page] Banks do more than hold your money. 
+	•	In the US, they are for-profit companies that serve a variety of audiences, including consumers, investors, companies, governments, and most importantly, their shareholders. 
+	•	[Give option to hover over definition of “shareholders” and show definition - shareholder: For corporations, shareholders are those who own stocks of the company. They have the ultimate power because, by law, they have the right to vote for who sits on the board of directors and sit in leadership positions (e.g., CEO, CFO, etc.) at the company. Shareholders' rights include: ownership, voting, dividends (payouts of the company's profits, which can be in the form of additional stocks or cash), the ability to sell shares, information about the company, like board meeting minutes, and the right to sue if you feel the company is not acting in the best interest of the shareholders.
+	•	In 2024 alone, the Federal Deposit Insurance Corporation (FDIC–the government agency that insures the deposits of banks) reported that the US banking industry had a collective net income of $268.2 billion in 2024, a $14.1B or 5.6% increase from the prior year (Federal Deposit Insurance Corporation, 2025). 
+	•	[If possible, it would be great to show the graph titled “Chart 1 - Full Year Net Income” and add “Source: FDIC”]
+	•	[Give option to hover over definition of “net income” and show definition - net income: For individuals, it is also known as your “take-home pay” after taxes, insurance, or retirement contributions. For companies, it is the money left over after taking out expenses. (Bennet, 2025)  For companies, net income and profit are often used interchangeably, but net income is a specific type of profit calculation that takes into account all costs, expenses, and income streams and is used by publicly traded companies to calculate their earnings per share. (Boyte-White, 2024). 
+	•	The “Big 4” banks–JP Morgan Chase, Bank of America, Wells Fargo, and Citigroup–collectively have $10 trillion in consolidated assets under management as of June 30, 2025 (Federal Reserve Board, 2025).  
+	•	[Jimmy Fallon Gif]  [Show gif and the logos of the “Big 4]
+	•	[Give option to hover over definition of “consolidated assets under management ” and show definition - consolidated assets under management: ________]
+	•	[New Page] In addition to holding your money, they make money. A lot of it. 
+	•	Because of this, banks inevitably have considerable bargaining power and influence in American society. They influence our political and social landscape. We’ll talk about this more in Unit 2, but this context cannot be lost as we navigate the banking system in hopes of creating our own version of wealth and contentment. 
+	•	Banking as an individual is often presented as a positive or neutral experience. But for many, banking can be fraught with challenges, especially if someone is already in a vulnerable financial position. 
+	•	[New Page] So before we dive in, let’s start with the basics of banking!  
+	•	[Button] Continue to Unit 1: Banking Basics
+Unit 1: Banking Basics 
+
+	•	[New Page] So, how robust is your banking vocab? 
+	•	We know a lot of you are banking and have a relationship with a bank already. Some of you may not, and that’s okay! Before diving into more complex topics, we will go over foundational banking terminology that you may or may not be familiar with. 
+	•	Directions: You’ll see each term on a digital flashcard and the corresponding definition on the back. You can come back to these flashcards and flip through the stack as many times as you want. You must flip through the cards at least once to move on to Unit 2. We’ll also highlight key terminology throughout the course, so don’t worry about having to memorize everything right now. 
+	•	[Studying gif] 
+	•	[Button]: Let’s go!
+	•	[Activity: Show as flashcards that students can flip through and randomize to practice their terminology. These are currently in alpha-order, but should be randomized in the experience]
+	•	Alternative Financial Institutions: Financial services that operate outside of traditional financial institutions. These include nonbank checkcashing outlets, payday lenders, pawnshops, rent-to-own stores, and auto title lenders. This provides easy access to cash, though their rates tend to be higher (The Urban Institute). These are also known as Non-Traditional Financial Institutions. 
+	•	Account Number: The unique ID number associated with your account. If you need to wire money or set up online bill payments, you will need this number.
+	•	Available Balance: The amount of money in a bank account that you have access to right now, factoring in pending transactions or deposits/withdrawals. (Bennet, 2025) For example, your available balance may say $400 because of a pending charge for $100, even though your current balance might say $500. If you are wondering how much you actually have to spend, check your available balance. 
+	•	Bank: “A chartered financial institution licensed to receive deposits and make loans, and may also provide other financial services such as wealth management, currency exchange, and safe deposit boxes.” (Bradford 2020) (Barone 2020)
+	•	Bank Fees: Charges imposed by a bank or financial institution for account setup, maintenance, or other transactional activities.
+	•	Bank Teller: Responsible for routine banking transactions at a financial institution. This includes cashing checks, withdrawals, and providing banking service information. 
+	•	Checking account: An account meant for everyday transactions and withdrawals.
+	•	Credit Card: Provides you with access to a cash substitute to pay for goods and services. You may pay interest on the amount you borrowed as well as other fees.
+	•	Credit union: “A member-owned and controlled, not-for-profit, cooperative financial institution formed to provide its members with affordable and safe financial services.” (National Credit Union Administration, 2025) (Need help citing exact law) 
+	•	Current balance: The amount of money in a bank account that does not factor in pending transactions or deposits/withdrawals. (Bennet, 2025) For example, your current balance may say $500 instead of $400, despite a pending charge for $100. Your available balance would be $400. If you are wondering how much you actually have to spend, check your available balance. 
+	•	Custodial Account: A bank account set up and administered by an adult for a minor.
+	•	Debit Card: Connected to a bank or credit union account. It is money you have in an account and cannot be overspent unless your bank allows for overdraft.
+	•	Debt collections: If you’ve fallen behind on your bills or debts, a debt collector may contact you. Debt collectors are typically people or agencies paid by creditors to collect on certain past-due debts. The longer the payment is past due, the more it can hurt your credit score.
+	•	Deposit: A sum of money that goes into a bank account. You can make bank deposits in several ways. The traditional method is to visit a local branch to deposit cash or physical checks. However, many deposits can now be handled electronically through account transfers, direct deposits, and remote check deposits. If you're employed, your employer may make regular bank deposits of your paycheck directly into your bank account.
+	•	Expenses: For individuals, the cost of something necessary for living. For companies, expenses represent the business activities that the corporation pays for. It's the money that goes out. Fixed expenses are costs that remain constant (e.g., rent) while variable expenses may change or are more unpredictable (e.g., medical bills). (Bennet, 2025)
+	•	FDIC Insured: With FDIC insurance, your money held in a bank is protected by the federal government if your bank fails. But there are coverage limits - typically $250,000. 
+	•	Inflation: When the prices of goods and services go up over time.
+	•	Interest: The price you pay when you borrow money or the cost you charge to lend money. You can earn interest through your savings account because the bank uses that money to lend to others and earns interest, which you receive a portion of. 
+	•	Loss: Revenue - Expenses = Profit or Loss; If a corporation's revenue is less than its expenses, then the corporation suffers a loss. Reporting a loss typically results in a negative effect on the value of the stock.
+	•	Net income: For individuals, it is also known as your “take-home pay” after taxes, insurance, or retirement contributions. For companies, it is the money left over after taking out expenses. (Bennet, 2025)  For companies, net income and profit are often used interchangeably, but net income is a specific type of profit calculation that takes into account all costs, expenses, and income streams and is used by publicly traded companies to calculate their earnings per share. (Boyte-White, 2024). 
+	•	Overdraft: Occurs when you don’t have enough money in your account to cover a transaction, but the bank pays the transaction anyway. Typically, when this happens, the account holder is charged a fee.
+	•	Profit: Revenue - Expenses = Profit or Loss; If a corporation's revenue is greater than its expenses, then the corporation enjoys a profit. Reporting a profit typically has a positive impact on the value of the stock.
+	•	Revenue: The amount of money the corporation makes. Another word for it is total income.
+	•	Routing number: The eight- or nine-digit number used to identify your banking institution. If you need to wire money or set up online bill payments, you will need this number.
+	•	Savings account: An interest-earning account meant for money you intend to hold for a certain amount of time.  
+	•	Shareholders: For corporations, shareholders are those who own stocks of the company. They have the ultimate power because, by law, they have the right to vote for who sits on the board of directors and sit in leadership positions (e.g., CEO, CFO, etc.) at the company. Shareholders' rights include: ownership, voting, dividends (payouts of the company's profits, which can be in the form of additional stocks or cash), the ability to sell shares, information about the company, like board meeting minutes, and the right to sue if you feel the company is not acting in the best interest of the shareholders.
+	•	Wire transfer: “A wire transfer is a common way to electronically move money from one bank account to another. They can be domestic (between two U.S. accounts) or between a U.S. and an international account.” (Consumer Financial Protection Bureau, 2024)
+	•	Withdrawal: To remove funds from a bank account.
+	•	[Give students the option to “reset” the experience and do another random order of the flashcards]
+	•	[Final card in the stack should ask them if they are ready to move onto the quiz. Button can say something like “Test my knowledge!” 
+	•	[New page] Now that you’ve practiced, let’s test your knowledge. Drag and drop the terms on the bottom half of the screen to their correct definitions at the top of the screen. 
+	•	[Create drag and drop activity for each of the five questions below - when students get it wrong, have an animation or a message that says “try again!”; when students get it right, show a checkmark or other simple animation]
+	•	[Could we show a quick animation that simulates the drag/drop exercise? Maybe one box has “definition” and the other box has “term,” and it’s just a visualization of a mouse clicking and dragging the term to the definition.]
+	•	[New page] Question 1 of 5
+	•	[Top of screen - show definitions in boxes] 
+	•	The eight- or nine-digit number used to identify your banking institution. If you need to wire money or set up online bill payments, you will need this number. 
+	•	[the correct answer is routing number]
+	•	The unique ID number associated with your account. If you need to wire money or set up online bill payments, you will need this number. 
+	•	[the correct answer is account number]
+	•	[Bottom of screen - show terms in boxes that they can drag to the right definition]
+	•	Account number
+	•	Routing number 
+	•	[New page] Question 2 of 5
+	•	[Top of screen - show definitions in boxes] 
+	•	Financial services that operate outside of traditional financial institutions. These include nonbank checkcashing outlets, payday lenders, pawnshops, rent-to-own stores, and auto title lenders. 
+	•	[the correct answer is Alternative Financial Institutions]
+	•	Chartered financial institutions that can accept deposits, make loans, and offer other financial services. 
+	•	[the correct answer is Banks]
+	•	Member-owned and controlled, not-for-profit, cooperative financial institutions. 
+	•	[the correct answer is Credit Unions]
+	•	[Bottom of screen - show terms in boxes that they can drag to the right definition]
+	•	Credit Unions
+	•	Banks
+	•	Alternative Financial Institutions
+	•	[New page] Question 3 of 5
+	•	[Top of screen - show definitions in boxes] 
+	•	An account set up and administered by an adult for a minor.[the correct answer is checking account]
+	•	An account meant for everyday transactions and withdrawals. [the correct answer is checking account]
+	•	An interest-earning account meant for money you intend to hold for a certain amount of time. [the correct answer is savings account]
+	•	[Bottom of screen - show terms in boxes that they can drag to the right definition]
+	•	Checking account
+	•	Savings account
+	•	Custodial account 
+	•	[New page] Question 4 of 5
+	•	[Top of screen - show definitions in boxes] 
+	•	The amount of money the corporation makes. 
+	•	[the correct answer is revenue]
+	•	The business activities that the corporation pays for. 
+	•	[the correct answer is expenses]
+	•	The ending amount of the money the corporation makes minus the business activities the corporation paid for. 
+	•	 [the correct answer is profit or loss]
+	•	[Bottom of screen - show terms in boxes that they can drag to the right definition]
+	•	Expenses
+	•	Revenue
+	•	Profit or loss
+	•	[New page] Question 5 of 5
+	•	[Top of screen - show definitions in boxes] 
+	•	The amount of money in a bank account that you have access to right now, factoring in pending transactions or deposits/withdrawals.
+	•	[the correct answer is available balance]
+	•	The amount of money in a bank account that does not factor in pending transactions or deposits/withdrawals. 
+	•	[the correct answer is current balance]
+	•	[Bottom of screen - show terms in boxes that they can drag to the right definition]
+	•	Current balance
+	•	Available balance 
+	•	[New page] Yay! You completed Unit 1: Banking Basics.
+	•	[Show dancing/celebration gif]
+	•	[Quick survey] How are you feeling? Tell us using one of the emojis below. 
+	•	[Show emojis on screen and allow users to click one]
+	•	😃😅🤔😐🥴😴😡
+	•	[give button options for next steps]
+	•	Return to Home
+	•	Start Unit 2: It’s a Fee-for-All
+
+

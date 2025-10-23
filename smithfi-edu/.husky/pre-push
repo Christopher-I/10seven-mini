@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Just ensure build works - same rules as production
+echo "🏗️  Testing build (same rules as production)..."
+npm run build

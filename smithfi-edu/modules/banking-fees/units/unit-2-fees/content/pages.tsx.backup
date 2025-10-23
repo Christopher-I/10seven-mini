@@ -1,0 +1,3473 @@
+/**
+ * Content Pages for Unit 2: It's a Fee-for-All
+ * Complete implementation of all educational content based on specifications
+ */
+
+'use client';
+
+import { useState } from 'react';
+import { WhackAMoleGame } from '../activities/WhackAMoleGame';
+import { BankStatement } from '../activities/BankStatement';
+import { BankingSurvey } from '../activities/BankingSurvey';
+import { StatementComparison } from '../activities/StatementComparison';
+import {
+  DefinitionTooltip,
+  BankProfitsQuiz,
+  InteractiveChecklist,
+  HistoricalCarousel
+} from '../activities/InteractiveElements';
+import { FeeCalculator } from '../activities/FeeCalculator';
+import { CalloutBox } from '@/core/components/CalloutBox';
+import { AnimatedButton } from '@/core/components/AnimatedButton';
+import {
+  HeroCard,
+  UnitTitle,
+  ContentBox,
+  AccentHeading,
+  SummaryCard,
+  AlertCard,
+  CompletionCard,
+  Text,
+  BulletList,
+  ListItem,
+  Layout,
+  Stack,
+  Center,
+  UnifiedHeading,
+  Small,
+  Checkbox,
+  LearningObjectives,
+  Narrative,
+  Educational,
+  MobileStatement,
+  Survey
+} from '@/core/design-system';
+import {
+  FinancialExclusionIllustration,
+  BankingEmotionsIllustration,
+  BankingHistoryIllustration,
+  BankEcosystemIllustration,
+  BankProfitsIllustration,
+  BankFeesIllustration,
+  AccountClosureIllustration,
+  AlternativeFinancialIllustration,
+  DigitalBankingIllustration
+} from '../components/FinancialIllustrations';
+
+interface PageProps {
+  onStepComplete?: (stepData: any) => void;
+  stepData?: any;
+}
+
+// Page 1: Introduction - Exact content from documentation
+export function Page1({ onStepComplete }: PageProps) {
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleGetStarted = () => {
+    setIsClicked(true);
+    onStepComplete?.({ pageViewed: true });
+  };
+
+  return (
+    <Stack spacing="lg">
+      {/* Overview Card - Similar to mobile design but for desktop */}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#2E1E72] via-[#3B2A8F] to-[#4A2FAA] p-8 lg:p-12 text-white shadow-2xl">
+        {/* Background decoration */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-4 right-4 w-32 h-32 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-4 left-4 w-24 h-24 bg-white rounded-full blur-2xl"></div>
+        </div>
+
+        <div className="relative z-10">
+          <div className="mb-6">
+            <h2 className="text-[28px] font-playfair font-semibold mb-4">
+              Unit 2: It's a Fee-for-All
+            </h2>
+            <p className="text-lg lg:text-xl text-purple-100 mb-8">
+              Let's talk about how banks operate. In this unit, you'll learn:
+            </p>
+          </div>
+
+          <div className="grid gap-4 mb-8">
+            <div className="flex items-start space-x-3">
+              <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></div>
+              <p className="text-white text-lg">Why banks exist</p>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></div>
+              <p className="text-white text-lg">Common types of bank fees</p>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></div>
+              <p className="text-white text-lg">Why bank fees exist</p>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></div>
+              <p className="text-white text-lg">How to handle challenging bank situations like overdraft charges and account closures</p>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></div>
+              <p className="text-white text-lg">What to keep in mind when transitioning out of a "student" bank account</p>
+            </div>
+          </div>
+
+          <div className="pt-6 border-t border-white/20">
+            <button
+              onClick={handleGetStarted}
+              disabled={isClicked}
+              className={`w-full px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200 transform ${
+                isClicked
+                  ? 'bg-white/20 text-white/70 scale-95 cursor-not-allowed'
+                  : 'bg-white text-[#2E1E72] hover:bg-white/90 hover:scale-105 active:scale-95 shadow-lg cursor-pointer'
+              }`}
+            >
+              {isClicked ? (
+                <>
+                  <svg className="inline w-5 h-5 mr-2 animate-spin text-current" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Starting...
+                </>
+              ) : (
+                'Let\'s Get Started! →'
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+    </Stack>
+  );
+}
+
+// Page 2: Whack-A-Mole Game with Statement as Subpage
+export function WhackAMolePages({ onStepComplete, stepData }: PageProps) {
+  const [currentView, setCurrentView] = useState<'intro' | 'game' | 'statement' | 'completed'>(
+    stepData?.pageCompleted ? 'completed' : 'intro'
+  );
+  const [gameTransactions, setGameTransactions] = useState<any[]>(stepData?.transactions || []);
+
+  // Handler functions
+  const handleGameComplete = (transactions: any[]) => {
+    setGameTransactions(transactions);
+    setCurrentView('statement');
+  };
+
+  const handleStatementContinue = () => {
+    setCurrentView('completed');
+    onStepComplete?.({
+      pageCompleted: true,
+      gameCompleted: true,
+      statementViewed: true,
+      transactions: gameTransactions
+    });
+  };
+
+  // Show intro view - exact text from documentation
+  if (currentView === 'intro') {
+    return (
+      <Stack spacing="lg">
+        <div className="max-w-4xl mx-auto text-center">
+          <UnifiedHeading level="h2" variant="default" className="mb-6">
+            Whack A Mole
+          </UnifiedHeading>
+          <div className="text-lg text-gray-700 space-y-4 mb-8">
+            <p>
+              Woohoo! It's Thursday, and you just got paid.
+            </p>
+            <p>
+              Let's play a quick game. On Thursday, you have $1000 in your account. You are expecting another $500 to be deposited into your account on Friday from your dog-walking side hustle.
+            </p>
+            <p>
+              <strong>Directions:</strong> Hit the moles as they pop up. Each mole represents an expense or charge that will come up over the next couple of days. Your balance will decrease as you whack each mole.
+            </p>
+          </div>
+          {/* Start Game Button - Mobile First Design */}
+          <div className="fixed bottom-6 left-4 right-4 md:relative md:bottom-auto md:left-auto md:right-auto z-50">
+            <button
+              onClick={() => setCurrentView('game')}
+              className="w-full py-4 px-8 rounded-full font-medium text-lg bg-[#2E1E72] text-white hover:bg-[#3B2A8F] transition-all duration-200 cursor-pointer"
+            >
+              Start
+            </button>
+          </div>
+        </div>
+      </Stack>
+    );
+  }
+
+  // Show game view
+  if (currentView === 'game') {
+    return (
+      <Stack spacing="lg">
+        <WhackAMoleGame onComplete={handleGameComplete} />
+      </Stack>
+    );
+  }
+
+  // Show bank statement (subpage)
+  if (currentView === 'statement') {
+    return (
+      <Stack spacing="lg">
+        <BankStatement onContinue={handleStatementContinue} />
+      </Stack>
+    );
+  }
+
+  // Show completion view
+  if (currentView === 'completed') {
+    return (
+      <Stack spacing="lg">
+        <div className="text-center space-y-6">
+          <div className="space-y-4">
+            <h3 className="text-[28px] font-playfair font-semibold text-[#2E1E72]">
+              Activity Complete!
+            </h3>
+            <p className="text-lg text-gray-700 leading-relaxed max-w-2xl mx-auto">
+              You've experienced how banking fees can quickly accumulate when transactions are processed in a certain order.
+            </p>
+            <p className="text-base text-gray-600">
+              Continue to the next page to explore your reaction to these fees.
+            </p>
+          </div>
+
+                    {/* Next and Restart buttons */}
+                    <div className="mt-4 space-y-3">
+                      {/* Next Button - Mobile First Design */}
+                      <div className="fixed bottom-6 left-4 right-4 md:relative md:bottom-auto md:left-auto md:right-auto z-50 space-y-3">
+                        <button
+                          onClick={() => onStepComplete?.({ gameCompleted: true, statementViewed: true, transactions: gameTransactions })}
+                          className="w-full py-4 px-8 rounded-full font-medium text-lg bg-[#2E1E72] text-white hover:bg-[#3B2A8F] transition-all duration-200 cursor-pointer"
+                        >
+                          Next
+                        </button>
+
+                        {/* Restart button - now visible on both mobile and desktop */}
+                        <button
+                          onClick={() => setCurrentView('intro')}
+                          className="w-full py-4 px-8 rounded-full font-medium text-lg border-2 border-[#2E1E72] bg-white text-[#2E1E72] hover:bg-[#E5DEEF] transition-all duration-200 cursor-pointer"
+                        >
+                          Restart Game
+                        </button>
+                      </div>
+          </div>
+        </div>
+      </Stack>
+    );
+  }
+
+  // Default fallback
+  return null;
+}
+
+// Page 3: Banking Context - Introduction to survey
+export function Page3({ onStepComplete }: PageProps) {
+  return (
+    <div className="max-w-4xl mx-auto p-6 pb-48 md:pb-6">
+      <div className="mb-8">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900 mb-6">
+          It's difficult to navigate the world without a banking account.
+        </h2>
+
+        <div className="flex flex-col lg:flex-row items-start gap-8 mb-6">
+          <div className="flex-1 text-lg text-gray-700 space-y-4">
+            <p>
+              Having a bank account and a relationship with a banking institution is an essential part of participating in the US financial system. Bank accounts allow us to receive direct deposits, access credit, make investments, save money, buy a home, and more. Do you absolutely need a bank to do any of those things? Not technically. But modern society has made being "unbanked" more challenging.
+            </p>
+          </div>
+          <div className="flex-shrink-0">
+            <FinancialExclusionIllustration size="xl" />
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          Let's take the Your Banking History Survey
+        </h3>
+        <p className="text-gray-700 mb-4">
+          Let's learn a little bit more about your banking history.
+        </p>
+        <p className="text-sm text-gray-600">
+          All answers are anonymous and you may consent or decline to share your answers with us. These kinds of surveys will appear throughout the course and help us better understand where students are coming from when they take the course.
+        </p>
+      </div>
+
+      {/* Survey Buttons - New Design */}
+      <div className="fixed bottom-6 left-4 right-4 md:relative md:bottom-auto md:left-auto md:right-auto z-50 space-y-3">
+        {/* Take Survey Button */}
+        <button
+          onClick={() => onStepComplete?.({ takeSurvey: true })}
+          className="w-full py-4 px-8 rounded-full font-medium text-lg bg-[#2E1E72] text-white hover:bg-[#3B2A8F] transition-all duration-200 cursor-pointer"
+        >
+          Take Survey
+        </button>
+
+        {/* Skip Survey Button */}
+        <button
+          onClick={() => onStepComplete?.({ takeSurvey: false, skippedSurvey: true })}
+          className="w-full py-4 px-8 rounded-full font-medium text-lg border-2 border-[#2E1E72] bg-white text-[#2E1E72] hover:bg-[#E5DEEF] transition-all duration-200 cursor-pointer"
+        >
+          Skip Survey
+        </button>
+
+        {/* Back Button */}
+        <button
+          onClick={() => onStepComplete?.({ goBackOnePage: true })}
+          className="w-full py-4 px-8 rounded-full font-medium text-lg border-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 transition-all duration-200 cursor-pointer"
+        >
+          Back
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// Page 4: Survey Question 1 of 8 - Account Opening Age
+export function Page4({ onStepComplete }: PageProps) {
+  const [ageInput, setAgeInput] = useState('');
+
+  return (
+    <div className="w-full md:max-w-3xl mx-auto p-3 md:p-6 pb-40 md:pb-6">
+      <div className="bg-white border border-gray-200 rounded-xl p-4 md:p-8 shadow-sm">
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-[28px] font-playfair font-semibold text-[#2E1E72]">Banking Survey</h2>
+            <span className="text-sm text-gray-600 bg-[#E5DEEF] px-3 py-1 rounded-full">
+              1 of 8
+            </span>
+          </div>
+
+          {/* Progress bar */}
+          <div className="bg-[#E5DEEF] rounded-full h-2 mb-6">
+            <div
+              className="bg-[#2E1E72] h-2 rounded-full transition-all duration-300"
+              style={{ width: '12.5%' }}
+            />
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Question 1 of 8: At what age did you first open a bank account? It's okay to guess if you don't remember.
+          </h3>
+
+          <div className="space-y-4">
+            <div className="space-y-3">
+              <label className="block text-sm font-medium text-gray-700">
+                Enter your age when you first opened a bank account:
+              </label>
+              <input
+                type="number"
+                min="1"
+                max="100"
+                value={ageInput}
+                placeholder="e.g., 16"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2E1E72] focus:border-[#2E1E72] text-gray-900 placeholder-gray-500 transition-colors"
+                onChange={(e) => {
+                  setAgeInput(e.target.value);
+                }}
+              />
+            </div>
+
+            <div className="fixed bottom-6 left-4 right-4 md:relative md:bottom-auto md:left-auto md:right-auto z-50 space-y-3 pt-4">
+              <button
+                onClick={() => {
+                  const age = parseInt(ageInput) || 0;
+                  onStepComplete?.({ accountOpeningAge: age, hasAccount: true });
+                }}
+                className="w-full py-4 px-8 rounded-full font-medium text-lg bg-[#2E1E72] text-white hover:bg-[#3B2A8F] transition-all duration-200 cursor-pointer"
+              >
+                Continue
+              </button>
+              <button
+                onClick={() => onStepComplete?.({ goBackOnePage: true })}
+                className="w-full py-4 px-8 rounded-full font-medium text-lg border-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 transition-all duration-200 cursor-pointer"
+              >
+                Back
+              </button>
+            </div>
+
+            <div className="border-t border-gray-200 pt-4">
+              <button
+                onClick={() => onStepComplete?.({ hasAccount: false })}
+                className="text-sm text-[#8577B7] hover:text-[#2E1E72] underline font-medium transition-colors"
+              >
+                I don't have a bank account
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Page 5: Survey Question 2 of 8 - Reasons for Opening
+export function Page5({ onStepComplete }: PageProps) {
+  const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
+
+  const toggleReason = (reason: string) => {
+    setSelectedReasons(prev =>
+      prev.includes(reason)
+        ? prev.filter(r => r !== reason)
+        : [...prev, reason]
+    );
+  };
+
+  return (
+    <div className="w-full md:max-w-3xl mx-auto p-3 md:p-6 pb-32 md:pb-6">
+      <div className="bg-white border border-gray-200 rounded-xl p-4 md:p-8 shadow-sm">
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-[28px] font-playfair font-semibold text-[#2E1E72]">Banking Survey</h2>
+            <span className="text-sm text-gray-600 bg-[#E5DEEF] px-3 py-1 rounded-full">
+              2 of 8
+            </span>
+          </div>
+
+          {/* Progress bar */}
+          <div className="bg-[#E5DEEF] rounded-full h-2 mb-6">
+            <div
+              className="bg-[#2E1E72] h-2 rounded-full transition-all duration-300"
+              style={{ width: '25%' }}
+            />
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Question 2 of 8: Why did you open a bank account?
+          </h3>
+          <p className="text-sm text-gray-600 mb-4">Select all that apply</p>
+
+          <div className="space-y-3">
+            {[
+              'I got a job',
+              'My parent(s) or guardian(s) opened one for me',
+              'I had money from other sources',
+              'I started college',
+              'Other'
+            ].map((reason) => (
+              <label key={reason} className="flex items-center space-x-3 p-4 border border-gray-200 rounded-lg hover:bg-[#F8F6FF] hover:border-[#8577B7] cursor-pointer transition-all">
+                <input
+                  type="checkbox"
+                  className="w-4 h-4 text-[#2E1E72] border-gray-300 rounded focus:ring-[#2E1E72] focus:ring-2 accent-[#2E1E72]"
+                  onChange={() => toggleReason(reason)}
+                  checked={selectedReasons.includes(reason)}
+                />
+                <span className="text-gray-800 font-medium">{reason}</span>
+              </label>
+            ))}
+
+            <div className="fixed bottom-6 left-4 right-4 md:relative md:bottom-auto md:left-auto md:right-auto z-50 space-y-3 pt-4">
+              <button
+                onClick={() => onStepComplete?.({ openingReasons: selectedReasons })}
+                className="w-full py-4 px-8 rounded-full font-medium text-lg bg-[#2E1E72] text-white hover:bg-[#3B2A8F] transition-all duration-200 cursor-pointer"
+              >
+                Continue
+              </button>
+              <button
+                onClick={() => onStepComplete?.({ goBackOnePage: true })}
+                className="w-full py-4 px-8 rounded-full font-medium text-lg border-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 transition-all duration-200 cursor-pointer"
+              >
+                Back
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Page 6: Survey Question 3 of 8 - Opening Process
+export function Page6({ onStepComplete }: PageProps) {
+  return (
+    <div className="w-full md:max-w-3xl mx-auto p-3 md:p-6 pb-32 md:pb-6">
+      <div className="bg-white border border-gray-200 rounded-xl p-4 md:p-8 shadow-sm">
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-[28px] font-playfair font-semibold text-[#2E1E72]">Banking Survey</h2>
+            <span className="text-sm text-gray-600 bg-[#E5DEEF] px-3 py-1 rounded-full">
+              3 of 8
+            </span>
+          </div>
+
+          {/* Progress bar */}
+          <div className="bg-[#E5DEEF] rounded-full h-2 mb-6">
+            <div
+              className="bg-[#2E1E72] h-2 rounded-full transition-all duration-300"
+              style={{ width: '37.5%' }}
+            />
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Question 3 of 8: What was the process you went through to open a bank account?
+          </h3>
+          <p className="text-sm text-gray-600 mb-4">Select one</p>
+
+          <div className="space-y-3 mb-6">
+            {[
+              'I did it online',
+              'I went to a bank branch in person',
+              'I did it over the phone',
+              'My parent(s) or guardian(s) did it for me',
+              'Other'
+            ].map((process) => (
+              <button
+                key={process}
+                onClick={() => onStepComplete?.({ openingProcess: process })}
+                className="w-full p-4 text-left border border-gray-200 rounded-lg hover:bg-[#F8F6FF] hover:border-[#8577B7] hover:shadow-sm transition-all cursor-pointer"
+              >
+                <span className="text-gray-800 font-medium">{process}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Continue and Back Buttons */}
+          <div className="fixed bottom-6 left-4 right-4 md:relative md:bottom-auto md:left-auto md:right-auto z-50 space-y-3">
+            <button
+              onClick={() => onStepComplete?.({ openingProcess: 'Not specified' })}
+              className="w-full py-4 px-8 rounded-full font-medium text-lg bg-[#2E1E72] text-white hover:bg-[#3B2A8F] transition-all duration-200 cursor-pointer"
+            >
+              Continue
+            </button>
+            <button
+              onClick={() => onStepComplete?.({ goBackOnePage: true })}
+              className="w-full py-4 px-8 rounded-full font-medium text-lg border-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 transition-all duration-200 cursor-pointer"
+            >
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Page 7: Survey Question 4 of 8 - Account Types
+export function Page7({ onStepComplete }: PageProps) {
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+
+  const toggleType = (type: string) => {
+    setSelectedTypes(prev =>
+      prev.includes(type)
+        ? prev.filter(t => t !== type)
+        : [...prev, type]
+    );
+  };
+
+  return (
+    <div className="w-full md:max-w-3xl mx-auto p-3 md:p-6 pb-32 md:pb-6">
+      <div className="bg-white border border-gray-200 rounded-xl p-4 md:p-8 shadow-sm">
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-[28px] font-playfair font-semibold text-[#2E1E72]">Banking Survey</h2>
+            <span className="text-sm text-gray-600 bg-[#E5DEEF] px-3 py-1 rounded-full">
+              4 of 8
+            </span>
+          </div>
+
+          {/* Progress bar */}
+          <div className="bg-[#E5DEEF] rounded-full h-2 mb-6">
+            <div
+              className="bg-[#2E1E72] h-2 rounded-full transition-all duration-300"
+              style={{ width: '50%' }}
+            />
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Question 4 of 8: What kind of account did you open?
+          </h3>
+          <p className="text-sm text-gray-600 mb-4">Select all that apply</p>
+
+          <div className="space-y-3">
+            {[
+              'Checking account',
+              'Savings account',
+              'Investment account',
+              'Not sure / can\'t remember',
+              'Other'
+            ].map((type) => (
+              <label key={type} className="flex items-center space-x-3 p-4 border border-gray-200 rounded-lg hover:bg-[#F8F6FF] hover:border-[#8577B7] cursor-pointer transition-all">
+                <input
+                  type="checkbox"
+                  className="w-4 h-4 text-[#2E1E72] border-gray-300 rounded focus:ring-[#2E1E72] focus:ring-2 accent-[#2E1E72]"
+                  onChange={() => toggleType(type)}
+                  checked={selectedTypes.includes(type)}
+                />
+                <span className="text-gray-800 font-medium">{type}</span>
+              </label>
+            ))}
+
+            <div className="fixed bottom-6 left-4 right-4 md:relative md:bottom-auto md:left-auto md:right-auto z-50 space-y-3 pt-4">
+              <button
+                onClick={() => onStepComplete?.({ accountTypes: selectedTypes })}
+                className="w-full py-4 px-8 rounded-full font-medium text-lg bg-[#2E1E72] text-white hover:bg-[#3B2A8F] transition-all duration-200 cursor-pointer"
+              >
+                Continue
+              </button>
+              <button
+                onClick={() => onStepComplete?.({ goBackOnePage: true })}
+                className="w-full py-4 px-8 rounded-full font-medium text-lg border-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 transition-all duration-200 cursor-pointer"
+              >
+                Back
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Page 8: Survey Question 5 of 8 - Experience Rating
+export function Page8({ onStepComplete }: PageProps) {
+  return (
+    <div className="w-full md:max-w-3xl mx-auto p-3 md:p-6 pb-32 md:pb-6">
+      <div className="bg-white border border-gray-200 rounded-xl p-4 md:p-8 shadow-sm">
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-[28px] font-playfair font-semibold text-[#2E1E72]">Banking Survey</h2>
+            <span className="text-sm text-gray-600 bg-[#E5DEEF] px-3 py-1 rounded-full">
+              5 of 8
+            </span>
+          </div>
+
+          {/* Progress bar */}
+          <div className="bg-[#E5DEEF] rounded-full h-2 mb-6">
+            <div
+              className="bg-[#2E1E72] h-2 rounded-full transition-all duration-300"
+              style={{ width: '62.5%' }}
+            />
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Question 5 of 8: How would you rate the experience of opening your account?
+          </h3>
+          <p className="text-sm text-gray-600 mb-4">Select one</p>
+
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-7 gap-2">
+              {[1, 2, 3, 4, 5, 6, 7].map((rating) => (
+                <button
+                  key={rating}
+                  onClick={() => onStepComplete?.({ experienceRating: rating })}
+                  className="flex flex-col items-center p-3 border border-gray-200 rounded-lg hover:bg-[#F8F6FF] hover:border-[#8577B7] hover:shadow-sm transition-all cursor-pointer"
+                >
+                  <span className="text-xs font-semibold text-[#2E1E72] mb-1">{rating}</span>
+                  <span className="text-xs text-gray-800 font-medium text-center">
+                    {rating === 1 ? 'Very difficult' :
+                     rating === 2 ? 'Difficult' :
+                     rating === 3 ? 'Somewhat difficult' :
+                     rating === 4 ? 'Neither difficult nor easy' :
+                     rating === 5 ? 'Somewhat easy' :
+                     rating === 6 ? 'Easy' : 'Very easy'}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Continue and Back Buttons */}
+          <div className="fixed bottom-6 left-4 right-4 md:relative md:bottom-auto md:left-auto md:right-auto z-50 space-y-3 mt-6">
+            <button
+              onClick={() => onStepComplete?.({ experienceRating: 0 })}
+              className="w-full py-4 px-8 rounded-full font-medium text-lg bg-[#2E1E72] text-white hover:bg-[#3B2A8F] transition-all duration-200 cursor-pointer"
+            >
+              Continue
+            </button>
+            <button
+              onClick={() => onStepComplete?.({ goBackOnePage: true })}
+              className="w-full py-4 px-8 rounded-full font-medium text-lg border-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 transition-all duration-200 cursor-pointer"
+            >
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Page 9: Survey Question 6 of 8 - Experience Description
+export function Page9({ onStepComplete }: PageProps) {
+  const [description, setDescription] = useState('');
+
+  return (
+    <div className="w-full md:max-w-3xl mx-auto p-3 md:p-6 pb-32 md:pb-6">
+      <div className="bg-white border border-gray-200 rounded-xl p-4 md:p-8 shadow-sm">
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-[28px] font-playfair font-semibold text-[#2E1E72]">Banking Survey</h2>
+            <span className="text-sm text-gray-600 bg-[#E5DEEF] px-3 py-1 rounded-full">
+              6 of 8
+            </span>
+          </div>
+
+          {/* Progress bar */}
+          <div className="bg-[#E5DEEF] rounded-full h-2 mb-6">
+            <div
+              className="bg-[#2E1E72] h-2 rounded-full transition-all duration-300"
+              style={{ width: '75%' }}
+            />
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Question 6 of 8: Based on what you just selected, please recount the experience to the best of your ability.
+          </h3>
+          <p className="text-sm text-gray-600 mb-4">
+            For example, if you chose "very difficult," what specific task or interaction made it difficult? If you don't remember, just put N/A.
+          </p>
+
+          <div className="space-y-4">
+            <textarea
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2E1E72] focus:border-[#2E1E72] text-gray-900 placeholder-gray-500 transition-colors"
+              rows={6}
+              placeholder="Please describe your experience opening the account..."
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+
+            <div className="fixed bottom-6 left-4 right-4 md:relative md:bottom-auto md:left-auto md:right-auto z-50 space-y-3 pt-2">
+              <button
+                onClick={() => onStepComplete?.({ experienceDescription: description })}
+                className="w-full py-4 px-8 rounded-full font-medium text-lg bg-[#2E1E72] text-white hover:bg-[#3B2A8F] transition-all duration-200 cursor-pointer"
+              >
+                Continue
+              </button>
+              <button
+                onClick={() => onStepComplete?.({ goBackOnePage: true })}
+                className="w-full py-4 px-8 rounded-full font-medium text-lg border-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 transition-all duration-200 cursor-pointer"
+              >
+                Back
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Page 10: Survey Question 7 of 8 - Balance Check Frequency
+export function Page10({ onStepComplete }: PageProps) {
+  return (
+    <div className="w-full md:max-w-3xl mx-auto p-3 md:p-6 pb-32 md:pb-6">
+      <div className="bg-white border border-gray-200 rounded-xl p-4 md:p-8 shadow-sm">
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-[28px] font-playfair font-semibold text-[#2E1E72]">Banking Survey</h2>
+            <span className="text-sm text-gray-600 bg-[#E5DEEF] px-3 py-1 rounded-full">
+              7 of 8
+            </span>
+          </div>
+
+          {/* Progress bar */}
+          <div className="bg-[#E5DEEF] rounded-full h-2 mb-6">
+            <div
+              className="bg-[#2E1E72] h-2 rounded-full transition-all duration-300"
+              style={{ width: '87.5%' }}
+            />
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Question 7 of 8: How often do you check your account balance(s)?
+          </h3>
+          <p className="text-sm text-gray-600 mb-4">Select one</p>
+
+          <div className="space-y-3">
+            {[
+              'Multiple times a day',
+              'Once a day',
+              'Every few days',
+              'Once a week',
+              'Once a month',
+              'Barely ever (less than once a month)'
+            ].map((frequency) => (
+              <button
+                key={frequency}
+                onClick={() => onStepComplete?.({ balanceCheckFrequency: frequency })}
+                className="w-full p-4 text-left border border-gray-200 rounded-lg hover:bg-[#F8F6FF] hover:border-[#8577B7] hover:shadow-sm transition-all cursor-pointer"
+              >
+                <span className="text-gray-800 font-medium">{frequency}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Continue and Back Buttons */}
+          <div className="fixed bottom-6 left-4 right-4 md:relative md:bottom-auto md:left-auto md:right-auto z-50 space-y-3 mt-6">
+            <button
+              onClick={() => onStepComplete?.({ balanceCheckFrequency: 'Not specified' })}
+              className="w-full py-4 px-8 rounded-full font-medium text-lg bg-[#2E1E72] text-white hover:bg-[#3B2A8F] transition-all duration-200 cursor-pointer"
+            >
+              Continue
+            </button>
+            <button
+              onClick={() => onStepComplete?.({ goBackOnePage: true })}
+              className="w-full py-4 px-8 rounded-full font-medium text-lg border-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 transition-all duration-200 cursor-pointer"
+            >
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Page 11: Survey Question 8 of 10 - Feelings When Checking Balance
+export function Page11({ onStepComplete }: PageProps) {
+  const [selectedFeelings, setSelectedFeelings] = useState<string[]>([]);
+  const [customFeeling, setCustomFeeling] = useState('');
+  const [showFeelingsWheel, setShowFeelingsWheel] = useState(false);
+
+  const feelingOptions = [
+    'Happy', 'Sad', 'Bad', 'Fearful', 'Angry', 'Surprised',
+    'Disgusted', 'Confused', 'Embarrassed', 'Vulnerable',
+    'Excited', 'Stressed', 'Shame'
+  ];
+
+  const toggleFeeling = (feeling: string) => {
+    setSelectedFeelings(prev =>
+      prev.includes(feeling)
+        ? prev.filter(f => f !== feeling)
+        : [...prev, feeling]
+    );
+  };
+
+  const handleContinue = () => {
+    const allFeelings = [...selectedFeelings];
+    if (customFeeling.trim()) {
+      allFeelings.push(customFeeling.trim());
+    }
+    onStepComplete?.({ feelingsWhenCheckingBalance: allFeelings });
+  };
+
+  return (
+    <div className="w-full md:max-w-3xl mx-auto p-3 md:p-6 pb-32 md:pb-6">
+      <div className="bg-white border border-gray-200 rounded-xl p-4 md:p-8 shadow-sm">
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-[28px] font-playfair font-semibold text-[#2E1E72]">Banking Survey</h2>
+            <span className="text-sm text-gray-600 bg-[#E5DEEF] px-3 py-1 rounded-full">
+              8 of 10
+            </span>
+          </div>
+
+          {/* Progress bar */}
+          <div className="bg-[#E5DEEF] rounded-full h-2 mb-6">
+            <div
+              className="bg-[#2E1E72] h-2 rounded-full transition-all duration-300"
+              style={{ width: '80%' }}
+            />
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Question 8 of 10: How do you feel when you check your account balance(s)?
+          </h3>
+          <p className="text-sm text-gray-600 mb-4">
+            Select all that apply. It is okay if one feeling applies to certain instances and another feeling applies to others.
+          </p>
+
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {feelingOptions.map((feeling) => (
+                <label key={feeling} className="flex items-center space-x-2 p-3 border border-gray-200 rounded-lg hover:bg-[#F8F6FF] hover:border-[#8577B7] cursor-pointer transition-all">
+                  <input
+                    type="checkbox"
+                    className="w-4 h-4 text-[#2E1E72] border-gray-300 rounded focus:ring-[#2E1E72] focus:ring-2 accent-[#2E1E72] cursor-pointer"
+                    onChange={() => toggleFeeling(feeling)}
+                    checked={selectedFeelings.includes(feeling)}
+                  />
+                  <span className="text-gray-800 font-medium text-sm">{feeling}</span>
+                </label>
+              ))}
+            </div>
+
+            <div className="border-t border-gray-200 pt-4">
+              <p className="text-sm text-gray-600 mb-3">
+                Something not listed here? Take a look at the{' '}
+                <button
+                  onClick={() => setShowFeelingsWheel(!showFeelingsWheel)}
+                  className="text-[#2E1E72] underline hover:text-[#8577B7] font-medium cursor-pointer"
+                >
+                  Feelings Wheel
+                </button>{' '}
+                and pick a word or words that feel more appropriate.
+              </p>
+
+              {showFeelingsWheel && (
+                <div className="mb-4 p-4 bg-gray-50 rounded-lg">
+                  <p className="text-sm text-gray-600 mb-2">
+                    <a href="https://feelingswheel.com" target="_blank" rel="noopener noreferrer" className="text-[#2E1E72] underline">
+                      Source: FeelingsWheel.com
+                    </a>
+                  </p>
+                  <div className="bg-white p-2 rounded border">
+                    <p className="text-sm text-gray-500 italic">
+                      [Static Feelings Wheel image would be displayed here]
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              <textarea
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2E1E72] focus:border-[#2E1E72] text-gray-900 placeholder-gray-500 transition-colors cursor-pointer"
+                rows={3}
+                placeholder="Describe other feelings not listed above..."
+                value={customFeeling}
+                onChange={(e) => setCustomFeeling(e.target.value)}
+              />
+            </div>
+
+            <div className="fixed bottom-6 left-4 right-4 md:relative md:bottom-auto md:left-auto md:right-auto z-50 space-y-3 pt-4">
+              <button
+                onClick={handleContinue}
+                className="w-full py-4 px-8 rounded-full font-medium text-lg bg-[#2E1E72] text-white hover:bg-[#3B2A8F] transition-all duration-200 cursor-pointer"
+              >
+                Continue
+              </button>
+              <button
+                onClick={() => onStepComplete?.({ goBackOnePage: true })}
+                className="w-full py-4 px-8 rounded-full font-medium text-lg border-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 transition-all duration-200 cursor-pointer"
+              >
+                Back
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Page 12: Survey Question 9 of 10 - Bank Satisfaction
+export function Page12({ onStepComplete }: PageProps) {
+  return (
+    <div className="w-full md:max-w-3xl mx-auto p-3 md:p-6 pb-32 md:pb-6">
+      <div className="bg-white border border-gray-200 rounded-xl p-4 md:p-8 shadow-sm">
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-[28px] font-playfair font-semibold text-[#2E1E72]">Banking Survey</h2>
+            <span className="text-sm text-gray-600 bg-[#E5DEEF] px-3 py-1 rounded-full">
+              9 of 10
+            </span>
+          </div>
+
+          {/* Progress bar */}
+          <div className="bg-[#E5DEEF] rounded-full h-2 mb-6">
+            <div
+              className="bg-[#2E1E72] h-2 rounded-full transition-all duration-300"
+              style={{ width: '90%' }}
+            />
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Question 9 of 10: How satisfied are you with your current bank?
+          </h3>
+          <p className="text-sm text-gray-600 mb-4">Select one</p>
+
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-7 gap-2">
+              {[1, 2, 3, 4, 5, 6, 7].map((rating) => (
+                <button
+                  key={rating}
+                  onClick={() => onStepComplete?.({ bankSatisfaction: rating })}
+                  className="flex flex-col items-center p-3 border border-gray-200 rounded-lg hover:bg-[#F8F6FF] hover:border-[#8577B7] hover:shadow-sm transition-all cursor-pointer"
+                >
+                  <span className="text-xs font-semibold text-[#2E1E72] mb-1">{rating}</span>
+                  <span className="text-xs text-gray-800 font-medium text-center">
+                    {rating === 1 ? 'Very dissatisfied' :
+                     rating === 2 ? 'Dissatisfied' :
+                     rating === 3 ? 'Somewhat dissatisfied' :
+                     rating === 4 ? 'Neither satisfied nor dissatisfied' :
+                     rating === 5 ? 'Somewhat satisfied' :
+                     rating === 6 ? 'Satisfied' : 'Very satisfied'}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Continue and Back Buttons */}
+          <div className="fixed bottom-6 left-4 right-4 md:relative md:bottom-auto md:left-auto md:right-auto z-50 space-y-3 mt-6">
+            <button
+              onClick={() => onStepComplete?.({ bankSatisfaction: 0 })}
+              className="w-full py-4 px-8 rounded-full font-medium text-lg bg-[#2E1E72] text-white hover:bg-[#3B2A8F] transition-all duration-200 cursor-pointer"
+            >
+              Continue
+            </button>
+            <button
+              onClick={() => onStepComplete?.({ goBackOnePage: true })}
+              className="w-full py-4 px-8 rounded-full font-medium text-lg border-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 transition-all duration-200 cursor-pointer"
+            >
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Page 13: Survey Question 10 of 10 - Socioeconomic Status (Optional)
+export function Page13({ onStepComplete }: PageProps) {
+  const [selfDescribe, setSelfDescribe] = useState('');
+
+  const handleOptionSelect = (option: string) => {
+    if (option === 'self-describe') {
+      // Don't complete yet, let them fill in the text
+      return;
+    }
+    onStepComplete?.({ socioeconomicStatus: option });
+  };
+
+  const handleSelfDescribeSubmit = () => {
+    if (selfDescribe.trim()) {
+      onStepComplete?.({ socioeconomicStatus: `Self-described: ${selfDescribe.trim()}` });
+    }
+  };
+
+  return (
+    <div className="w-full md:max-w-3xl mx-auto p-3 md:p-6 pb-32 md:pb-6">
+      <div className="bg-white border border-gray-200 rounded-xl p-4 md:p-8 shadow-sm">
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-[28px] font-playfair font-semibold text-[#2E1E72]">Banking Survey</h2>
+            <span className="text-sm text-gray-600 bg-[#E5DEEF] px-3 py-1 rounded-full">
+              10 of 10
+            </span>
+          </div>
+
+          {/* Progress bar */}
+          <div className="bg-[#E5DEEF] rounded-full h-2 mb-6">
+            <div
+              className="bg-[#2E1E72] h-2 rounded-full transition-all duration-300"
+              style={{ width: '100%' }}
+            />
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Optional Question 10: How would you describe your socioeconomic status growing up?
+          </h3>
+          <p className="text-sm text-gray-600 mb-4">Select one</p>
+
+          <div className="space-y-3">
+            {[
+              { value: 'prefer-not-to-answer', label: 'Prefer not to answer' },
+              { value: 'low-income', label: 'Low income' },
+              { value: 'middle-income', label: 'Middle income' },
+              { value: 'upper-class', label: 'Upper class' }
+            ].map((option) => (
+              <button
+                key={option.value}
+                onClick={() => handleOptionSelect(option.value)}
+                className="w-full p-4 text-left border border-gray-200 rounded-lg hover:bg-[#F8F6FF] hover:border-[#8577B7] hover:shadow-sm transition-all cursor-pointer"
+              >
+                <span className="text-gray-800 font-medium">{option.label}</span>
+              </button>
+            ))}
+
+            <div className="border border-gray-200 rounded-lg p-4">
+              <div className="mb-3">
+                <span className="text-gray-800 font-medium">Prefer to self-describe</span>
+              </div>
+              <div className="space-y-3">
+                <input
+                  type="text"
+                  value={selfDescribe}
+                  onChange={(e) => setSelfDescribe(e.target.value)}
+                  placeholder="Please describe..."
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2E1E72] focus:border-[#2E1E72] text-gray-900 placeholder-gray-500 transition-colors cursor-pointer"
+                />
+                {selfDescribe.trim() && (
+                  <button
+                    onClick={handleSelfDescribeSubmit}
+                    className="py-3 px-6 rounded-full font-medium text-base bg-[#2E1E72] text-white hover:bg-[#3B2A8F] transition-all duration-200 cursor-pointer"
+                  >
+                    Submit Answer
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Continue and Back Buttons */}
+          <div className="fixed bottom-6 left-4 right-4 md:relative md:bottom-auto md:left-auto md:right-auto z-50 space-y-3 mt-6">
+            <button
+              onClick={() => onStepComplete?.({ socioeconomicStatus: 'Not specified' })}
+              className="w-full py-4 px-8 rounded-full font-medium text-lg bg-[#2E1E72] text-white hover:bg-[#3B2A8F] transition-all duration-200 cursor-pointer"
+            >
+              Continue
+            </button>
+            <button
+              onClick={() => onStepComplete?.({ goBackOnePage: true })}
+              className="w-full py-4 px-8 rounded-full font-medium text-lg border-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 transition-all duration-200 cursor-pointer"
+            >
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Page 14: Banking Emotions Transition
+export function Page14({ onStepComplete }: PageProps) {
+  return (
+    <div className="max-w-4xl mx-auto p-6 pb-32 md:pb-6">
+      <div className="text-center space-y-6">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900 mb-8">
+          Banking can bring up a range of emotions! And that's ok.
+        </h2>
+
+        <div className="flex justify-center mb-8">
+          <BankingEmotionsIllustration size="xl" />
+        </div>
+
+        <div className="text-lg text-gray-700 space-y-4">
+          <p>
+            Maybe you're new to banking or maybe you already have a history engaging with banks.
+            No matter where you're at, this unit aims to give you helpful information so you can
+            understand the history of banks and how they've become central to participating in the economy.
+          </p>
+        </div>
+
+        {/* Continue and Back Buttons */}
+        <div className="fixed bottom-6 left-2 right-2 md:relative md:bottom-auto md:left-auto md:right-auto z-50 space-y-3 mt-8">
+          <button
+            onClick={() => onStepComplete?.({ pageViewed: true })}
+            className="w-full py-4 px-8 rounded-full font-medium text-lg bg-[#2E1E72] text-white hover:bg-[#3B2A8F] transition-all duration-200 cursor-pointer border-2 border-[#2E1E72]"
+          >
+            Continue
+          </button>
+          <button
+            onClick={() => onStepComplete?.({ goBackOnePage: true })}
+            className="w-full py-4 px-8 rounded-full font-medium text-lg border-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 transition-all duration-200 cursor-pointer"
+          >
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Page 15: Banking History Introduction
+export function Page15({ onStepComplete }: PageProps) {
+  return (
+    <div className="max-w-4xl mx-auto p-6 pb-40 md:pb-6">
+      <div className="text-center space-y-6">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900 mb-8">
+          Banking in the US has a long and complex history.
+        </h2>
+
+        <div className="flex justify-center mb-8">
+          <BankingHistoryIllustration size="lg" />
+        </div>
+
+        <div className="text-lg text-gray-700 space-y-4">
+          <p>
+            Here's a quick overview. Understanding the origins of banking in the US helps put the content of this unit in perspective.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+// Page 16: Banking History Details
+export function Page16({ onStepComplete }: PageProps) {
+  const timelineEvents = [
+    { year: '1781', event: 'Bank of North America', description: 'First commercial bank in the U.S.' },
+    { year: '1791', event: 'First Bank of the United States', description: 'Central bank to manage government debt and currency.' },
+    { year: '1863', event: 'National Banking Act', description: 'Established national banks and a uniform currency.' },
+    { year: '1913', event: 'Federal Reserve Act', description: 'Created the Federal Reserve System for monetary regulation.' },
+    { year: '1999', event: 'Repeal of Glass-Steagall Act', description: 'Allowed commercial and investment banks to merge.' }
+  ];
+
+  return (
+    <div className="max-w-5xl mx-auto px-2 sm:px-4 md:px-6 py-4 md:py-6 pb-32 md:pb-6">
+      <div className="space-y-8">
+        <div className="text-center">
+          <h2 className="text-[28px] font-playfair font-semibold text-gray-900 mb-6">
+            The History of Banking in the U.S.
+          </h2>
+          <p className="text-lg text-gray-700">
+            The history of banking in the U.S. dates back to the late 1700s, beginning with the establishment
+            of the Bank of North America in 1782. Over the years, the banking system evolved through various phases.
+          </p>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <div className="bg-transparent rounded-xl px-2 sm:px-4 md:px-6 py-4 md:py-6 space-y-8">
+              {/* YouTube Video */}
+              <div className="mb-8">
+                <h3 className="text-[28px] font-playfair font-semibold text-gray-900 mb-4">Watch: The History of Banking</h3>
+                <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                  <iframe
+                    className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+                    src="https://www.youtube.com/embed/CfqFZJUcW1g"
+                    title="The History of Banking"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-[28px] font-playfair font-semibold text-gray-900 mb-3">Early Beginnings (1780s-1800s)</h3>
+                <p className="text-gray-700 mb-2">
+                  <strong>First Banks:</strong> The first bank, the Bank of Pennsylvania, was established in 1780 to fund the Revolutionary War.
+                  The Bank of North America followed in 1782 as the first commercial bank.
+                </p>
+                <p className="text-gray-700">
+                  <strong>Central Banking:</strong> In 1791, the First Bank of the United States was created under Treasury Secretary
+                  Alexander Hamilton to stabilize the economy and manage government debt.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-[28px] font-playfair font-semibold text-gray-900 mb-3">Expansion and Regulation (1800s-1900s)</h3>
+                <p className="text-gray-700 mb-2">
+                  <strong>Free Banking Era:</strong> From 1837 to 1863, the "free banking" era allowed states to charter banks
+                  without federal oversight, leading to instability and bank failures.
+                </p>
+                <p className="text-gray-700">
+                  <strong>National Banking Act of 1863:</strong> This act established a system of national banks and a uniform
+                  national currency, addressing the chaos of state-chartered banks.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-[28px] font-playfair font-semibold text-gray-900 mb-3">The Federal Reserve and Modern Banking (1913-Present)</h3>
+                <p className="text-gray-700 mb-2">
+                  <strong>Federal Reserve System:</strong> Established in 1913, the Federal Reserve serves as the central bank,
+                  regulating monetary policy and providing financial stability.
+                </p>
+                <p className="text-gray-700">
+                  <strong>Deregulation:</strong> The late 20th century saw significant deregulation, including the repeal of the
+                  Glass-Steagall Act in 1999, which had separated commercial and investment banking.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div className="bg-transparent rounded-xl p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Key Events Timeline</h3>
+              <div className="space-y-4">
+                {timelineEvents.map((event, index) => (
+                  <div key={index} className="border-l-4 border-[#2E1E72] pl-4">
+                    <div className="text-sm font-semibold text-[#2E1E72]">{event.year}</div>
+                    <div className="text-sm font-medium text-gray-900">{event.event}</div>
+                    <div className="text-xs text-gray-600">{event.description}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-3">Why Banks Grew Large</h3>
+          <p className="text-gray-700 mb-4">
+            Banks grew large for two main reasons (Servon, 2017):
+          </p>
+          <div className="space-y-3">
+            <div>
+              <h4 className="font-semibold text-gray-900">Deregulation:</h4>
+              <p className="text-gray-700 text-sm">
+                After the Great Crash of 1929, the Glass-Steagall Act prevented banks from engaging in both investment
+                and commercial banking to minimize risk. However, in 1999, the Gramm-Leach-Bliley Act effectively nullified
+                Glass-Steagall, allowing commercial banks, investment banks, securities firms, and insurance companies to merge and grow.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-gray-900">Relaxed Branching Restrictions:</h4>
+              <p className="text-gray-700 text-sm">
+                Historically, nearly all states restricted bank branching to protect consumers from monopolies. Once allowed
+                to branch, banks expanded by opening new locations and acquiring smaller banks, leading to large multinational
+                organizations with less connection to the communities they served.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+// Page 17: Your Reaction (moved from previous location)
+export function Page17({ onStepComplete }: PageProps) {
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">Let's take a step back. Why do we have banks, anyway?</h2>
+
+        <div className="flex justify-center my-8">
+          <BankEcosystemIllustration size="xl" />
+        </div>
+
+        <Text className="text-gray-900">
+          By definition, banks are "a chartered financial institution licensed to receive deposits and make loans, and may also provide other financial services such as wealth management, currency exchange, and safe deposit boxes" (Bradford 2020; Barone 2020).
+        </Text>
+
+        <ContentBox variant="definition" className="bg-transparent border-none">
+          <Text className="text-gray-900">
+            <strong>Reminder:</strong> The Federal Deposit Insurance Corporation is an independent agency that "insures deposits, examines and supervises financial institutions for safety and soundness and consumer protection, works to make large and complex financial institutions resolvable, and manages receiverships" (FDIC, 2020, para 1.). It was created after the bank failures of the Great Depression and insures bank deposits up to $250,000. Consumers are encouraged to verify that the bank you choose is FDIC-insured, but if that is not something you want to do, that's ok! At a minimum, it is important to understand that without FDIC insurance, you will not get to enjoy this insurance protection.
+          </Text>
+        </ContentBox>
+
+        <Text className="text-gray-900">
+          First and foremost, they allow us to pay for things.
+        </Text>
+
+        <div className="flex justify-center my-8">
+          <img src="/Design/web/unit deisgn 4 icon 1.svg" alt="Payment icon" className="w-64 h-64" />
+        </div>
+
+        <Text className="text-gray-900">
+          "[Banks] operate a payments system, and a modern economy cannot function well without an efficient payments system. We make most of our payments by writing checks, swiping credit cards issued by banks or tied to them, and by paying bills via online banking… We have confidence in bank money because we can exchange it at the bank or an ATM for legal tender. Banks are obligated to hold reserves of legal tender to make these exchanges when we request them" (Sylla, 2010, para. 2).
+        </Text>
+
+        <ContentBox variant="definition" className="bg-transparent border-none">
+          <Text className="text-gray-900">
+            <strong>Legal tender:</strong> "United States coins and currency (including Federal Reserve notes and circulating notes of Federal Reserve banks and national banks) are legal tender for all debts, public charges, taxes, and dues. Foreign gold or silver coins are not legal tender for debts" ("31 USC 5103: Legal Tender" 2024).
+          </Text>
+        </ContentBox>
+
+        <Text className="text-gray-900">
+          But they also enable lending and investing via financial intermediation.
+        </Text>
+
+        <div className="flex justify-center my-8">
+          <img src="/Design/web/unit design 4, icon 2.svg" alt="Investing icon" className="w-64 h-64" />
+        </div>
+
+        <Text className="text-gray-900">
+          "The second key function of banks is financial intermediation, lending or investing the money we deposit with them or credit they themselves create to business enterprises, households, and governments. This is the business side of banking. Most banks are profit-seeking corporations with stockholders who provide the equity capital needed to start and maintain a banking business. Banks make their profits and cover their expenses by charging borrowers more for loans than they pay depositors for keeping money in the bank" (Sylla, 2010, para 2.).
+        </Text>
+      </ContentBox>
+    </Stack>
+  );
+}
+
+// Page 18: Banks serve a variety of audiences, including you!
+export function Page18({ onStepComplete }: PageProps) {
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">Banks serve a variety of audiences, including you!</h2>
+
+        <Text className="text-gray-900">
+          Banks have relationships with individual consumers, small businesses, large corporations, and governments. They offer a variety of services that enable those groups to save, invest, and make payments.
+        </Text>
+
+        <Text className="text-gray-900">
+          These days, consumer-focused advertising from banks has leaned heavily into themes of "empowering" their customers, being there "every step of the way," and making banking easy.
+        </Text>
+
+        <Stack spacing="lg" className="my-8">
+          <div>
+            <Text weight="bold" className="text-lg mb-3">U.S. Bank</Text>
+            <div className="relative w-full mb-6" style={{ paddingBottom: '56.25%' }}>
+              <iframe
+                className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+                src="https://www.youtube.com/embed/CfqFZJUcW1g"
+                title="U.S. Bank Commercial"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+
+          <div>
+            <Text weight="bold" className="text-lg mb-3">Citizens</Text>
+            <div className="relative w-full mb-6" style={{ paddingBottom: '56.25%' }}>
+              <iframe
+                className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+                src="https://www.youtube.com/embed/TxOSaTkOVq8"
+                title="Citizens Bank Commercial"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+
+          <div>
+            <Text weight="bold" className="text-lg mb-3">Wells Fargo:</Text>
+            <div className="relative w-full mb-6" style={{ paddingBottom: '56.25%' }}>
+              <iframe
+                className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+                src="https://www.youtube.com/embed/a25L_ToVhD4"
+                title="Wells Fargo Commercial"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+
+          <div>
+            <Text weight="bold" className="text-lg mb-3">Bank of America</Text>
+            <div className="relative w-full mb-6" style={{ paddingBottom: '56.25%' }}>
+              <iframe
+                className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+                src="https://www.youtube.com/embed/OrJZrXLaQJQ"
+                title="Bank of America Commercial"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+
+          <div>
+            <Text weight="bold" className="text-lg mb-3">ABC Bank.</Text>
+            <div className="relative w-full mb-4" style={{ paddingBottom: '56.25%' }}>
+              <iframe
+                className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+                src="https://www.youtube.com/embed/xM9u96uk2mM"
+                title="ABC Bank Parody Commercial"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+            <Text className="italic text-gray-600">Okay, this is a parody…but eerily reminiscent of the other ads.</Text>
+          </div>
+        </Stack>
+
+        <Text className="text-gray-900">
+          With messages like this, it may seem as though the average person–and their hopes and dreams–are the main priority. This is very strategic marketing in a time when Americans' trust in US institutions, including banks, continues to decline (Deane, 2024).
+        </Text>
+
+        <Text className="text-gray-900">
+          This is not to say that all banks automatically have ulterior motives, nor is it to say they aren't deserving of Americans' distrust. However, it is a good reminder that banks have a vested interest (no pun intended) in making themselves seem like approachable, accessible institutions. This helps them attract new customers and deepen existing customer relationships with services that contribute to their bottom line. These messages also make it seem less likely that you could have an adverse experience with your bank. And if you do, it's probably something you did.
+        </Text>
+
+        <Text className="text-gray-900">
+          After all, getting to manage your money as you shift tax brackets, make investments, or start a business? That's valuable and worth competing for.
+        </Text>
+      </ContentBox>
+    </Stack>
+  );
+}
+
+// Page 19: But ultimately, banks answer to shareholders
+export function Page19({ onStepComplete }: PageProps) {
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">But ultimately, banks answer to shareholders</h2>
+
+        <div className="my-8">
+          <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+            <iframe
+              className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+              src="https://www.youtube.com/embed/dMBzOpziZqU?start=305&end=319"
+              title="Banking and Shareholder Capitalism"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+          <Text className="text-sm text-gray-600 text-center mt-2 italic">Video segment from 5:05 to 5:19</Text>
+        </div>
+
+        <Text className="text-gray-900">
+          Shareholder capitalism states that banks should prioritize generating profits for their shareholders above all other goals. This is different from stakeholder capitalism, where the needs of customers, employees, and the community are considered alongside shareholders.
+        </Text>
+      </ContentBox>
+    </Stack>
+  );
+}
+
+// Page 20: Shareholder primacy requires that banks prioritize profit over consumers' interests
+export function Page20({ onStepComplete }: PageProps) {
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">Shareholder primacy requires that banks prioritize profit over consumers' interests</h2>
+
+        <Text className="text-gray-900">
+          This is the dominant form of capitalism in the United States, and it helps explain why banks find new ways to extract fees, even when those fees harm their customers.
+        </Text>
+
+        <Text className="text-gray-900">
+          If you don't know what stakeholder capitalism is, use the definitions box below.
+        </Text>
+
+        <ContentBox variant="definition" className="bg-transparent border-none">
+          <Stack spacing="md">
+            <Stack spacing="xs">
+              <Text weight="bold" className="text-gray-900">Shareholder Capitalism:</Text>
+              <Text className="text-gray-900">A business model where companies prioritize maximizing profits for shareholders above all other considerations, including customer welfare, employee well-being, or community impact.</Text>
+            </Stack>
+
+            <Stack spacing="xs">
+              <Text weight="bold" className="text-gray-900">Stakeholder Capitalism:</Text>
+              <Text className="text-gray-900">A business model where companies consider the needs and interests of all stakeholders - shareholders, customers, employees, suppliers, and the broader community - when making decisions, rather than focusing solely on profit maximization.</Text>
+            </Stack>
+          </Stack>
+        </ContentBox>
+      </ContentBox>
+    </Stack>
+  );
+}
+
+// Page 21: JPMorgan Chase Revenue Quiz
+export function Page21({ onStepComplete }: PageProps) {
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+
+  const handleAnswerSelect = (answer: string) => {
+    setSelectedAnswer(answer);
+    onStepComplete?.({ quizAnswer: answer });
+  };
+
+  const answerOptions = [
+    '10-20B',
+    '20-30B',
+    '30-40B',
+    '40-50B',
+    '50B+'
+  ];
+
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">[Activity - mini quiz] Take a guess.</h2>
+
+        <div className="flex justify-center my-8">
+          <BankProfitsIllustration size="xl" />
+        </div>
+
+        <Text className="text-gray-900 mb-6">
+          How much in revenue did JPMorgan Chase, the largest bank in the United States and in the world (Klebnikov, 2025), make in 2024? Select one.
+        </Text>
+
+        <Stack spacing="sm">
+          {answerOptions.map((option) => (
+            <button
+              key={option}
+              onClick={() => handleAnswerSelect(option)}
+              className={`w-full p-4 text-left border-2 rounded-lg transition-all ${
+                selectedAnswer === option
+                  ? 'border-[#2E1E72] bg-[#F8F6FF] text-[#2E1E72]'
+                  : 'border-gray-200 hover:border-[#8577B7] hover:bg-[#F8F6FF]'
+              }`}
+            >
+              <Text className={`font-medium ${selectedAnswer === option ? 'text-[#2E1E72]' : 'text-gray-900'}`}>
+                {option}
+              </Text>
+            </button>
+          ))}
+        </Stack>
+      </ContentBox>
+
+      {selectedAnswer && (
+        <Center>
+          <AnimatedButton
+            onClick={() => onStepComplete?.({ quizCompleted: true, selectedAnswer })}
+            variant="primary"
+            size="lg"
+          >
+            See the Answer →
+          </AnimatedButton>
+        </Center>
+      )}
+    </Stack>
+  );
+}
+
+// Page 22: Bank Revenue Data
+export function Page22({ onStepComplete }: PageProps) {
+  const bankData = [
+    {
+      name: 'JP Morgan Chase',
+      logo: '🏦',
+      revenue: '$180.6B',
+      netIncome: '$58.5B',
+      source: '(JP Morgan Chase, 2025)'
+    },
+    {
+      name: 'Bank of America',
+      logo: '🏛️',
+      revenue: '$101.9B',
+      netIncome: '$27.1B',
+      source: '(Bank of America, 2025)'
+    },
+    {
+      name: 'Wells Fargo',
+      logo: '🏦',
+      revenue: '$82.3B',
+      netIncome: '$19.7B',
+      source: '(Wells Fargo, 2025)'
+    },
+    {
+      name: 'CitiGroup',
+      logo: '🏛️',
+      revenue: '$81.1B',
+      netIncome: '$12.7B',
+      source: '(CitiGroup, 2025)'
+    }
+  ];
+
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">[Show answer - as a new page or sub-page - consider including a table with the bank logo] The top 4 US banks made the following in revenue and net income in 2024.</h2>
+
+        <div className="mt-6 bg-transparent rounded-lg border border-gray-200 overflow-hidden">
+          {bankData.map((bank, index) => (
+            <div
+              key={index}
+              className={`p-4 ${index !== bankData.length - 1 ? 'border-b border-gray-200' : ''}`}
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
+                <div>
+                  <Text weight="bold" className="text-gray-900">{bank.name}</Text>
+                  <Text className="text-xs text-gray-600">{bank.source}</Text>
+                </div>
+                <div>
+                  <Text className="text-sm text-gray-700 font-medium">Revenue</Text>
+                  <Text className="text-gray-900 font-semibold">{bank.revenue}</Text>
+                </div>
+                <div>
+                  <Text className="text-sm text-gray-700 font-medium">Net Income</Text>
+                  <Text className="text-gray-900 font-semibold">{bank.netIncome}</Text>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <Text className="text-gray-900 mt-6 mb-4">
+          And their profits are only increasing.
+        </Text>
+
+
+        <Text className="text-gray-900 mb-4">
+          [If possible, it would be great to show the graph titled "Chart 1 - Full Year Net Income" and add "Source: FDIC"]
+        </Text>
+
+        <Text className="text-gray-900 mb-4">
+          Banks are seeing some of their biggest profits ever thanks to favorable market conditions, an administration friendly to corporations, and consumer spending (Saeedy, 2025). And as we reported, much of that is from bank fees directly affecting the individual consumer. Bank of America stated in their 2024 Annual Report that 45% of their 2024 total revenue came from fees (Bank of America, 2025).
+        </Text>
+      </ContentBox>
+
+    </Stack>
+  );
+}
+
+// Page 23: Content Check-in Introduction
+export function Page23({ onStepComplete }: PageProps) {
+  return (
+    <Stack spacing="lg">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">Okay, let's take a break to see if you are tracking.</h2>
+
+        <Text className="text-gray-900">
+          [Take user through a Content Check-in - this is meant to represent a period assessment of the content they reviewed]
+        </Text>
+      </ContentBox>
+
+    </Stack>
+  );
+}
+
+// Page 24: Bank Fees Overview
+export function Page24({ onStepComplete }: PageProps) {
+  const [hoveredFee, setHoveredFee] = useState<string | null>(null);
+
+  const feeDefinitions = {
+    overdraft: "If you don't have enough money in your bank account to pay a bill, the bank will allow the transaction to go through, but your balance will be negative. Banks call this overdraft \"protection\" because they are framing it as them covering the cost of the transaction for you. Most banks charge a fee for the overdraft in addition to the transaction cost. You overdrafted three times to pay your credit card bill and your portion of dinner with friends.",
+    atm: "If you don't use an ATM owned by your bank, your bank may charge you a fee for using an out-of-network ATM. You needed to get cash in a pinch but were not near an ATM owned by your bank."
+  };
+
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">Alright, let's talk bank fees.</h2>
+
+        <div className="flex justify-center my-8">
+          <BankFeesIllustration size="xl" />
+        </div>
+
+        <Text className="text-gray-900 mb-6">
+          Let's think back to the fees you incurred in the earlier activity.
+        </Text>
+
+        <Text className="text-gray-900 mb-4">
+          [Show resulting statement with debit-resequencing, we'll explain the order of transactions soon. Also show the fee definitions, allow user to roll over with their mouse and bring up the full definition]
+        </Text>
+
+        <Stack spacing="md">
+          <ContentBox variant="definition" className="bg-transparent border-none">
+            <div
+              onMouseEnter={() => setHoveredFee('overdraft')}
+              onMouseLeave={() => setHoveredFee(null)}
+              className="cursor-help relative inline-block"
+            >
+              <Text weight="bold" className="text-gray-900">Overdraft fee:</Text>
+              <Text className="text-gray-900">Hover for full definition</Text>
+
+              {hoveredFee === 'overdraft' && (
+                <div className="absolute z-10 w-80 max-w-sm p-4 mt-2 bg-white border border-gray-300 rounded-lg shadow-lg">
+                  <Text className="text-sm text-gray-900">{feeDefinitions.overdraft}</Text>
+                  <div className="absolute top-0 left-4 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-white transform -translate-y-2"></div>
+                </div>
+              )}
+            </div>
+          </ContentBox>
+
+          <ContentBox variant="definition" className="bg-transparent border-none">
+            <div
+              onMouseEnter={() => setHoveredFee('atm')}
+              onMouseLeave={() => setHoveredFee(null)}
+              className="cursor-help relative inline-block"
+            >
+              <Text weight="bold" className="text-gray-900">ATM fee:</Text>
+              <Text className="text-gray-900">Hover for full definition</Text>
+
+              {hoveredFee === 'atm' && (
+                <div className="absolute z-10 w-80 max-w-sm p-4 mt-2 bg-white border border-gray-300 rounded-lg shadow-lg">
+                  <Text className="text-sm text-gray-900">{feeDefinitions.atm}</Text>
+                  <div className="absolute top-0 left-4 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-white transform -translate-y-2"></div>
+                </div>
+              )}
+            </div>
+          </ContentBox>
+        </Stack>
+      </ContentBox>
+
+    </Stack>
+  );
+}
+
+// Page 25: Additional Bank Fees Overview
+export function Page25({ onStepComplete }: PageProps) {
+  const [hoveredFee, setHoveredFee] = useState<string | null>(null);
+
+  const additionalFeeDefinitions = {
+    maintenance: "A bank fee typically charged to your checking, savings, or money market account if you do not meet certain requirements, such as maintaining a minimum monthly balance or making direct deposits. However, some banks may charge a monthly maintenance fee automatically.",
+    check: "Check Fees may occur when you cash a check at a bank or credit union that you do not have an account with.",
+    nsf: "Insufficient Funds Fees (aka Returned Item Fees or Non-Sufficient Funds (NSF) fees) may occur when you don't have enough money in your checking account to cover an attempted check or online payment. Banks will usually charge a fee and reject the transaction (NSF Fees & Overdraft Protection, 2025).",
+    foreign: "Foreign transaction fees are fees charged to credit cards for purchases made in foreign countries, usually 1% of the transaction cost (CFPB \"Financial Terms Glossary,\" 2025).",
+    transfer: "Transfer fees occur when you move money from one bank account to another, either domestically or internationally, such as via wire transfer.",
+    excessive: "Excessive transaction fees may occur if your bank sets a limit for the number of withdrawals per month out of your savings account. If you reach the maximum amount, the bank could charge you a fee. The fee may increase per withdrawal.",
+    research: "Account Research fees may occur if you request an investigation of a specific transaction or issue in your account, usually upon request. This could include account history, transaction disputes, or lost deposits.",
+    dormancy: "Dormancy fees or inactivity fees may occur when there is no activity in an account for an extended period of time (CFPB \"Financial Terms Glossary,\" 2025).",
+    closing: "Account closing fees may occur if you close an account quickly after opening it. They may also charge a fee if you have outstanding balances (checks, fees, or automatic payments) that may bounce after an account closure."
+  };
+
+  const feesList = [
+    { key: 'maintenance', title: 'Monthly maintenance fee' },
+    { key: 'check', title: 'Check Fees' },
+    { key: 'nsf', title: 'Insufficient Funds Fees' },
+    { key: 'foreign', title: 'Foreign transaction fees' },
+    { key: 'transfer', title: 'Transfer fees' },
+    { key: 'excessive', title: 'Excessive transaction fees' },
+    { key: 'research', title: 'Account Research fees' },
+    { key: 'dormancy', title: 'Dormancy fees or inactivity fees' },
+    { key: 'closing', title: 'Account closing fees' }
+  ];
+
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">[New sub Page] That's just the tip of the iceberg.</h2>
+
+        <Text className="text-gray-900 mb-4">
+          Overdraft fees and ATMs fees are often ones that people are most familiar with, but there are even more that you might not encounter until they happen.
+        </Text>
+
+        <Text className="text-gray-900 mb-6">
+          Every bank is different, but each bank is required to publish out their fee structure. However, these documents can be hidden on their website or tedious and difficult to read. Here, we give you a detailed overview of what kinds of fees exist. Keep in mind that banks may use different terminology or even change the names of fees unexpectedly ("Overdraft and Account Fees | FDIC" 2024; Grandoni, 2011).
+        </Text>
+
+        <Text className="text-gray-900 mb-4">
+          [Show as a continuation of the previous page of definitions; show the fee definition, allow user to roll over with their mouse, and bring up the full definition]
+        </Text>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {feesList.map((fee) => (
+            <ContentBox key={fee.key} variant="definition" className="bg-transparent border border-gray-200 rounded-lg p-4 h-fit">
+              <div
+                onMouseEnter={() => setHoveredFee(fee.key)}
+                onMouseLeave={() => setHoveredFee(null)}
+                className="cursor-help relative"
+              >
+                <Text weight="bold" className="text-gray-900 text-sm mb-2 block">{fee.title}</Text>
+                <Text className="text-gray-600 text-xs">Hover for full definition</Text>
+
+                {hoveredFee === fee.key && (
+                  <div className="absolute z-10 w-80 max-w-sm p-4 mt-2 bg-white border border-gray-300 rounded-lg shadow-lg left-0 top-full">
+                    <Text className="text-sm text-gray-900">{additionalFeeDefinitions[fee.key as keyof typeof additionalFeeDefinitions]}</Text>
+                    <div className="absolute top-0 left-4 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-white transform -translate-y-2"></div>
+                  </div>
+                )}
+              </div>
+            </ContentBox>
+          ))}
+        </div>
+      </ContentBox>
+    </Stack>
+  );
+}
+
+// Page 26: Is Anything Being Done? (as specified in doc)
+export function Page26({ onStepComplete }: PageProps) {
+  const [selectedCase, setSelectedCase] = useState<string | null>(null);
+
+  const lawsuitCases = [
+    {
+      id: 'wells-fargo',
+      bank: 'Wells Fargo',
+      year: '2010',
+      settlement: '$203M',
+      logo: '🏛️',
+      details: {
+        issue: 'Manipulated transactions to charge more overdraft fees (debit resequencing)',
+        judgeQuote: 'Overdraft fees are the second-largest source of revenue for Wells Fargo\'s consumer deposits group... Wells Fargo has devised a bookkeeping device to turn what would ordinarily be one overdraft into as many as ten overdrafts, thereby dramatically multiplying the number of fees the bank can extract from a single mistake.',
+        impact: 'In California alone, Wells Fargo assessed over $1.4 billion in overdraft penalties between 2005 and 2007.'
+      }
+    },
+    {
+      id: 'jp-morgan',
+      bank: 'JP Morgan Chase',
+      year: '2011',
+      settlement: '$110M',
+      logo: '🏦',
+      details: {
+        issue: 'Part of nationwide lawsuit for overdrafting transactions from largest to smallest',
+        impact: 'Accused of reordering transactions to maximize overdraft fees',
+        outcome: 'Settled as part of larger industry-wide legal action'
+      }
+    },
+    {
+      id: 'bank-of-america',
+      bank: 'Bank of America',
+      year: '2011',
+      settlement: '$410M',
+      logo: '🏛️',
+      details: {
+        issue: 'Part of nationwide lawsuit for overdrafting transactions from largest to smallest',
+        impact: 'Accused of reordering transactions to maximize overdraft fees',
+        outcome: 'Largest settlement in the multi-bank lawsuit'
+      }
+    }
+  ];
+
+  const selectedCaseData = lawsuitCases.find(c => c.id === selectedCase);
+
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">
+          Is anything being done about this?
+        </h2>
+
+        <Text className="text-gray-900 mb-6">
+          Public pressure, lawsuits, and CFPB action have caused some major banks to step away from
+          predatory fees and practices such as debit resequencing or reduce their occurrence altogether.
+        </Text>
+      </ContentBox>
+      
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <Text className="text-lg font-semibold text-gray-900 mb-4">Major Bank Settlements - Click to learn more:</Text>
+        
+        <div className="mb-6 space-y-2">
+          {lawsuitCases.map((case_) => (
+            <div
+              key={case_.id}
+              className="cursor-pointer transition-all hover:shadow-lg hover:scale-[1.02] bg-transparent hover:bg-purple-50 p-4 rounded-lg hover:z-10 relative"
+              onClick={() => setSelectedCase(case_.id === selectedCase ? null : case_.id)}
+            >
+              <div className="space-y-1">
+                <Text className="text-base font-semibold text-gray-900">{case_.bank} ({case_.year})</Text>
+                <Text className="text-gray-900">Settlement: {case_.settlement}</Text>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Popup Modal */}
+        {selectedCaseData && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
+            <div className="bg-purple-50 border-2 border-purple-300 rounded-lg w-full max-w-sm sm:max-w-2xl max-h-[90vh] sm:max-h-[80vh] overflow-y-auto p-4 sm:p-6 relative mx-2 sm:mx-0">
+              {/* Close button */}
+              <button
+                onClick={() => setSelectedCase(null)}
+                className="absolute top-2 right-2 sm:top-4 sm:right-4 text-gray-600 hover:text-gray-900 text-xl sm:text-2xl font-bold w-8 h-8 flex items-center justify-center"
+              >
+                ×
+              </button>
+
+              <Text className="text-lg sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 pr-10 sm:pr-8">{selectedCaseData.bank} Case Details</Text>
+
+              <div className="space-y-4 sm:space-y-6">
+                <div className="space-y-2 sm:space-y-3">
+                  <Text weight="bold" className="text-gray-900 text-base sm:text-lg">Issue:</Text>
+                  <Text className="text-gray-900 text-sm sm:text-base leading-relaxed">{selectedCaseData.details.issue}</Text>
+                </div>
+
+                {selectedCaseData.details.judgeQuote && (
+                  <div className="bg-transparent border-l-4 border-purple-600 pl-3 sm:pl-4 py-2 sm:py-3 space-y-2 sm:space-y-3">
+                    <Text weight="bold" className="text-gray-900 text-base sm:text-lg">Judge's Statement:</Text>
+                    <Text className="italic text-gray-900 text-sm sm:text-base leading-relaxed">"{selectedCaseData.details.judgeQuote}"</Text>
+                  </div>
+                )}
+
+                <div className="space-y-2 sm:space-y-3">
+                  <Text weight="bold" className="text-gray-900 text-base sm:text-lg">Impact:</Text>
+                  <Text className="text-gray-900 text-sm sm:text-base leading-relaxed">{selectedCaseData.details.impact}</Text>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </ContentBox>
+      
+      <ContentBox variant="callout" className="bg-transparent border border-purple-200">
+        <Text className="text-lg font-semibold text-gray-900 mb-3">Recent Regulatory Action</Text>
+        <Text className="text-gray-900 mb-3">
+          In 2022, the Consumer Financial Protection Bureau (CFPB) issued guidance around surprise overdraft fees
+          and junk fees, stating they may violate the Consumer Financial Protection Act if consumers cannot reasonably avoid getting charged.
+        </Text>
+        <Text className="text-gray-900">
+          A more recent move by the CFPB in 2024 sought to cap overdraft fees at $5. However, the Trump administration
+          reversed this ruling and banks are still allowed to charge what they want for overdrafts.
+        </Text>
+      </ContentBox>
+    </Stack>
+  );
+}
+
+// Page 27: Some Banks Have Eliminated Overdraft Fees (as specified in doc)
+export function Page27({ onStepComplete }: PageProps) {
+  const banksWithoutFees = [
+    { name: 'Capital One', feature: 'No overdraft fees' },
+    { name: 'Ally Bank', feature: 'No overdraft fees' },
+    { name: 'Citibank', feature: 'No overdraft fees' },
+    { name: 'Alliant Credit Union', feature: 'No overdraft fees' }
+  ];
+
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">
+          Some banks have eliminated overdraft fees altogether or significantly reduced them.
+        </h2>
+
+        <Text className="text-gray-900 mb-4">
+          Revenue across banks from overdraft fees has been cut significantly in recent years due to many
+          larger banks changing their fee practices (likely after getting hit with lawsuits and dealing
+          with very negative press).
+        </Text>
+      </ContentBox>
+      
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <Stack direction="row" align="center" spacing="sm" className="mb-4">
+          <Text className="text-lg font-semibold text-gray-900">Banks That Have Eliminated Overdraft Fees</Text>
+        </Stack>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {banksWithoutFees.map((bank, index) => (
+            <div key={index} className="p-4 bg-transparent">
+              <Stack direction="row" align="center" spacing="sm">
+                <Text className="text-green-600">✓</Text>
+                <Stack spacing="xs">
+                  <Text className="text-base font-semibold text-gray-900">{bank.name}</Text>
+                  <Text className="text-gray-900">{bank.feature}</Text>
+                </Stack>
+              </Stack>
+              <div className="border-b border-purple-400 mt-3"></div>
+            </div>
+          ))}
+        </div>
+      </ContentBox>
+      
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <Stack direction="row" align="center" spacing="sm" className="mb-3">
+          <Text className="text-lg font-semibold text-gray-900">Should You Switch?</Text>
+        </Stack>
+        <Text className="text-gray-900">
+          If you tend to overdraft, it's not a bad idea to go with a bank that does not engage with this practice.
+          Of course, if you are comfortable with overdraft protection and want to protect yourself, that is fine too.
+        </Text>
+      </ContentBox>
+    </Stack>
+  );
+}
+
+// Page 28: Is There Anything I Can Do to Protect Myself? (as specified in doc)
+export function Page28({ onStepComplete }: PageProps) {
+  const [checkedTips, setCheckedTips] = useState<string[]>([]);
+  
+  const protectionTips = [
+    {
+      id: 'fees',
+      title: 'Learn more about the fees your bank charges',
+      description: 'Banks will typically list what they may charge for different types of accounts they offer. For example, Bank of America lists out its fees for each account on their website. Note how each account comes with a different set of fees and requirements. Confusing? It\'s meant to be.'
+    },
+    {
+      id: 'opt-out',
+      title: 'Opt-out of overdraft',
+      description: 'When you open an online bank account, it automatically opts you into overdraft, which is often marketed as overdraft protection. You can contact your bank and opt out. In that case, all ATM and one-time debit card transactions that exceed the funds in your account will be rejected, and you won\'t be charged overdraft fee.'
+    },
+    {
+      id: 'link-accounts',
+      title: 'Link your accounts',
+      description: 'If you have the ability to open a savings account with a minimum required amount of cash, think about linking your savings account to your checking account as a fail-safe. Most banks will allow you to do this, so you take from the savings account instead of the overdraft.'
+    },
+    {
+      id: 'notifications',
+      title: 'Turn on notifications and turn off auto-payments',
+      description: 'You can turn on notifications so you know when your account balance is low. The heads-up could make all the difference. Consider turning off any automatic payments so they don\'t inadvertently drain your account.'
+    }
+  ];
+  
+  const toggleTip = (tipId: string) => {
+    setCheckedTips(prev => 
+      prev.includes(tipId) 
+        ? prev.filter(id => id !== tipId)
+        : [...prev, tipId]
+    );
+  };
+
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">
+          Is there anything I can do to protect myself?
+        </h2>
+
+        <Text className="text-gray-900 mb-4">
+          <Text weight="bold" as="span">Yes!</Text>
+        </Text>
+
+        <ContentBox variant="callout" className="bg-transparent border-none">
+          <Stack direction="row" align="center" spacing="sm" className="mb-3">
+            <Text className="text-lg font-semibold text-gray-900">Remember: It's Not Your Fault</Text>
+          </Stack>
+          <Text className="text-gray-900">
+            While there may be times where fees are inevitable, there are some ways you can protect yourself.
+            Just remember that these fees and systems are designed to keep you in vulnerable situations and
+            make banks money and the fees you incur are <strong>NOT your fault</strong>.
+          </Text>
+        </ContentBox>
+
+        <Text className="text-gray-900 mb-6">
+          Most banks will list out the types of fees to expect; however, advice is often centered around
+          "keeping enough money in your account." This puts the onus on you instead of them.
+          Take this advice with a grain of salt.
+        </Text>
+
+        <Text className="text-lg font-semibold text-gray-900 mb-4">
+          Here are some practical tips to help reduce your exposure to fees:
+        </Text>
+      </ContentBox>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {protectionTips.map((tip) => (
+          <ContentBox
+            key={tip.id}
+            variant="callout"
+            className={`transition-all bg-transparent border border-gray-200 ${
+              checkedTips.includes(tip.id) ? 'bg-white border-gray-300' : ''
+            }`}
+          >
+            <Stack direction="row" align="left" spacing="sm">
+              <button
+                onClick={() => toggleTip(tip.id)}
+                className={`mt-1 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${
+                  checkedTips.includes(tip.id)
+                    ? 'border-purple-600 bg-purple-600 text-white'
+                    : 'border-gray-300 hover:border-gray-400'
+                }`}
+              >
+                {checkedTips.includes(tip.id) && (
+                  <span className="text-xs">✓</span>
+                )}
+              </button>
+
+              <Stack spacing="xs">
+                <Text className="text-base font-semibold text-gray-900">{tip.title}</Text>
+                <Text className="text-gray-900">{tip.description}</Text>
+              </Stack>
+            </Stack>
+          </ContentBox>
+        ))}
+      </div>
+
+      {checkedTips.length > 0 && (
+        <ContentBox variant="callout" className="bg-[#2E1E72] border border-[#2E1E72]">
+          <Stack direction="row" align="center" spacing="sm">
+            <Text weight="semibold" className="text-white">
+              Great! You've reviewed {checkedTips.length}/{protectionTips.length} protection strategies.
+            </Text>
+          </Stack>
+          <Text className="mt-1 text-white">
+            These practical steps can significantly reduce your exposure to banking fees.
+          </Text>
+        </ContentBox>
+      )}
+    </Stack>
+  );
+}
+
+// Page 29: Let's Talk About Account Closures (as specified in doc)
+export function Page29({ onStepComplete }: PageProps) {
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">
+          Let's talk about something else that could have happened. In some cases, the bank may just
+          close your account after hitting overdraft or leaving.
+        </h2>
+
+        <ContentBox variant="callout" semantic="error">
+          <Text className="text-xl font-bold text-gray-900 mb-4">What?!</Text>
+          <Text className="text-gray-900 mb-4">
+            Common reasons this can happen include inactivity or low usage. Unresolved overdrafts can also
+            lead to account closure. If your account remains in the negative for too many days, you may get
+            charged additional overdraft fees. If too many overdraft fees occur and go unpaid, the bank may
+            close down your account.
+          </Text>
+
+          <Text className="text-xl font-bold text-gray-900 mb-3">How can they do this?</Text>
+          <Text className="text-gray-900">
+            Generally, banks may close accounts for any reason and without notice. That is not fair or just,
+            but it happens more often than you think. If a bank closes your account, it isn't required to
+            notify you, so you may not receive a notification informing you of the closure. However, you can
+            sign up for alerts, as we suggested on the previous page.
+          </Text>
+        </ContentBox>
+      </ContentBox>
+    </Stack>
+  );
+}
+
+// Page 30: Wait, They Can Just Close My Account? (as specified in doc)
+export function Page30({ onStepComplete }: PageProps) {
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">
+          Wait, they can just close my account without telling me?
+        </h2>
+
+        <div className="flex justify-center my-8">
+          <AccountClosureIllustration size="xl" />
+        </div>
+
+        <ContentBox variant="callout" semantic="warning">
+          <Text className="text-gray-900 mb-4">
+            <Text weight="bold" as="span">Yes.</Text> There is no federal law requiring banks to notify account holders if they plan
+            to close their accounts.
+          </Text>
+
+          <Text className="text-gray-900 mb-4">
+            The bank is also required to return any money that may have been in the account. Any money that is
+            received in the form of a check deposited into a different account that the bank has opened for you instead.
+          </Text>
+
+          <Text className="text-gray-900">
+            At first, a bank account closure does not have a direct impact on your credit score (like, say, having your
+            credit card closed), but there could become a problem if your account has any outstanding balances, such as
+            unpaid overdraft fees. They might send this debt information to a collection agency, causing a negative
+            report on your credit by the credit bureaus, which can decrease your credit score.
+          </Text>
+        </ContentBox>
+      </ContentBox>
+    </Stack>
+  );
+}
+
+// Page 31: The Unbanked (as specified in doc)
+export function Page31({ onStepComplete }: PageProps) {
+  const [highlightedStats, setHighlightedStats] = useState<string[]>([]);
+
+  const statistics = [
+    { id: 'unbanked', label: '4.5% of U.S. households', description: 'are considered "unbanked" - meaning they do not have a checking or savings account' },
+    { id: 'underbanked', label: '14.1% of U.S. households', description: 'are "underbanked" - they have bank accounts but also use alternative financial services' },
+    { id: 'fees', label: '$5.5 billion annually', description: 'in overdraft fees are collected by the largest banks' },
+    { id: 'demographics', label: '11.2% of Black households', description: 'are unbanked compared to 2.5% of white households' }
+  ];
+
+  const toggleHighlight = (statId: string) => {
+    setHighlightedStats(prev =>
+      prev.includes(statId)
+        ? prev.filter(id => id !== statId)
+        : [...prev, statId]
+    );
+  };
+
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">
+          For many, these fees make them feel it's not worth it to open a traditional bank account
+        </h2>
+
+        <Text className="text-gray-900 mb-6">
+          When banking becomes too expensive or punitive, people look for alternatives. This has created
+          what we call the "unbanked" and "underbanked" populations.
+        </Text>
+
+        <Text className="text-lg font-semibold text-gray-900 mb-4">
+          The Numbers Tell a Story:
+        </Text>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {statistics.map((stat) => (
+            <ContentBox
+              key={stat.id}
+              variant="callout"
+              className={`transition-all cursor-pointer bg-transparent border border-gray-200 ${
+                highlightedStats.includes(stat.id) ? 'bg-purple-50 border-purple-300' : 'hover:border-gray-300'
+              }`}
+              onClick={() => toggleHighlight(stat.id)}
+            >
+              <Text className="text-xl font-bold text-gray-900 mb-2">{stat.label}</Text>
+              <Text className="text-gray-900">{stat.description}</Text>
+            </ContentBox>
+          ))}
+        </div>
+
+        {highlightedStats.length > 0 && (
+          <ContentBox variant="callout" className="bg-transparent border border-purple-400">
+            <Text className="text-gray-900">
+              <Text weight="bold" as="span">Key Insight:</Text> These statistics show how banking fees
+              create barriers that push people away from the traditional financial system,
+              disproportionately affecting communities of color and low-income households.
+            </Text>
+          </ContentBox>
+        )}
+      </ContentBox>
+    </Stack>
+  );
+}
+
+// Page 32: Predatory Lending and Payday Loans (as specified in doc)
+export function Page32({ onStepComplete }: PageProps) {
+  const [selectedService, setSelectedService] = useState<string | null>(null);
+
+  const alternativeServices = [
+    {
+      id: 'payday',
+      name: 'Payday Loans',
+      averageCost: '$15 per $100 borrowed',
+      annualizedRate: '400% APR',
+      description: 'Short-term loans due on your next payday. Often trap borrowers in cycles of debt.',
+      warning: 'Can lead to a cycle where you need new loans to pay off old ones.'
+    },
+    {
+      id: 'check-cashing',
+      name: 'Check Cashing Services',
+      averageCost: '1-5% of check value',
+      annualizedRate: 'N/A',
+      description: 'Cash checks without a bank account. Fees can add up to hundreds per year.',
+      warning: 'No protection against lost or stolen cash, unlike bank deposits.'
+    },
+    {
+      id: 'prepaid',
+      name: 'Prepaid Debit Cards',
+      averageCost: '$5-15 monthly fees',
+      annualizedRate: 'Various fees',
+      description: 'Cards you load with money. Can have hidden fees for basic transactions.',
+      warning: 'Limited fraud protection and potential fees for ATM use, checking balance, etc.'
+    },
+    {
+      id: 'money-orders',
+      name: 'Money Orders',
+      averageCost: '$1-5 per order',
+      annualizedRate: 'N/A',
+      description: 'Paper payment method for bills. Safer than cash but more expensive than checks.',
+      warning: 'Can be lost or stolen, and replacement can be costly and time-consuming.'
+    }
+  ];
+
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">
+          When traditional banking isn't accessible, people turn to alternatives
+        </h2>
+
+        <div className="flex justify-center my-8">
+          <AlternativeFinancialIllustration size="xl" />
+        </div>
+
+        <Text className="text-gray-900 mb-6">
+          These alternative financial services are often marketed as "helping" people without bank accounts,
+          but they can be significantly more expensive than traditional banking.
+        </Text>
+
+        <Text className="text-lg font-semibold text-gray-900 mb-4">
+          Common Alternative Financial Services:
+        </Text>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+          {alternativeServices.map((service, index) => (
+            <div
+              key={service.id}
+              className={`p-4 bg-transparent cursor-pointer transition-all border-b border-purple-400 ${
+                index % 2 === 0 ? 'md:border-r' : ''
+              } ${
+                index >= alternativeServices.length - 2 ? 'md:border-b-0' : ''
+              } ${
+                selectedService === service.id ? 'bg-purple-50' : 'hover:bg-purple-50/30'
+              }`}
+              onClick={() => setSelectedService(selectedService === service.id ? null : service.id)}
+            >
+              <Text className="text-lg font-bold text-gray-900 mb-2">{service.name}</Text>
+              <Text className="text-gray-900 mb-2">Average Cost: {service.averageCost}</Text>
+
+              {selectedService === service.id && (
+                <div className="mt-3 pt-3 border-t border-purple-400">
+                  <Text className="text-gray-900 mb-2">{service.description}</Text>
+                  <ContentBox variant="callout" className="bg-transparent border border-purple-400">
+                    <Text className="text-gray-900">
+                      <Text weight="bold" as="span">Warning:</Text> {service.warning}
+                    </Text>
+                  </ContentBox>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {selectedService && (
+          <ContentBox variant="callout" className="bg-transparent border border-purple-400">
+            <Text className="text-gray-900">
+              <Text weight="bold" as="span">Key Point:</Text> These services can cost families hundreds
+              or thousands of dollars per year - far more than traditional banking fees. This creates
+              a "poverty tax" where those who can least afford it pay the most for basic financial services.
+            </Text>
+          </ContentBox>
+        )}
+      </ContentBox>
+    </Stack>
+  );
+}
+
+// Page 33: Financial Empowerment and Community Solutions (as specified in doc)
+export function Page33({ onStepComplete }: PageProps) {
+  const [selectedSolution, setSelectedSolution] = useState<string | null>(null);
+
+  const communitySolutions = [
+    {
+      id: 'credit-unions',
+      name: 'Community Credit Unions',
+      description: 'Nonprofit financial cooperatives owned by their members',
+      benefits: ['Lower fees than banks', 'More flexible lending', 'Focus on community needs', 'Often more willing to work with you']
+    },
+    {
+      id: 'community-banks',
+      name: 'Local Community Banks',
+      description: 'Smaller banks that focus on serving their local communities',
+      benefits: ['Personal relationships', 'Local decision making', 'Understanding of community needs', 'Often more accessible leadership']
+    },
+    {
+      id: 'financial-counseling',
+      name: 'Nonprofit Financial Counseling',
+      description: 'Free services to help with budgeting, debt, and financial planning',
+      benefits: ['Free or low-cost services', 'No sales pressure', 'Educational focus', 'Help with debt management']
+    },
+    {
+      id: 'policy-advocacy',
+      name: 'Consumer Advocacy Groups',
+      description: 'Organizations working to change unfair banking practices',
+      benefits: ['Fighting for policy change', 'Education and awareness', 'Support for affected individuals', 'Research and data collection']
+    }
+  ];
+
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">
+          Community-based solutions are working to address these problems
+        </h2>
+
+        <Text className="text-gray-900 mb-6">
+          While the problems are real, communities and organizations are developing solutions to provide
+          fairer financial services and advocate for change.
+        </Text>
+
+        <Text className="text-lg font-semibold text-gray-900 mb-4">
+          Community-Based Financial Solutions:
+        </Text>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+          {communitySolutions.map((solution, index) => (
+            <div
+              key={solution.id}
+              className={`p-4 bg-transparent cursor-pointer transition-all border-b border-purple-400 ${
+                index % 2 === 0 ? 'md:border-r' : ''
+              } ${
+                index >= communitySolutions.length - 2 ? 'md:border-b-0' : ''
+              } ${
+                selectedSolution === solution.id ? 'bg-purple-50' : 'hover:bg-purple-50/30'
+              }`}
+              onClick={() => setSelectedSolution(selectedSolution === solution.id ? null : solution.id)}
+            >
+              <Text className="text-lg font-bold text-gray-900 mb-2">{solution.name}</Text>
+              <Text className="text-gray-900 mb-3">{solution.description}</Text>
+              {selectedSolution === solution.id && (
+                <div className="mt-3 pt-3 border-t border-purple-400">
+                  <Text className="text-base font-semibold text-gray-900 mb-2">Key Benefits:</Text>
+                  <Stack spacing="xs">
+                    {solution.benefits.map((benefit, index) => (
+                      <Stack key={index} direction="row" align="center" spacing="sm">
+                        <Text className="text-purple-600">•</Text>
+                        <Text className="text-gray-900">{benefit}</Text>
+                      </Stack>
+                    ))}
+                  </Stack>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {selectedSolution && (
+          <ContentBox variant="callout" className="bg-transparent border border-purple-400">
+            <Text className="text-gray-900">
+              <Text weight="bold" as="span">Remember:</Text> These community-based solutions often prioritize
+              people over profits and can provide more equitable financial services than traditional large banks.
+            </Text>
+          </ContentBox>
+        )}
+      </ContentBox>
+    </Stack>
+  );
+}
+
+// Page 30: Key Takeaways (as specified in doc)
+export function Page34({ onStepComplete }: PageProps) {
+  const [checkedTakeaways, setCheckedTakeaways] = useState<string[]>([]);
+  
+  const keyTakeaways = [
+    {
+      id: 'fees-revenue',
+      title: 'Banking fees are a major source of bank revenue',
+      description: 'Fees can account for up to 40% of a bank\'s revenue. This means banks have a financial incentive to charge fees, even if they hurt customers.'
+    },
+    {
+      id: 'resequencing-legal',
+      title: 'Debit resequencing is legal but harmful',
+      description: 'Banks can reorder your transactions to maximize overdraft fees. This practice is perfectly legal but can significantly increase the fees you pay.'
+    },
+    {
+      id: 'account-closure',
+      title: 'Banks can close your account without notice',
+      description: 'There\'s no federal law requiring banks to notify you before closing your account. This can happen due to overdrafts, inactivity, or other reasons.'
+    },
+    {
+      id: 'chexsystems-impact',
+      title: 'ChexSystems can lock you out of banking',
+      description: 'If you end up in ChexSystems due to banking problems, it can be nearly impossible to open a new bank account at most traditional banks.'
+    },
+    {
+      id: 'not-your-fault',
+      title: 'These systems are designed to be confusing',
+      description: 'Banking fee structures and policies are intentionally complex. If you\'ve been caught by surprise fees, it\'s not because you\'re bad with money—it\'s because the system is designed this way.'
+    },
+    {
+      id: 'alternatives-exist',
+      title: 'Alternatives and protections exist',
+      description: 'Second chance banking, fee-free banks, and consumer protections are available. You have options even if you\'ve had banking problems.'
+    }
+  ];
+  
+  const toggleTakeaway = (takeawayId: string) => {
+    setCheckedTakeaways(prev => 
+      prev.includes(takeawayId) 
+        ? prev.filter(id => id !== takeawayId)
+        : [...prev, takeawayId]
+    );
+  };
+
+  return (
+    <Stack spacing="md" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold border-l-4 border-purple-600 pl-3 sm:pl-4">
+          Key takeaways
+        </h2>
+
+        <Text className="mb-6">
+          Let's review the most important things to remember from this unit.
+          Check off each takeaway as you read through them:
+        </Text>
+      </ContentBox>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {keyTakeaways.map((takeaway) => (
+          <ContentBox
+            key={takeaway.id}
+            variant="callout"
+            className="bg-transparent border-none border-l-4 border-purple-600 pl-3 sm:pl-4 cursor-pointer hover:bg-purple-50/30 transition-all h-full flex"
+            onClick={() => toggleTakeaway(takeaway.id)}
+          >
+            <Stack direction="row" align="left" spacing="sm" className="w-full">
+              <button
+                className={`mt-1 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors flex-shrink-0 ${
+                  checkedTakeaways.includes(takeaway.id)
+                    ? 'border-purple-600 bg-purple-600 text-white'
+                    : 'border-gray-300 hover:border-gray-400'
+                }`}
+              >
+                {checkedTakeaways.includes(takeaway.id) && (
+                  <span className="text-xs">✓</span>
+                )}
+              </button>
+              <Stack spacing="xs" className="flex-1">
+                <Text className="text-base font-semibold text-gray-900">{takeaway.title}</Text>
+                <Text className="text-sm text-gray-900">{takeaway.description}</Text>
+              </Stack>
+            </Stack>
+          </ContentBox>
+        ))}
+      </div>
+      
+      {checkedTakeaways.length > 0 && (
+        <ContentBox variant="callout">
+          <Stack direction="row" spacing="xs" align="center">
+
+            <Text weight="semibold">
+              Progress: {checkedTakeaways.length}/{keyTakeaways.length} key takeaways reviewed
+            </Text>
+          </Stack>
+          {checkedTakeaways.length === keyTakeaways.length && (
+            <Small semantic="success" className="mt-1">
+              Excellent! You've reviewed all the key concepts from this unit.
+            </Small>
+          )}
+        </ContentBox>
+      )}
+    </Stack>
+  );
+}
+
+// Page 31: Remember (as specified in doc)
+export function Page35({ onStepComplete }: PageProps) {
+  return (
+    <Stack spacing="md" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-[#E5DEEF] border-none">
+        <h2 className="text-[28px] font-playfair font-semibold border-l-4 border-purple-600 pl-3 sm:pl-4">
+          Remember:
+        </h2>
+
+        <ContentBox variant="callout" className="bg-[#E5DEEF] border-none">
+          <Center className="mb-6">
+            <UnitTitle level="h4" className="text-gray-900">
+              The fees you incur are NOT your fault.
+            </UnitTitle>
+          </Center>
+
+          <Stack spacing="sm">
+            <Text variant="large" className="text-gray-900">
+              The banking system is designed to be confusing and to extract fees from people,
+              especially those who are already in vulnerable financial situations.
+            </Text>
+
+            <Text variant="large" className="text-gray-900">
+              These practices disproportionately affect communities of color, low-income individuals,
+              and people who are already struggling financially.
+            </Text>
+
+            <Text variant="large" weight="semibold" className="text-gray-900">
+              Understanding these systems is the first step toward protecting yourself and advocating for change.
+            </Text>
+          </Stack>
+
+          <ContentBox variant="callout" className="mt-6 bg-transparent border-none">
+            <h2 className="text-[28px] font-playfair font-semibold mb-2">What You Can Do:</h2>
+            <BulletList>
+              <ListItem>Share this knowledge with friends and family</ListItem>
+              <ListItem>Research your banking options carefully</ListItem>
+              <ListItem>Consider banks with transparent, fair fee structures</ListItem>
+              <ListItem>Support policy changes that protect consumers</ListItem>
+              <ListItem>Remember that financial struggles don't reflect your worth or intelligence</ListItem>
+            </BulletList>
+          </ContentBox>
+        </ContentBox>
+      </ContentBox>
+    </Stack>
+  );
+}
+
+// Page 36: Digital Banking Alternatives and Fintech (as specified in doc)
+export function Page36({ onStepComplete }: PageProps) {
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+
+  const digitalOptions = [
+    {
+      id: 'neobanks',
+      name: 'Neobanks (Digital-Only Banks)',
+      examples: ['Chime', 'Current', 'Varo', 'Ally'],
+      pros: ['Lower overhead costs', 'Often fee-free', 'Modern mobile apps', 'Quick account opening'],
+      cons: ['Limited physical locations', 'Fewer services', 'Newer companies with less history'],
+      bestFor: 'People comfortable with mobile banking who want to avoid fees'
+    },
+    {
+      id: 'fintech',
+      name: 'Fintech Payment Apps',
+      examples: ['Venmo', 'Cash App', 'PayPal', 'Zelle'],
+      pros: ['Easy peer-to-peer payments', 'Quick transfers', 'Social payment features', 'Wide acceptance'],
+      cons: ['Limited banking features', 'Potential fees for instant transfers', 'Less regulatory protection'],
+      bestFor: 'Young adults who prioritize convenience and social features'
+    },
+    {
+      id: 'online-banks',
+      name: 'Online-Only Traditional Banks',
+      examples: ['Capital One 360', 'Marcus', 'Discover Bank'],
+      pros: ['Higher interest rates', 'Lower fees', 'Full banking services', 'FDIC insured'],
+      cons: ['No physical branches', 'May require other bank for cash deposits', 'Phone/chat support only'],
+      bestFor: 'Tech-savvy customers who want full banking without fees'
+    }
+  ];
+
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">
+          Digital banking alternatives are changing the landscape
+        </h2>
+
+        <div className="flex justify-center my-8">
+          <DigitalBankingIllustration size="xl" />
+        </div>
+
+        <Text className="text-gray-900 mb-6">
+          Technology has created new options that often have lower fees and more transparent pricing
+          than traditional banks.
+        </Text>
+
+        <Text className="text-lg font-semibold text-gray-900 mb-4">
+          Digital Banking Options:
+        </Text>
+
+        <div className="space-y-4">
+          {digitalOptions.map((option) => (
+            <ContentBox
+              key={option.id}
+              variant="callout"
+              className={`transition-all cursor-pointer bg-transparent border border-gray-200 ${
+                selectedOption === option.id ? 'bg-purple-50 border-purple-300' : 'hover:border-gray-300'
+              }`}
+              onClick={() => setSelectedOption(selectedOption === option.id ? null : option.id)}
+            >
+              <Text className="text-lg font-bold text-gray-900 mb-2">{option.name}</Text>
+              <Text className="text-gray-900 mb-2">
+                Examples: {option.examples.join(', ')}
+              </Text>
+
+              {selectedOption === option.id && (
+                <div className="mt-4 space-y-3">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <Text className="text-base font-semibold text-gray-900 mb-2">Pros:</Text>
+                      <Stack spacing="xs">
+                        {option.pros.map((pro, index) => (
+                          <Stack key={index} direction="row" align="center" spacing="sm">
+                            <Text className="text-purple-600">+</Text>
+                            <Text className="text-gray-900">{pro}</Text>
+                          </Stack>
+                        ))}
+                      </Stack>
+                    </div>
+                    <div>
+                      <Text className="text-base font-semibold text-gray-900 mb-2">Cons:</Text>
+                      <Stack spacing="xs">
+                        {option.cons.map((con, index) => (
+                          <Stack key={index} direction="row" align="center" spacing="sm">
+                            <Text className="text-purple-600">-</Text>
+                            <Text className="text-gray-900">{con}</Text>
+                          </Stack>
+                        ))}
+                      </Stack>
+                    </div>
+                  </div>
+                  <ContentBox variant="callout" className="bg-transparent border border-purple-400">
+                    <Text className="text-gray-900">
+                      <Text weight="bold" as="span">Best For:</Text> {option.bestFor}
+                    </Text>
+                  </ContentBox>
+                </div>
+              )}
+            </ContentBox>
+          ))}
+        </div>
+
+        {selectedOption && (
+          <ContentBox variant="callout" className="bg-transparent border border-purple-400">
+            <Text className="text-gray-900">
+              <Text weight="bold" as="span">Remember:</Text> Always research any financial institution thoroughly,
+              including reading reviews and understanding their fee structure before opening an account.
+            </Text>
+          </ContentBox>
+        )}
+      </ContentBox>
+    </Stack>
+  );
+}
+
+// Page 37: Credit Union Comparison and Benefits (as specified in doc)
+export function Page37({ onStepComplete }: PageProps) {
+  const [selectedComparison, setSelectedComparison] = useState<string | null>(null);
+
+  const comparisons = [
+    {
+      id: 'ownership',
+      category: 'Ownership Structure',
+      creditUnion: 'Member-owned cooperative',
+      traditionalBank: 'Shareholder-owned corporation',
+      impact: 'Credit unions focus on member benefits rather than maximizing shareholder profits'
+    },
+    {
+      id: 'fees',
+      category: 'Fees and Rates',
+      creditUnion: 'Lower fees, higher savings rates',
+      traditionalBank: 'Higher fees, lower savings rates',
+      impact: 'Members often save hundreds of dollars per year in fees'
+    },
+    {
+      id: 'service',
+      category: 'Customer Service',
+      creditUnion: 'Personal, community-focused',
+      traditionalBank: 'Standardized, efficiency-focused',
+      impact: 'Credit unions often provide more personalized financial guidance'
+    },
+    {
+      id: 'access',
+      category: 'Access and Convenience',
+      creditUnion: 'Fewer branches, shared ATM networks',
+      traditionalBank: 'More branches and ATMs',
+      impact: 'May require planning for banking needs, but often worth the trade-off'
+    }
+  ];
+
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">
+          Credit unions often provide better deals than traditional banks
+        </h2>
+
+        <Text className="text-gray-900 mb-6">
+          Credit unions are nonprofit financial cooperatives that exist to serve their members,
+          not to maximize profits for shareholders.
+        </Text>
+
+        <Text className="text-lg font-semibold text-gray-900 mb-4">
+          Credit Unions vs. Traditional Banks:
+        </Text>
+
+        <div className="space-y-4">
+          {comparisons.map((comparison) => (
+            <ContentBox
+              key={comparison.id}
+              variant="callout"
+              className={`transition-all cursor-pointer bg-transparent border border-gray-200 ${
+                selectedComparison === comparison.id ? 'bg-purple-50 border-purple-300' : 'hover:border-gray-300'
+              }`}
+              onClick={() => setSelectedComparison(selectedComparison === comparison.id ? null : comparison.id)}
+            >
+              <Text className="text-lg font-bold text-gray-900 mb-3">{comparison.category}</Text>
+
+              {selectedComparison === comparison.id ? (
+                <div className="space-y-3">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <ContentBox variant="callout" className="bg-transparent border border-purple-400">
+                      <Text className="text-base font-semibold text-gray-900 mb-2">Credit Union:</Text>
+                      <Text className="text-gray-900">{comparison.creditUnion}</Text>
+                    </ContentBox>
+                    <ContentBox variant="callout" className="bg-transparent border border-gray-200">
+                      <Text className="text-base font-semibold text-gray-900 mb-2">Traditional Bank:</Text>
+                      <Text className="text-gray-900">{comparison.traditionalBank}</Text>
+                    </ContentBox>
+                  </div>
+                  <ContentBox variant="callout" className="bg-transparent border border-purple-400">
+                    <Text className="text-gray-900">
+                      <Text weight="bold" as="span">Why This Matters:</Text> {comparison.impact}
+                    </Text>
+                  </ContentBox>
+                </div>
+              ) : (
+                <Text className="text-gray-900">Click to compare credit unions vs. traditional banks</Text>
+              )}
+            </ContentBox>
+          ))}
+        </div>
+
+        <ContentBox variant="callout" className="bg-transparent border border-purple-400">
+          <Text className="text-lg font-semibold text-gray-900 mb-3">How to Find a Credit Union:</Text>
+          <Stack spacing="xs">
+            <Text className="text-gray-900">• Use the National Credit Union Locator at mycreditunion.gov</Text>
+            <Text className="text-gray-900">• Check if your employer, school, or community has a credit union</Text>
+            <Text className="text-gray-900">• Look for credit unions that serve your geographic area</Text>
+            <Text className="text-gray-900">• Ask about membership requirements - they're often easier to meet than you think</Text>
+          </Stack>
+        </ContentBox>
+      </ContentBox>
+    </Stack>
+  );
+}
+
+// Page 38: Consumer Protection and Regulatory Resources (as specified in doc)
+export function Page38({ onStepComplete }: PageProps) {
+  const [selectedResource, setSelectedResource] = useState<string | null>(null);
+
+  const protectionResources = [
+    {
+      id: 'cfpb',
+      name: 'Consumer Financial Protection Bureau (CFPB)',
+      website: 'consumerfinance.gov',
+      description: 'Federal agency that regulates banks and protects consumers',
+      services: ['File complaints against banks', 'Free financial education resources', 'Track banking industry trends', 'Get help with financial problems'],
+      howToUse: 'Submit complaints online, access free tools and guides, check if your bank has been fined'
+    },
+    {
+      id: 'fdic',
+      name: 'Federal Deposit Insurance Corporation (FDIC)',
+      website: 'fdic.gov',
+      description: 'Insures bank deposits and provides consumer information',
+      services: ['Deposit insurance information', 'Bank safety ratings', 'Consumer guides', 'Help with bank problems'],
+      howToUse: 'Check if your bank is FDIC insured, research bank safety ratings, access financial education'
+    },
+    {
+      id: 'state-regulators',
+      name: 'State Banking Regulators',
+      website: 'varies by state',
+      description: 'State agencies that oversee banks chartered in their state',
+      services: ['Handle complaints about state banks', 'License and regulate banks', 'Consumer protection', 'Local oversight'],
+      howToUse: 'Find your state banking regulator online, file complaints about local banks'
+    },
+    {
+      id: 'nonprofit-counseling',
+      name: 'Nonprofit Credit Counseling',
+      website: 'nfcc.org',
+      description: 'Free or low-cost financial counseling and education',
+      services: ['Budget counseling', 'Debt management', 'Housing counseling', 'Financial education'],
+      howToUse: 'Find local nonprofit counselors, schedule free consultations, get help with financial planning'
+    }
+  ];
+
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">
+          Know your rights and where to get help
+        </h2>
+
+        <Text className="text-gray-900 mb-6">
+          Several government agencies and nonprofit organizations exist to protect consumers
+          and provide help when you're having problems with banks.
+        </Text>
+
+        <Text className="text-lg font-semibold text-gray-900 mb-4">
+          Consumer Protection Resources:
+        </Text>
+
+        <div className="space-y-4">
+          {protectionResources.map((resource) => (
+            <ContentBox
+              key={resource.id}
+              variant="callout"
+              className={`transition-all cursor-pointer bg-transparent border border-gray-200 ${
+                selectedResource === resource.id ? 'bg-purple-50 border-purple-300' : 'hover:border-gray-300'
+              }`}
+              onClick={() => setSelectedResource(selectedResource === resource.id ? null : resource.id)}
+            >
+              <Text className="text-lg font-bold text-gray-900 mb-2">{resource.name}</Text>
+              <Text className="text-gray-900 mb-2">Website: {resource.website}</Text>
+              <Text className="text-gray-900">{resource.description}</Text>
+
+              {selectedResource === resource.id && (
+                <div className="mt-4 space-y-3">
+                  <div>
+                    <Text className="text-base font-semibold text-gray-900 mb-2">Services Available:</Text>
+                    <Stack spacing="xs">
+                      {resource.services.map((service, index) => (
+                        <Stack key={index} direction="row" align="center" spacing="sm">
+                          <Text className="text-purple-600">•</Text>
+                          <Text className="text-gray-900">{service}</Text>
+                        </Stack>
+                      ))}
+                    </Stack>
+                  </div>
+                  <ContentBox variant="callout" className="bg-transparent border border-purple-400">
+                    <Text className="text-gray-900">
+                      <Text weight="bold" as="span">How to Use:</Text> {resource.howToUse}
+                    </Text>
+                  </ContentBox>
+                </div>
+              )}
+            </ContentBox>
+          ))}
+        </div>
+
+        <ContentBox variant="callout" className="bg-transparent border border-purple-400">
+          <Text className="text-lg font-semibold text-gray-900 mb-3">Your Rights as a Banking Customer:</Text>
+          <Stack spacing="xs">
+            <Text className="text-gray-900">• Right to receive clear information about fees and terms</Text>
+            <Text className="text-gray-900">• Right to file complaints without retaliation</Text>
+            <Text className="text-gray-900">• Right to dispute errors on your account</Text>
+            <Text className="text-gray-900">• Right to request account information and transaction history</Text>
+            <Text className="text-gray-900">• Right to close your account if you're unsatisfied</Text>
+          </Stack>
+        </ContentBox>
+      </ContentBox>
+    </Stack>
+  );
+}
+
+// Page 39: Real-World Scenarios and Case Studies (as specified in doc)
+export function Page39({ onStepComplete }: PageProps) {
+  const [selectedScenario, setSelectedScenario] = useState<string | null>(null);
+
+  const scenarios = [
+    {
+      id: 'maria',
+      name: 'Maria\'s Story: Overdraft Fees',
+      situation: 'Single mother, tight budget, got hit with multiple overdraft fees in one day',
+      challenge: '$175 in fees from 5 transactions that were all under $10',
+      action: 'Called bank, researched alternatives, switched to credit union',
+      outcome: 'New credit union refunded fees as goodwill gesture, now saves $300/year in fees',
+      lesson: 'It\'s worth advocating for yourself and shopping around for better options'
+    },
+    {
+      id: 'james',
+      name: 'James\'s Story: ChexSystems',
+      situation: 'Account closed due to unpaid overdraft fees, couldn\'t open new account anywhere',
+      challenge: 'Blacklisted by ChexSystems, forced to use expensive check-cashing services',
+      action: 'Found nonprofit counselor, learned about second chance banking, disputed ChexSystems report',
+      outcome: 'Opened account at credit union, gradually rebuilt banking relationship',
+      lesson: 'Second chance banking and nonprofit help can break the cycle of financial exclusion'
+    },
+    {
+      id: 'student',
+      name: 'College Student Scenario',
+      situation: 'Away from home, parents set up account with fees the student didn\'t understand',
+      challenge: 'Monthly maintenance fees, ATM fees, minimum balance requirements',
+      action: 'Researched student banking options, compared fee structures, talked to parents',
+      outcome: 'Switched to online bank with no fees, learned to budget and track spending',
+      lesson: 'Young adults need to understand banking terms and shop for accounts that fit their needs'
+    },
+    {
+      id: 'elderly',
+      name: 'Elderly Customer Scenario',
+      situation: 'Senior on fixed income facing increasing bank fees and confusing policies',
+      challenge: 'Fees kept changing, hard to understand statements, felt pressured by bank staff',
+      action: 'Brought adult child to bank meeting, researched senior banking options',
+      outcome: 'Found bank with senior-friendly policies and transparent fee structure',
+      lesson: 'Banks should serve customers of all ages fairly, and it\'s okay to ask for help'
+    }
+  ];
+
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">
+          Real stories from people who faced banking challenges
+        </h2>
+
+        <Text className="text-gray-900 mb-6">
+          These scenarios are based on real experiences people have shared about dealing
+          with banking fees and finding better solutions.
+        </Text>
+
+        <Text className="text-lg font-semibold text-gray-900 mb-4">
+          Case Studies:
+        </Text>
+
+        <div className="space-y-4">
+          {scenarios.map((scenario) => (
+            <ContentBox
+              key={scenario.id}
+              variant="callout"
+              className={`transition-all cursor-pointer bg-transparent border border-gray-200 ${
+                selectedScenario === scenario.id ? 'bg-purple-50 border-purple-300' : 'hover:border-gray-300'
+              }`}
+              onClick={() => setSelectedScenario(selectedScenario === scenario.id ? null : scenario.id)}
+            >
+              <Text className="text-lg font-bold text-gray-900 mb-2">{scenario.name}</Text>
+              <Text className="text-gray-900">{scenario.situation}</Text>
+
+              {selectedScenario === scenario.id && (
+                <div className="mt-4 space-y-3">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <Text className="text-base font-semibold text-gray-900 mb-2">The Challenge:</Text>
+                      <Text className="text-gray-900">{scenario.challenge}</Text>
+                    </div>
+                    <div>
+                      <Text className="text-base font-semibold text-gray-900 mb-2">Action Taken:</Text>
+                      <Text className="text-gray-900">{scenario.action}</Text>
+                    </div>
+                  </div>
+                  <div>
+                    <Text className="text-base font-semibold text-gray-900 mb-2">Outcome:</Text>
+                    <Text className="text-gray-900">{scenario.outcome}</Text>
+                  </div>
+                  <ContentBox variant="callout" className="bg-transparent border border-purple-400">
+                    <Text className="text-gray-900">
+                      <Text weight="bold" as="span">Key Lesson:</Text> {scenario.lesson}
+                    </Text>
+                  </ContentBox>
+                </div>
+              )}
+            </ContentBox>
+          ))}
+        </div>
+
+        {selectedScenario && (
+          <ContentBox variant="callout" className="bg-transparent border border-purple-400">
+            <Text className="text-gray-900">
+              <Text weight="bold" as="span">Remember:</Text> You have options and rights as a banking customer.
+              Don't be afraid to advocate for yourself, ask questions, and shop around for better deals.
+            </Text>
+          </ContentBox>
+        )}
+      </ContentBox>
+    </Stack>
+  );
+}
+
+// Page 40: Action Planning and Personal Finance Assessment (as specified in doc)
+export function Page40({ onStepComplete }: PageProps) {
+  const [selectedActions, setSelectedActions] = useState<string[]>([]);
+  const [currentBankingSituation, setCurrentBankingSituation] = useState<string | null>(null);
+
+  const actionPlanItems = [
+    {
+      id: 'review-fees',
+      action: 'Review my current bank\'s fee structure',
+      timeframe: 'This week',
+      difficulty: 'Easy',
+      description: 'Look at recent statements and fee schedules'
+    },
+    {
+      id: 'shop-alternatives',
+      action: 'Research credit unions and alternative banks',
+      timeframe: 'Next 2 weeks',
+      difficulty: 'Medium',
+      description: 'Compare fees, services, and requirements'
+    },
+    {
+      id: 'opt-out-overdraft',
+      action: 'Opt out of overdraft "protection"',
+      timeframe: 'This week',
+      difficulty: 'Easy',
+      description: 'Call bank or visit branch to opt out'
+    },
+    {
+      id: 'check-chexsystems',
+      action: 'Check my ChexSystems report',
+      timeframe: 'This week',
+      difficulty: 'Easy',
+      description: 'Request free annual report from ChexSystems'
+    },
+    {
+      id: 'budget-review',
+      action: 'Set up a budget to track spending',
+      timeframe: 'Next month',
+      difficulty: 'Medium',
+      description: 'Use apps or tools to monitor cash flow'
+    },
+    {
+      id: 'educate-others',
+      action: 'Share this knowledge with family/friends',
+      timeframe: 'Ongoing',
+      difficulty: 'Easy',
+      description: 'Help others avoid expensive banking fees'
+    }
+  ];
+
+  const bankingSituations = [
+    { id: 'current-happy', label: 'Happy with current bank', priority: 'Monitor fees and stay informed' },
+    { id: 'high-fees', label: 'Paying too many fees', priority: 'Research alternatives immediately' },
+    { id: 'no-account', label: 'Don\'t have a bank account', priority: 'Explore second chance banking options' },
+    { id: 'chexsystems', label: 'Having trouble opening accounts', priority: 'Check ChexSystems and find second chance banks' },
+    { id: 'confused', label: 'Confused about banking options', priority: 'Get help from nonprofit counselor' }
+  ];
+
+  const toggleAction = (actionId: string) => {
+    setSelectedActions(prev =>
+      prev.includes(actionId)
+        ? prev.filter(id => id !== actionId)
+        : [...prev, actionId]
+    );
+  };
+
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">
+          Create your personal action plan
+        </h2>
+
+        <Text className="text-gray-900 mb-6">
+          Based on what you've learned, create a plan to improve your banking situation.
+          Start by identifying where you are now, then choose actions that make sense for you.
+        </Text>
+
+        <Text className="text-lg font-semibold text-gray-900 mb-4">
+          What describes your current banking situation?
+        </Text>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+          {bankingSituations.map((situation, index) => (
+            <ContentBox
+              key={situation.id}
+              variant="callout"
+              className={`transition-all cursor-pointer bg-transparent border border-purple-400 h-full flex ${
+                currentBankingSituation === situation.id ? 'bg-purple-50' : 'hover:bg-purple-50/30'
+              }`}
+              onClick={() => setCurrentBankingSituation(situation.id)}
+            >
+              <div className="w-full">
+                <Stack direction="row" align="center" spacing="sm">
+                  <button
+                    className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors flex-shrink-0 ${
+                      currentBankingSituation === situation.id
+                        ? 'border-purple-600 bg-purple-600'
+                        : 'border-gray-300'
+                    }`}
+                  >
+                    {currentBankingSituation === situation.id && (
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                    )}
+                  </button>
+                  <Text className="text-gray-900 flex-1">{situation.label}</Text>
+                </Stack>
+                {currentBankingSituation === situation.id && (
+                  <Text className="text-purple-600 mt-2 ml-6">
+                    <Text weight="bold" as="span">Priority:</Text> {situation.priority}
+                  </Text>
+                )}
+              </div>
+            </ContentBox>
+          ))}
+        </div>
+
+        <Text className="text-lg font-semibold text-gray-900 mb-4">
+          Choose actions for your personal plan:
+        </Text>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {actionPlanItems.map((item, index) => (
+            <ContentBox
+              key={item.id}
+              variant="callout"
+              className={`transition-all cursor-pointer bg-transparent border border-purple-400 h-full flex ${
+                selectedActions.includes(item.id) ? 'bg-purple-50' : 'hover:bg-purple-50/30'
+              }`}
+              onClick={() => toggleAction(item.id)}
+            >
+              <Stack direction="row" align="left" spacing="sm" className="w-full">
+                <button
+                  className={`mt-1 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors flex-shrink-0 ${
+                    selectedActions.includes(item.id)
+                      ? 'border-purple-600 bg-purple-600 text-white'
+                      : 'border-gray-300 hover:border-gray-400'
+                  }`}
+                >
+                  {selectedActions.includes(item.id) && (
+                    <span className="text-xs">✓</span>
+                  )}
+                </button>
+                <Stack spacing="xs" className="flex-1">
+                  <Text className="text-base font-semibold text-gray-900">{item.action}</Text>
+                  <Text className="text-gray-900">{item.description}</Text>
+                  <div className="flex flex-col gap-1 text-sm">
+                    <Text className="text-purple-600">Timeline: {item.timeframe}</Text>
+                    <Text className="text-purple-600">Difficulty: {item.difficulty}</Text>
+                  </div>
+                </Stack>
+              </Stack>
+            </ContentBox>
+          ))}
+        </div>
+
+        {selectedActions.length > 0 && (
+          <ContentBox variant="callout" className="bg-transparent border border-purple-400">
+            <Text className="text-gray-900">
+              <Text weight="bold" as="span">Your Action Plan:</Text> You've selected {selectedActions.length} action{selectedActions.length !== 1 ? 's' : ''} to improve your banking situation.
+              Start with the easiest ones first to build momentum!
+            </Text>
+          </ContentBox>
+        )}
+      </ContentBox>
+    </Stack>
+  );
+}
+
+// Page 41: Unit Summary and Key Takeaways (as specified in doc)
+export function Page41({ onStepComplete }: PageProps) {
+  const [checkedTakeaways, setCheckedTakeaways] = useState<string[]>([]);
+
+  const keyTakeaways = [
+    {
+      id: 'system-design',
+      title: 'Banking fees are not accidents - they\'re by design',
+      description: 'Banks profit billions from fees, especially from vulnerable customers. The complexity is intentional.'
+    },
+    {
+      id: 'not-your-fault',
+      title: 'Financial struggles with banking are NOT your fault',
+      description: 'The system is designed to be confusing and extract fees from people who can least afford them.'
+    },
+    {
+      id: 'alternatives-exist',
+      title: 'You have more options than you think',
+      description: 'Credit unions, digital banks, and second chance banking provide alternatives to traditional banks.'
+    },
+    {
+      id: 'knowledge-power',
+      title: 'Knowledge is your best protection',
+      description: 'Understanding how fees work and your rights as a consumer helps you make better decisions.'
+    },
+    {
+      id: 'advocacy-works',
+      title: 'Speaking up can make a difference',
+      description: 'You can dispute fees, file complaints, and advocate for yourself. Many people successfully get fees reversed.'
+    },
+    {
+      id: 'systemic-change',
+      title: 'This is about more than individual choices',
+      description: 'Banking fees disproportionately harm communities of color and low-income families. We need systemic changes.'
+    }
+  ];
+
+  const toggleTakeaway = (takeawayId: string) => {
+    setCheckedTakeaways(prev =>
+      prev.includes(takeawayId)
+        ? prev.filter(id => id !== takeawayId)
+        : [...prev, takeawayId]
+    );
+  };
+
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">
+          Key takeaways from this unit
+        </h2>
+
+        <Text className="text-gray-900 mb-6">
+          Let's review the most important things to remember. Check off each takeaway
+          as you reflect on what you've learned:
+        </Text>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" style={{ marginBottom: '10px' }}>
+          {keyTakeaways.map((takeaway) => (
+            <ContentBox
+              key={takeaway.id}
+              variant="callout"
+              className={`transition-all cursor-pointer bg-transparent border border-purple-400 h-full flex ${
+                checkedTakeaways.includes(takeaway.id) ? 'bg-purple-50' : 'hover:bg-purple-50/30'
+              }`}
+              onClick={() => toggleTakeaway(takeaway.id)}
+            >
+              <Stack direction="row" align="left" spacing="sm" className="w-full">
+                <button
+                  className={`mt-1 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors flex-shrink-0 ${
+                    checkedTakeaways.includes(takeaway.id)
+                      ? 'border-purple-600 bg-purple-600 text-white'
+                      : 'border-gray-300 hover:border-gray-400'
+                  }`}
+                >
+                  {checkedTakeaways.includes(takeaway.id) && (
+                    <span className="text-xs">✓</span>
+                  )}
+                </button>
+                <Stack spacing="xs" className="flex-1">
+                  <Text className="text-lg font-semibold text-gray-900">{takeaway.title}</Text>
+                  <Text className="text-gray-900">{takeaway.description}</Text>
+                </Stack>
+              </Stack>
+            </ContentBox>
+          ))}
+        </div>
+
+        {checkedTakeaways.length > 0 && (
+          <ContentBox variant="callout" className="bg-transparent border border-purple-400">
+            <Text className="text-gray-900">
+              <Text weight="bold" as="span">Progress:</Text> You've reviewed {checkedTakeaways.length}/{keyTakeaways.length} key takeaways.
+              {checkedTakeaways.length === keyTakeaways.length && (
+                <span> Excellent! You've reviewed all the key concepts from this unit.</span>
+              )}
+            </Text>
+          </ContentBox>
+        )}
+
+        <ContentBox variant="callout" className="bg-transparent border border-purple-400">
+          <Text className="text-lg font-semibold text-gray-900 mb-3">What You Can Do Next:</Text>
+          <Stack spacing="xs">
+            <Text className="text-gray-900">• Start with your action plan from the previous page</Text>
+            <Text className="text-gray-900">• Share this knowledge with friends and family</Text>
+            <Text className="text-gray-900">• Stay informed about banking practices and consumer rights</Text>
+            <Text className="text-gray-900">• Support policy changes that protect all consumers</Text>
+            <Text className="text-gray-900">• Remember: you deserve fair and transparent financial services</Text>
+          </Stack>
+        </ContentBox>
+      </ContentBox>
+    </Stack>
+  );
+}
+
+// Page 42: Completion and Next Steps (as specified in doc)
+export function Page42({ onStepComplete }: PageProps) {
+  return (
+    <Stack spacing="lg" className="pb-40 md:pb-6">
+      <ContentBox variant="callout" className="bg-transparent border-none">
+        <h2 className="text-[28px] font-playfair font-semibold text-gray-900">
+          Congratulations! You've completed Unit 2: "It's a Fee-for-All"
+        </h2>
+
+        <ContentBox variant="callout" className="bg-[#E5DEEF] border-none">
+          <Center className="mb-6">
+            <Text className="text-2xl font-bold text-gray-900">
+              You now understand how banking fees really work
+            </Text>
+          </Center>
+
+          <Stack spacing="sm">
+            <Text className="text-lg text-gray-900">
+              You've learned that banking fees aren't just "the cost of doing business" -
+              they're a major profit center that disproportionately affects people who can least afford them.
+            </Text>
+
+            <Text className="text-lg text-gray-900">
+              More importantly, you now know that you have options, rights, and the ability
+              to make informed decisions about your financial life.
+            </Text>
+
+            <Text className="text-lg font-semibold text-gray-900">
+              Remember: The fees you've paid are NOT your fault, and you deserve better.
+            </Text>
+          </Stack>
+        </ContentBox>
+
+        <ContentBox variant="callout" className="bg-transparent border-none">
+          <Text className="text-lg font-semibold text-gray-900 mb-4">What's Next?</Text>
+          <Stack spacing="sm">
+            <Text className="text-gray-900">• Continue exploring financial education topics</Text>
+            <Text className="text-gray-900">• Put your action plan into practice</Text>
+            <Text className="text-gray-900">• Share what you've learned with others</Text>
+            <Text className="text-gray-900">• Stay engaged with consumer advocacy</Text>
+            <Text className="text-gray-900">• Keep learning about personal finance and your rights</Text>
+          </Stack>
+        </ContentBox>
+
+        <ContentBox variant="callout" className="bg-[#2E1E72] border border-[#2E1E72]">
+          <Center>
+            <Text className="text-xl font-bold text-white mb-3">
+              You're now equipped to navigate the banking system more effectively
+            </Text>
+            <Text className="text-white">
+              Take what you've learned and use it to improve your financial situation and help others do the same.
+            </Text>
+          </Center>
+        </ContentBox>
+      </ContentBox>
+
+      {/* Complete Unit and Back Buttons */}
+      <div className="fixed bottom-6 left-2 right-2 md:relative md:bottom-auto md:left-auto md:right-auto z-50 space-y-3 mt-8">
+        <button
+          onClick={() => {
+            onStepComplete?.({ unitCompleted: true });
+            // Use window.location instead of router.push to avoid bundler conflicts
+            setTimeout(() => {
+              window.location.href = '/banking-fees';
+            }, 500);
+          }}
+          className="w-full py-4 px-8 rounded-full font-medium text-lg bg-[#2E1E72] text-white hover:bg-[#3B2A8F] transition-all duration-200 cursor-pointer border-2 border-[#2E1E72]"
+        >
+          Complete Unit 2 →
+        </button>
+        <button
+          onClick={() => onStepComplete?.({ goBackOnePage: true })}
+          className="w-full py-4 px-8 rounded-full font-medium text-lg border-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 transition-all duration-200 cursor-pointer"
+        >
+          Back
+        </button>
+      </div>
+    </Stack>
+  );
+}
+
+// Export all pages as an array for easy navigation
+export const UNIT_2_PAGES = [
+  { id: 1, component: Page1, title: "Introduction" },
+  { id: 2, component: WhackAMolePages, title: "Whack-A-Mole Game" },
+  { id: 3, component: Page3, title: "Banking Context" },
+  { id: 4, component: Page4, title: "Survey Question 1 of 8" },
+  { id: 5, component: Page5, title: "Survey Question 2 of 8" },
+  { id: 6, component: Page6, title: "Survey Question 3 of 8" },
+  { id: 7, component: Page7, title: "Survey Question 4 of 8" },
+  { id: 8, component: Page8, title: "Survey Question 5 of 8" },
+  { id: 9, component: Page9, title: "Survey Question 6 of 8" },
+  { id: 10, component: Page10, title: "Survey Question 7 of 8" },
+  { id: 11, component: Page11, title: "Survey Question 8 of 8" },
+  { id: 12, component: Page12, title: "Your Reaction" },
+  { id: 13, component: Page13, title: "Banks Are More Than Places to Put Money" },
+  { id: 14, component: Page14, title: "Investment Portfolios and Fees" },
+  { id: 15, component: Page15, title: "Let's Think Back to Fees" },
+  { id: 16, component: Page16, title: "But Wait, There's More Fees!" },
+  { id: 17, component: Page17, title: "Fee Calculator & Comparison Tool" },
+  { id: 18, component: Page18, title: "Historical Context" },
+  { id: 19, component: Page19, title: "Debit Resequencing Introduction" },
+  { id: 20, component: Page20, title: "What Is Debit Resequencing?" },
+  { id: 21, component: Page21, title: "If It Seems Unfair" },
+  { id: 22, component: Page22, title: "Is Anything Being Done?" },
+  { id: 23, component: Page23, title: "Some Banks Have Eliminated Fees" },
+  { id: 24, component: Page24, title: "Is There Anything I Can Do?" },
+  { id: 25, component: Page25, title: "Fee Definitions and Types" },
+  { id: 26, component: Page26, title: "Major Bank Settlements" },
+  { id: 27, component: Page27, title: "Banks That Have Eliminated Fees" },
+  { id: 28, component: Page28, title: "Protection Strategies" },
+  { id: 29, component: Page29, title: "Account Closures" },
+  { id: 30, component: Page30, title: "Account Closure Reality" },
+  { id: 31, component: Page31, title: "The Unbanked Population" },
+  { id: 32, component: Page32, title: "Alternative Financial Services" },
+  { id: 33, component: Page33, title: "Community Solutions" },
+  { id: 34, component: Page34, title: "Banking Relationship Tips" },
+  { id: 35, component: Page35, title: "Remember This Message" },
+  { id: 36, component: Page36, title: "Digital Banking Alternatives" },
+  { id: 37, component: Page37, title: "Credit Union Benefits" },
+  { id: 38, component: Page38, title: "Consumer Protection Resources" },
+  { id: 39, component: Page39, title: "Real-World Case Studies" },
+  { id: 40, component: Page40, title: "Personal Action Planning" },
+  { id: 41, component: Page41, title: "Unit Summary" },
+  { id: 42, component: Page42, title: "Completion and Next Steps" }
+];

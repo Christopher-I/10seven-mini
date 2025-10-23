@@ -1,0 +1,126 @@
+{
+  "colors": {
+    "blue": {
+      "200": "#2e1e72",
+      "300": "#e5deef",
+      "500": "#0f2d52"
+    },
+    "white": {
+      "200": "#f8f8f8",
+      "500": "#ffffff"
+    },
+    "purple": {
+      "200": "#9d71fa",
+      "500": "#8577b7"
+    },
+    "gray": {
+      "500": "#666666"
+    },
+    "black": {
+      "500": "#000000"
+    },
+    "other": {
+      "500": "#dbe250"
+    }
+  },
+  "fontFamily": {
+    "display": [
+      "Playfair Display",
+      "serif"
+    ],
+    "heading": [
+      "Oswald",
+      "sans-serif"
+    ],
+    "primary": [
+      "Red Hat Display",
+      "sans-serif"
+    ],
+    "body": [
+      "Mulish",
+      "sans-serif"
+    ],
+    "system": [
+      "SF Pro",
+      "system-ui"
+    ]
+  },
+  "fontSize": {
+    "size-1": "16px",
+    "size-2": "14px",
+    "size-3": "17px",
+    "size-4": "28px",
+    "size-5": "20px",
+    "size-6": "16px",
+    "size-7": "32px",
+    "size-8": "28px",
+    "size-9": "16px",
+    "size-10": "24px",
+    "size-11": "24px",
+    "size-12": "16px"
+  },
+  "spacing": {
+    "space-4": "4px",
+    "space-8": "8px",
+    "space-12": "12px",
+    "space-16": "16px",
+    "space-20": "20px",
+    "space-24": "24px",
+    "space-28": "28px",
+    "space-32": "32px",
+    "space-36": "36px",
+    "space-40": "40px",
+    "space-44": "44px",
+    "space-48": "48px",
+    "space-52": "52px",
+    "space-56": "56px",
+    "space-60": "60px",
+    "space-64": "64px",
+    "space-68": "68px",
+    "space-72": "72px",
+    "space-76": "76px",
+    "space-80": "80px",
+    "space-84": "84px",
+    "space-88": "88px",
+    "space-92": "92px",
+    "space-96": "96px",
+    "space-100": "100px",
+    "space-108": "108px",
+    "space-112": "112px",
+    "space-120": "120px",
+    "space-124": "124px",
+    "space-128": "128px",
+    "space-144": "144px",
+    "space-148": "148px",
+    "space-152": "152px",
+    "space-164": "164px",
+    "space-168": "168px",
+    "space-172": "172px",
+    "space-176": "176px",
+    "space-180": "180px",
+    "space-184": "184px",
+    "space-192": "192px",
+    "space-196": "196px",
+    "space-200": "200px",
+    "space-204": "204px",
+    "space-216": "216px",
+    "space-228": "228px",
+    "space-240": "240px",
+    "space-252": "252px",
+    "space-264": "264px",
+    "space-268": "268px",
+    "space-288": "288px",
+    "space-300": "300px",
+    "space-340": "340px",
+    "space-360": "360px",
+    "space-412": "412px",
+    "space-452": "452px",
+    "space-460": "460px",
+    "space-476": "476px",
+    "space-500": "500px",
+    "space-512": "512px",
+    "space-536": "536px",
+    "space-680": "680px",
+    "space-688": "688px"
+  }
+}

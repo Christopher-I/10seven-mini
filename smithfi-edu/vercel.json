@@ -1,0 +1,10 @@
+{
+  "buildCommand": "npm run build",
+  "framework": "nextjs",
+  "build": {
+    "env": {
+      "SKIP_TYPE_CHECKING": "true",
+      "DISABLE_ESLINT": "true"
+    }
+  }
+}

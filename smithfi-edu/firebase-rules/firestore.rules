@@ -1,0 +1,50 @@
+// Firestore Security Rules for Fund Your Future Platform
+// Apply these rules in Firebase Console > Firestore Database > Rules
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Users collection - users can read/write their own data
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      
+      // Allow user creation during signup
+      allow create: if request.auth != null && request.auth.uid == userId
+        && request.resource.data.uid == userId
+        && request.resource.data.email == request.auth.token.email;
+    }
+    
+    // Game sessions - users can read/write their own sessions
+    match /gameSessions/{sessionId} {
+      allow read, write: if request.auth != null && 
+        request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && 
+        request.auth.uid == request.resource.data.userId;
+    }
+    
+    // Analytics data - users can create but not read (privacy)
+    match /analytics/{analyticsId} {
+      allow create: if request.auth != null;
+      allow read: if false; // Only backend/admin can read analytics
+    }
+    
+    // Public data (if any)
+    match /public/{document} {
+      allow read: if true;
+      allow write: if false; // Only admin can write public data
+    }
+    
+    // Leaderboard data - read only for authenticated users
+    match /leaderboard/{document} {
+      allow read: if request.auth != null;
+      allow write: if false; // System generated
+    }
+    
+    // Admin only collections
+    match /admin/{document=**} {
+      allow read, write: if request.auth != null && 
+        request.auth.token.email in ['admin@fundyourfuture.edu'];
+    }
+  }
+}
