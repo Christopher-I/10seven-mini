@@ -1,0 +1,187 @@
+/**
+ * Unit 5: Banking As a Smithie
+ * Banking Module - Smith College-specific banking education
+ */
+
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { AppHeader } from '@/core/components/AppHeader';
+import { SectionProgress } from '@/core/components/SectionProgress';
+import { Navigation } from '@/core/components/Navigation';
+import { useProgressTracking } from '@/hooks/useProgressTracking';
+import { loadProgress, updateUnitProgress } from '@/core/services/storage';
+import { trackPageView } from '@/core/services/analytics';
+import { UNIT_5_PAGES } from './content/pages';
+import {
+  PageContainer,
+  UnifiedCard,
+  Stack,
+  HeroCard,
+  UnifiedHeading,
+  Text
+} from '@/core/design-system';
+
+const MODULE_ID = 'banking-fees';
+const UNIT_ID = 'unit-5-student-banking';
+const TOTAL_PAGES = 9;
+
+export default function Unit5Container() {
+  const router = useRouter();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [canAdvance, setCanAdvance] = useState(false);
+
+  const [stepData, setStepData] = useState<Record<string, any>>({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Enhanced progress tracking
+  const { trackPageView: trackPageViewNew } = useProgressTracking({
+    moduleId: MODULE_ID,
+    moduleTitle: 'Banking & Fees',
+    unitId: UNIT_ID,
+    unitTitle: 'Banking As a Smithie',
+    totalPages: TOTAL_PAGES,
+    autoInitialize: true
+  });
+
+  // Load progress on mount
+  useEffect(() => {
+    const userProgress = loadProgress();
+    const unitProgress = userProgress?.modules[MODULE_ID]?.units[UNIT_ID];
+
+    if (unitProgress) {
+      setCurrentPage(unitProgress.currentPage);
+      // Load any saved step data
+      const savedStepData = localStorage.getItem(`unit-${UNIT_ID}-step-data`);
+      if (savedStepData) {
+        setStepData(JSON.parse(savedStepData));
+      }
+    }
+    setIsLoading(false);
+  }, []);
+
+  const handlePageChange = (page: number) => {
+    if (page > 0 && page <= TOTAL_PAGES) {
+      setCurrentPage(page);
+      setCanAdvance(false);
+
+      // Track page view
+      trackPageViewNew(page);
+      trackPageView(MODULE_ID, UNIT_ID, page);
+
+      // Update storage
+      updateUnitProgress(MODULE_ID, UNIT_ID, {
+        currentPage: page,
+        completed: page === TOTAL_PAGES
+      });
+    }
+  };
+
+  const handleStepComplete = (data: any) => {
+    setCanAdvance(true);
+
+    // Update step data
+    const updatedStepData = { ...stepData, [`page_${currentPage}`]: data };
+    setStepData(updatedStepData);
+
+    // Save to localStorage
+    localStorage.setItem(`unit-${UNIT_ID}-step-data`, JSON.stringify(updatedStepData));
+
+    // Track completion
+    trackPageView(MODULE_ID, UNIT_ID, currentPage);
+
+    // Auto-advance to next page after completion
+    if (currentPage < TOTAL_PAGES) {
+      if (data.pageViewed || data.completed || data.interactionComplete) {
+        setTimeout(() => {
+          handlePageChange(currentPage + 1);
+        }, 1500);
+      }
+    } else if (currentPage === TOTAL_PAGES) {
+      // Final page - return to module overview
+      updateUnitProgress(MODULE_ID, UNIT_ID, {
+        currentPage: TOTAL_PAGES,
+        completed: true
+      });
+      setTimeout(() => {
+        router.push('/banking-fees');
+      }, 2000);
+    }
+  };
+
+  const breadcrumbs = [
+    { href: '/', label: 'Home' },
+    { href: '/banking-fees', label: 'Banking & Fees' },
+    { href: '/banking-fees/unit-5-student-banking', label: 'Unit 5: Banking As a Smithie' }
+  ];
+
+  const CurrentPageContent = UNIT_5_PAGES[currentPage - 1]?.component;
+
+  return (
+    <PageContainer variant="page" background="neutral">
+      <AppHeader
+        title="Unit 5: Banking As a Smithie"
+        description="Navigate banking as a Smith College student"
+        breadcrumbs={breadcrumbs}
+        variant="unit"
+      />
+
+      <PageContainer variant="constrained" className="pb-32 sm:pb-20">
+        <Stack spacing="md">
+          {/* Progress indicator */}
+          <SectionProgress
+            currentPage={currentPage}
+            totalPages={TOTAL_PAGES}
+            title="Banking As a Smithie"
+          />
+
+          {/* Content */}
+          {currentPage === 1 ? (
+            <HeroCard>
+              <UnifiedHeading level="h2" variant="unit" semantic="white">
+                Beyond the Big Four and Neobanks
+              </UnifiedHeading>
+              <Text className="text-white text-base sm:text-lg mb-4 sm:mb-6">
+                We just talked a lot about how bank accounts work with the likes of the Big Four and Neo banks. But, those aren't the only places that offer bank accounts.
+              </Text>
+              <Text className="text-white mb-4">
+                In fact, Smith College students have access to specific banking resources and partnerships that can make your financial journey smoother.
+              </Text>
+              <Text className="text-white mb-6">
+                In this unit, you'll learn about student accounts, study abroad banking considerations, and Smith-specific resources.
+              </Text>
+            </HeroCard>
+          ) : (
+            <UnifiedCard variant="elevated" size="lg">
+              {CurrentPageContent ? (
+                <CurrentPageContent
+                  onStepComplete={handleStepComplete}
+                  stepData={stepData}
+                />
+              ) : (
+                <Stack spacing="sm" className="text-center py-8">
+                  <UnifiedHeading variant="default" level="h3">
+                    Page {currentPage}
+                  </UnifiedHeading>
+                  <Text semantic="muted">
+                    Content for this page is being developed.
+                  </Text>
+                </Stack>
+              )}
+            </UnifiedCard>
+          )}
+        </Stack>
+      </PageContainer>
+
+      {/* Navigation - outside constrained container */}
+      <Navigation
+        currentPage={currentPage}
+        totalPages={TOTAL_PAGES}
+        onPageChange={handlePageChange}
+        canGoBack={currentPage > 1}
+        canGoForward={currentPage < TOTAL_PAGES}
+      />
+    </PageContainer>
+  );
+}
