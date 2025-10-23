@@ -60,53 +60,6 @@ export default function AboutPage() {
 
       <main className="mx-auto max-w-[1200px] px-6 py-12 md:px-6 md:py-16">
         <div className="space-y-12">
-          {/* Demo Mode: Play Whackamole Game Section */}
-          {isDemoMode && (
-            <section
-              className="rounded-2xl p-8 text-center shadow-sm transition-shadow hover:shadow-md"
-              style={{
-                background:
-                  'linear-gradient(to bottom right, rgba(46, 30, 114, 0.1), rgba(133, 119, 183, 0.1))',
-                border: '2px solid #8577B7',
-              }}
-            >
-              <div className="max-w-2xl mx-auto">
-                <h2
-                  className="mb-4 font-playfair text-[32px] font-bold"
-                  style={{ color: '#0F2D52' }}
-                >
-                  Try Our Interactive Learning
-                </h2>
-                <p className="mx-auto mb-6 font-red-hat text-gray-700 text-lg">
-                  Experience hands-on financial literacy with our engaging
-                  Whackamole game. Learn about banking fees in an interactive
-                  way!
-                </p>
-
-                <Link
-                  href="/demo/whackamole"
-                  className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-lg font-semibold font-red-hat text-white transition-all hover:scale-105 shadow-lg"
-                  style={{ backgroundColor: '#2E1E72' }}
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  Play Whackamole Game
-                </Link>
-              </div>
-            </section>
-          )}
-
           {/* Conway Center Section */}
           <section className="rounded-2xl bg-white p-8 shadow-sm transition-shadow hover:shadow-md">
             <div className="mb-6">
@@ -435,6 +388,53 @@ export default function AboutPage() {
               </div>
             </div>
           </section>
+
+          {/* Demo Mode: Play Whackamole Game Section */}
+          {isDemoMode && (
+            <section
+              className="rounded-2xl p-8 text-center shadow-sm transition-shadow hover:shadow-md"
+              style={{
+                background:
+                  'linear-gradient(to bottom right, rgba(46, 30, 114, 0.1), rgba(133, 119, 183, 0.1))',
+                border: '2px solid #8577B7',
+              }}
+            >
+              <div className="max-w-2xl mx-auto">
+                <h2
+                  className="mb-4 font-playfair text-[32px] font-bold"
+                  style={{ color: '#0F2D52' }}
+                >
+                  Try Our Interactive Learning
+                </h2>
+                <p className="mx-auto mb-6 font-red-hat text-gray-700 text-lg">
+                  Experience hands-on financial literacy with our engaging
+                  Whackamole game. Learn about banking fees in an interactive
+                  way!
+                </p>
+
+                <Link
+                  href="/demo/whackamole"
+                  className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-lg font-semibold font-red-hat text-white transition-all hover:scale-105 shadow-lg"
+                  style={{ backgroundColor: '#2E1E72' }}
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  Play Whackamole Game
+                </Link>
+              </div>
+            </section>
+          )}
         </div>
       </main>
     </div>
