@@ -10,9 +10,9 @@ import { WhackAMolePages } from '@/modules/banking-fees/units/unit-2-fees/conten
 import { GameNavigation } from '@/components/demo/GameNavigation';
 
 export default function WhackamolePage() {
-  const [gameData, setGameData] = useState<any>(null);
+  const [gameData, setGameData] = useState<unknown>(null);
 
-  const handleStepComplete = (data: any) => {
+  const handleStepComplete = (data: unknown) => {
     console.log('Game step completed:', data);
     setGameData(data);
   };

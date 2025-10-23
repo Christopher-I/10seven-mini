@@ -12,7 +12,6 @@ import { AppHeader } from '@/core/components/AppHeader';
 import { FloatingQuestionButton } from '@/core/components/FloatingQuestionButton';
 import { AnnouncementBar } from '@/core/components/AnnouncementBar';
 import { DashboardCard, TrackSection } from '@/core/design-system';
-import { useAuth } from '@/contexts/AuthContext';
 import type { UserProgress } from '@/core/types';
 import { useDemoMode } from '@/hooks/useDemoMode';
 import { DemoCard } from '@/components/demo/DemoCard';
@@ -20,7 +19,6 @@ import { DemoCard } from '@/components/demo/DemoCard';
 export default function HomePage() {
   const [userProgress, setUserProgress] = useState<UserProgress | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { user, userProfile } = useAuth();
   const { isDemoMode } = useDemoMode();
 
   useEffect(() => {
