@@ -216,7 +216,7 @@ export function Page27({ onStepComplete }: PageProps) {
   );
 }
 
-// Page 28: Whack A Mole Statement - Debit Resequencing Revealed
+// Page 28: Whack-A-Mole Statement - Debit Resequencing Revealed
 export function Page28({ onStepComplete }: PageProps) {
   const [selectedView, setSelectedView] = useState<'actual' | 'bank'>('actual');
 
@@ -260,7 +260,7 @@ export function Page28({ onStepComplete }: PageProps) {
     <div className="max-w-4xl mx-auto p-6 pb-32 md:pb-6">
       <div className="space-y-6">
         <h2 className="text-[28px] font-playfair font-semibold text-gray-900 mb-8">
-          Going back to the Whack A Mole activity and your resulting bank statement.
+          Going back to the Whack-A-Mole activity and your resulting bank statement.
         </h2>
 
         <div className="text-lg text-gray-700 space-y-4">

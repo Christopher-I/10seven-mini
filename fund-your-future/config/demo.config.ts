@@ -9,9 +9,9 @@ export const demoConfig: DemoConfig = {
   enabled: process.env.NEXT_PUBLIC_DEMO_MODE === 'true',
 
   card: {
-    moduleNumber: 'Demo Module',
-    title: 'Demo App',
-    description: 'Explore our interactive financial literacy platform through this guided demo experience.',
+    moduleNumber: 'Fund Your Future Demo',
+    title: 'It\'s a Big Bank World',
+    description: 'Explore the Fund Your Future course through an interactive activity.',
     route: '/about',
   },
 

@@ -5,6 +5,7 @@
 
 'use client';
 
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useDemoMode } from '@/hooks/useDemoMode';
@@ -12,6 +13,16 @@ import { useDemoMode } from '@/hooks/useDemoMode';
 export default function AboutPage() {
   const router = useRouter();
   const { isDemoMode } = useDemoMode();
+
+  useEffect(() => {
+    // In demo mode, mark step 1 as complete when visiting About page
+    if (isDemoMode) {
+      const currentProgress = parseInt(localStorage.getItem('demo-progress') || '0', 10);
+      if (currentProgress < 1) {
+        localStorage.setItem('demo-progress', '1');
+      }
+    }
+  }, [isDemoMode]);
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#E5DEEF' }}>
@@ -81,11 +92,7 @@ export default function AboutPage() {
                 Smith College is dedicated to fostering innovation, creativity,
                 and entrepreneurial thinking among students. Our mission is to
                 empower students with the knowledge, skills, and resources they
-                need to create meaningful change in the world.
-              </p>
-
-              <p className="font-red-hat leading-relaxed text-gray-700">
-                Through innovative programs, workshops, and educational
+                need to create meaningful change in the world. Through innovative programs, workshops, and educational
                 initiatives, we help students develop financial literacy,
                 business acumen, and the entrepreneurial mindset necessary to
                 succeed in today&apos;s economy.
@@ -129,7 +136,7 @@ export default function AboutPage() {
             </div>
           </section>
 
-          {/* Generational Wealth Initiative */}
+          {/* Fund Your Future */}
           <section
             className="rounded-2xl p-8 shadow-sm transition-shadow hover:shadow-md"
             style={{
@@ -142,7 +149,7 @@ export default function AboutPage() {
                 className="mb-4 font-playfair text-[32px] font-bold"
                 style={{ color: '#0F2D52' }}
               >
-                Generational Wealth Initiative
+                Fund Your Future
               </h2>
               <div
                 className="h-1 w-20 rounded-full"
@@ -159,7 +166,7 @@ export default function AboutPage() {
                   Our Mission
                 </h3>
                 <p className="font-red-hat leading-relaxed text-gray-700">
-                  The Generational Wealth Initiative focuses on breaking cycles
+                  Fund Your Future focuses on breaking cycles
                   of financial inequality by providing comprehensive financial
                   education to underrepresented communities. We believe that
                   financial literacy is a cornerstone of economic empowerment.
@@ -404,12 +411,10 @@ export default function AboutPage() {
                   className="mb-4 font-playfair text-[32px] font-bold"
                   style={{ color: '#0F2D52' }}
                 >
-                  Try Our Interactive Learning
+                  Test Out Our Interactive Learning Platform
                 </h2>
                 <p className="mx-auto mb-6 font-red-hat text-gray-700 text-lg">
-                  Experience hands-on financial literacy with our engaging
-                  Whackamole game. Learn about banking fees in an interactive
-                  way!
+                  Experience immersive financial education and learn about bank fees through a game of Whack-A-Mole!
                 </p>
 
                 <Link
@@ -430,7 +435,7 @@ export default function AboutPage() {
                       d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
-                  Play Whackamole Game
+                  Play Game
                 </Link>
               </div>
             </section>

@@ -76,7 +76,7 @@ export default function HomePage() {
     );
   }
 
-  // Demo mode - show single demo card
+  // Demo mode - show demo card + locked modules for preview
   if (isDemoMode) {
     return (
       <div className="min-h-screen bg-brand-light">
@@ -88,9 +88,33 @@ export default function HomePage() {
             <AnnouncementBar />
           </div>
 
-          {/* Demo Section */}
-          <TrackSection trackNumber={1} title="Interactive Demo">
+          {/* Track 1 Section with Demo + Locked Modules */}
+          <TrackSection trackNumber={1} title="Track 1: Financial Foundations">
+            {/* Demo Card */}
             <DemoCard />
+
+            {/* Locked Module Cards for Preview */}
+            {MODULES.map((module, index) => {
+              const progress = getModuleProgress(module.id);
+
+              return (
+                <DashboardCard
+                  key={module.id}
+                  moduleNumber={`Module ${index + 1}`}
+                  title={module.title}
+                  description={module.description}
+                  progress={{
+                    completed: progress.completed,
+                    total: progress.total
+                  }}
+                  isLocked={true}
+                  isAvailable={false}
+                  status="coming-soon"
+                  href={undefined}
+                  buttonText="Start"
+                />
+              );
+            })}
           </TrackSection>
         </main>
 

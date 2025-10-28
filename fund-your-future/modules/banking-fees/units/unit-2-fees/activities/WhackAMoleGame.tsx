@@ -146,18 +146,7 @@ export function WhackAMoleGame({
         currentMolePosition: null,
         showFridayMessage: true,
       }));
-
-      // Show Friday deposit message for 3 seconds, then continue
-      setTimeout(() => {
-        setCurrentDay('F');
-        setGameState((prev) => ({
-          ...prev,
-          balance: prev.balance + 500,
-          fridayDeposit: true,
-          currentExpenseIndex: prev.currentExpenseIndex + 1,
-          showFridayMessage: false,
-        }));
-      }, 3000);
+      // User will click Next button to continue - no auto-advance
     }
     // Check if game is complete
     else if (gameState.currentExpenseIndex === expenses.length - 1) {
@@ -168,10 +157,7 @@ export function WhackAMoleGame({
         currentMolePosition: null,
         gameCompleted: true,
       }));
-      setTimeout(() => {
-        onComplete([...gameState.transactions, newTransaction]);
-        setGameState((prev) => ({ ...prev, callbackCalled: true }));
-      }, 1000);
+      // User will click Next button to continue - no auto-advance
     }
     // Normal progression
     else {
@@ -187,48 +173,32 @@ export function WhackAMoleGame({
 
   const currentExpense = expenses[gameState.currentExpenseIndex];
 
-  if (gameState.gameCompleted && !gameState.callbackCalled) {
+  if (gameState.gameCompleted) {
     return (
-      <div className="rounded-xl border-2 border-[#8577B7] bg-white p-8">
-        <div className="text-center">
-          <div className="mb-4 text-4xl">😰</div>
-          <h3 className="mb-4 text-xl font-bold text-[#2E1E72]">
+      <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#E5DEEF' }}>
+        <div className="max-w-md w-full text-center space-y-6">
+          <div className="text-6xl">😰</div>
+          <h3 className="text-2xl font-bold text-[#2E1E72]" style={{ fontFamily: 'Playfair Display' }}>
             Game Complete!
           </h3>
-          <p className="mb-4 text-[#2E1E72]">
+          <p className="text-xl text-[#2E1E72]" style={{ fontFamily: 'Red Hat Display' }}>
             Your final balance:{' '}
             <span className="font-bold">${gameState.balance.toFixed(2)}</span>
           </p>
-          <p className="text-[#8577B7]">
+          <p className="text-lg text-[#2E1E72]" style={{ fontFamily: 'Red Hat Display' }}>
             Wait... where did all that money go? Let's look at your statement to
             find out!
           </p>
-          <div className="mt-4 flex justify-center">
-            <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-[#2E1E72]"></div>
-          </div>
-          <p className="mt-2 text-sm text-[#8577B7]">Moving to next page...</p>
-        </div>
-      </div>
-    );
-  }
 
-  // After callback is called, show different content or let navigation take over
-  if (gameState.gameCompleted && gameState.callbackCalled) {
-    return (
-      <div className="rounded-xl border-2 border-[#8577B7] bg-white p-8">
-        <div className="text-center">
-          <div className="mb-4 text-4xl">✅</div>
-          <h3 className="mb-4 text-xl font-bold text-[#2E1E72]">Game Complete!</h3>
-          <p className="text-[#2E1E72]">
-            You've experienced firsthand how banking fees can add up. Let's
-            analyze your statement next!
-          </p>
-          <div className="mt-4 flex justify-center">
-            <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-[#2E1E72]"></div>
-          </div>
-          <p className="mt-2 text-sm text-[#8577B7]">
-            Loading statement analysis...
-          </p>
+          <button
+            onClick={() => {
+              onComplete(gameState.transactions);
+              setGameState((prev) => ({ ...prev, callbackCalled: true }));
+            }}
+            className="w-full max-w-sm bg-[#2E1E72] hover:bg-[#3B2A8F] text-white font-bold py-4 px-8 rounded-full text-lg transition-colors cursor-pointer"
+          >
+            Next
+          </button>
         </div>
       </div>
     );
@@ -293,7 +263,7 @@ export function WhackAMoleGame({
                 showFridayMessage: false,
               }));
             }}
-            className="w-full max-w-sm bg-[#2E1E72] hover:bg-[#3B2A8F] text-white font-bold py-4 px-8 rounded-full text-lg transition-colors"
+            className="w-full max-w-sm bg-[#2E1E72] hover:bg-[#3B2A8F] text-white font-bold py-4 px-8 rounded-full text-lg transition-colors cursor-pointer"
           >
             Next
           </button>
@@ -316,11 +286,12 @@ export function WhackAMoleGame({
         </div>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
           <span className="text-base font-bold text-[#2E1E72] sm:text-lg">
-            Balance: ${gameState.balance.toFixed(2)}
+            {gameState.fridayDeposit ? 'Available Balance: ' : 'Balance: '}
+            ${gameState.fridayDeposit ? (gameState.balance - 500).toFixed(2) : gameState.balance.toFixed(2)}
           </span>
           {gameState.fridayDeposit && (
             <span className="rounded bg-green-50 px-2 py-1 text-xs text-green-800 sm:text-sm">
-              +$500 deposited!
+              $500 pending
             </span>
           )}
         </div>

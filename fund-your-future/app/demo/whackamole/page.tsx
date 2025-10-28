@@ -5,16 +5,27 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { WhackAMolePages } from '@/modules/banking-fees/units/unit-2-fees/content/pages/pages-01-03';
 import { GameNavigation } from '@/components/demo/GameNavigation';
 
 export default function WhackamolePage() {
   const [gameData, setGameData] = useState<unknown>(null);
 
+  useEffect(() => {
+    // Mark step 2 as complete when visiting the game page
+    const currentProgress = parseInt(localStorage.getItem('demo-progress') || '0', 10);
+    if (currentProgress < 2) {
+      localStorage.setItem('demo-progress', '2');
+    }
+  }, []);
+
   const handleStepComplete = (data: unknown) => {
     console.log('Game step completed:', data);
     setGameData(data);
+
+    // Mark step 3 as complete when game finishes
+    localStorage.setItem('demo-progress', '3');
   };
 
   return (
@@ -26,7 +37,7 @@ export default function WhackamolePage() {
             className="font-playfair text-[32px] font-bold text-center"
             style={{ color: '#0F2D52' }}
           >
-            Whackamole Banking Fees Game
+            Whack-A-Mole Bank Fees Game
           </h1>
         </div>
       </header>

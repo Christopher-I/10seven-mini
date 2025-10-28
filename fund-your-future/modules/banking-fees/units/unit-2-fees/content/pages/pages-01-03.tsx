@@ -141,17 +141,17 @@ export function WhackAMolePages({ onStepComplete, stepData }: PageProps) {
       <Stack spacing="lg">
         <div className="max-w-4xl mx-auto text-center">
           <UnifiedHeading level="h2" variant="default" className="mb-6">
-            Whack A Mole
+            Whack-A-Mole
           </UnifiedHeading>
           <div className="text-lg text-gray-700 space-y-4 mb-8">
             <p>
               Woohoo! It's Thursday, and you just got paid.
             </p>
             <p>
-              Let's play a quick game. On Thursday, you have $1000 in your account. You are expecting another $500 to be deposited into your account on Friday from your dog-walking side hustle.
+              Let's play a quick game. On <strong>Thursday</strong>, you have <strong>$1000 in your account</strong>. You are expecting to receive a <strong>direct deposit</strong> of $500 to your account on <strong>Friday afternoon</strong> from your dog-walking side hustle.
             </p>
             <p>
-              <strong>Directions:</strong> Hit the moles as they pop up. Each mole represents an expense or charge that will come up over the next couple of days. Your balance will decrease as you whack each mole.
+              <strong>Directions:</strong> Hit the moles as they pop up. Each mole represents an expense or charge that will come up over the next couple of days. Your <strong>available balance</strong> will decrease as you whack each mole.
             </p>
           </div>
           {/* Start Game and Back Buttons - Mobile First Design */}
