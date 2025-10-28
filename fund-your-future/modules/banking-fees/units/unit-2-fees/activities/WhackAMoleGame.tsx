@@ -247,8 +247,8 @@ export function WhackAMoleGame({
           </div>
 
           {/* Message text - exact from documentation */}
-          <p className="text-xl font-bold text-black px-4" style={{ fontFamily: 'Playfair Display' }}>
-            It's Friday morning! You check your bank account. You see that your available balance is $200, and the $500 check from dogwalking was deposited into your account. Your current balance is $700.
+          <p className="text-xl text-[#2E1E72] px-4" style={{ fontFamily: 'Playfair Display' }}>
+            It's Friday afternoon! You've been checking your bank account and see that your <strong>available balance</strong> is $200, and the $500 from your dog walking side hustle was deposited after 3:00pm. Your <strong>current balance</strong> is $700.
           </p>
 
           {/* Next button - matches design */}
@@ -277,20 +277,17 @@ export function WhackAMoleGame({
       {/* Game Status */}
       <div className="rounded-lg border border-[#8577B7] bg-white p-3 shadow-sm sm:p-4">
         <div className="mb-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
-          <span className="text-sm font-semibold text-[#2E1E72] sm:text-base">
+          <span className="text-lg font-semibold text-[#2E1E72] sm:text-xl">
             {currentDay === 'T' ? '📅 Thursday' : '📅 Friday'}
-          </span>
-          <span className="text-xs text-[#8577B7] sm:text-sm">
-            Expense {gameState.currentExpenseIndex + 1} of {expenses.length}
           </span>
         </div>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
-          <span className="text-base font-bold text-[#2E1E72] sm:text-lg">
+          <span className="text-xl font-bold text-[#2E1E72] sm:text-2xl">
             {gameState.fridayDeposit ? 'Available Balance: ' : 'Balance: '}
             ${gameState.fridayDeposit ? (gameState.balance - 500).toFixed(2) : gameState.balance.toFixed(2)}
           </span>
           {gameState.fridayDeposit && (
-            <span className="rounded bg-green-50 px-2 py-1 text-xs text-green-800 sm:text-sm">
+            <span className="rounded bg-green-50 px-2 py-1 text-base text-green-800 sm:text-lg">
               $500 pending
             </span>
           )}
@@ -413,11 +410,6 @@ export function WhackAMoleGame({
             backgroundColor: '#8577B7',
           }}
         />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xs font-semibold text-[#2E1E72]">
-            {gameState.currentExpenseIndex}/{expenses.length} Expenses
-          </span>
-        </div>
       </div>
 
       {/* Professional animations */}

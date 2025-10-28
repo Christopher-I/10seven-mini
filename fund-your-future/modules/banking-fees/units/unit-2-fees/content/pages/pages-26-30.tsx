@@ -9,6 +9,7 @@
 
 import { useState } from 'react';
 import { AnimatedButton } from '@/core/components/AnimatedButton';
+import { PageNumber } from '@/core/components/PageNumber';
 import {
   ContentBox,
   Text,
@@ -150,10 +151,7 @@ export function Page26({ onStepComplete }: PageProps) {
           onBack={onStepComplete}
         />
 
-        {/* Desktop Page Number */}
-        <div className="hidden md:block text-center mt-8">
-          <p className="text-sm text-gray-500">Page 26 of 43</p>
-        </div>
+        <PageNumber current={26} total={43} />
       </div>
     </div>
   );
@@ -208,9 +206,11 @@ export function Page27({ onStepComplete }: PageProps) {
         />
 
         {/* Desktop Page Number */}
-        <div className="hidden md:block text-center mt-8">
-          <p className="text-sm text-gray-500">Page 27 of 43</p>
-        </div>
+        {process.env.NODE_ENV === 'development' && (
+          <div className="hidden md:block text-center mt-8">
+            <p className="text-sm text-gray-500">Page 27 of 43</p>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -365,9 +365,11 @@ export function Page28({ onStepComplete }: PageProps) {
         />
 
         {/* Desktop Page Number */}
-        <div className="hidden md:block text-center mt-8">
-          <p className="text-sm text-gray-500">Page 28 of 43</p>
-        </div>
+        {process.env.NODE_ENV === 'development' && (
+          <div className="hidden md:block text-center mt-8">
+            <p className="text-sm text-gray-500">Page 28 of 43</p>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -467,9 +469,11 @@ export function Page29({ onStepComplete }: PageProps) {
         />
 
         {/* Desktop Page Number */}
-        <div className="hidden md:block text-center mt-8">
-          <p className="text-sm text-gray-500">Page 29 of 43</p>
-        </div>
+        {process.env.NODE_ENV === 'development' && (
+          <div className="hidden md:block text-center mt-8">
+            <p className="text-sm text-gray-500">Page 29 of 43</p>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -571,9 +575,11 @@ export function Page30({ onStepComplete }: PageProps) {
         />
 
         {/* Desktop Page Number */}
-        <div className="hidden md:block text-center mt-8">
-          <p className="text-sm text-gray-500">Page 30 of 43</p>
-        </div>
+        {process.env.NODE_ENV === 'development' && (
+          <div className="hidden md:block text-center mt-8">
+            <p className="text-sm text-gray-500">Page 30 of 43</p>
+          </div>
+        )}
       </div>
     </div>
   );

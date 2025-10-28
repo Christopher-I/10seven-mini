@@ -15,6 +15,7 @@ import {
 import {
   FinancialExclusionIllustration
 } from '../../components/FinancialIllustrations';
+import { PageNumber } from '@/core/components/PageNumber';
 
 interface PageProps {
   onStepComplete?: (stepData: any) => void;
@@ -99,10 +100,7 @@ export function Page1({ onStepComplete }: PageProps) {
         </div>
       </div>
 
-      {/* Desktop Page Number */}
-      <div className="hidden md:block text-center mt-8">
-        <p className="text-sm text-gray-500">Page 1 of 43</p>
-      </div>
+      <PageNumber current={1} total={43} />
     </Stack>
   );
 }
@@ -143,7 +141,7 @@ export function WhackAMolePages({ onStepComplete, stepData }: PageProps) {
           <UnifiedHeading level="h2" variant="default" className="mb-6">
             Whack-A-Mole
           </UnifiedHeading>
-          <div className="text-lg text-gray-700 space-y-4 mb-8">
+          <div className="text-lg text-[#2E1E72] space-y-4 mb-8">
             <p>
               Woohoo! It's Thursday, and you just got paid.
             </p>
@@ -173,10 +171,7 @@ export function WhackAMolePages({ onStepComplete, stepData }: PageProps) {
           </div>
         </div>
 
-      {/* Desktop Page Number */}
-      <div className="hidden md:block text-center mt-8">
-        <p className="text-sm text-gray-500">Page 2 of 43</p>
-      </div>
+      <PageNumber current={2} total={43} />
       </Stack>
     );
   }
@@ -187,10 +182,7 @@ export function WhackAMolePages({ onStepComplete, stepData }: PageProps) {
       <Stack spacing="lg">
         <WhackAMoleGame onComplete={handleGameComplete} />
 
-      {/* Desktop Page Number */}
-      <div className="hidden md:block text-center mt-8">
-        <p className="text-sm text-gray-500">Page 2 of 43</p>
-      </div>
+      <PageNumber current={2} total={43} />
       </Stack>
     );
   }
@@ -201,10 +193,7 @@ export function WhackAMolePages({ onStepComplete, stepData }: PageProps) {
       <Stack spacing="lg">
         <BankStatement onContinue={handleStatementContinue} />
 
-      {/* Desktop Page Number */}
-      <div className="hidden md:block text-center mt-8">
-        <p className="text-sm text-gray-500">Page 2 of 43</p>
-      </div>
+      <PageNumber current={2} total={43} />
       </Stack>
     );
   }
@@ -215,29 +204,29 @@ export function WhackAMolePages({ onStepComplete, stepData }: PageProps) {
       <Stack spacing="lg">
         <div className="max-w-4xl mx-auto p-6 pb-32 md:pb-6">
           <div className="space-y-8">
-            <h2 className="text-[28px] font-playfair font-semibold text-gray-900 mb-6">
+            <h2 className="text-[28px] font-playfair font-semibold text-[#2E1E72] mb-6">
               You might be thinking:
             </h2>
 
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-[#2E1E72] rounded-full mt-2 flex-shrink-0"></div>
-                <p className="text-lg text-gray-700">Where the heck did all these fees come from?</p>
+                <p className="text-lg text-[#2E1E72]">Where the heck did all these fees come from?</p>
               </div>
 
               <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-[#2E1E72] rounded-full mt-2 flex-shrink-0"></div>
-                <p className="text-lg text-gray-700">Why did I overdraft so many times?</p>
+                <p className="text-lg text-[#2E1E72]">Why did I overdraft so many times?</p>
               </div>
 
               <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-[#2E1E72] rounded-full mt-2 flex-shrink-0"></div>
-                <p className="text-lg text-gray-700">What happened to the $500 I was supposed to receive Friday?</p>
+                <p className="text-lg text-[#2E1E72]">What happened to the $500 that was deposited on Friday afternoon?</p>
               </div>
             </div>
 
             <div className="bg-[#E5DEEF] border border-[#8577B7] rounded-lg p-6 mt-8">
-              <p className="text-lg text-gray-900">
+              <p className="text-lg text-[#2E1E72]">
                 We'll talk more about what happened soon. First, let's zoom out and look at banking as an industry in the US.
               </p>
             </div>
@@ -253,10 +242,7 @@ export function WhackAMolePages({ onStepComplete, stepData }: PageProps) {
             </div>
           </div>
 
-          {/* Desktop Page Number */}
-          <div className="hidden md:block text-center mt-8">
-            <p className="text-sm text-gray-500">Page 2 of 43</p>
-          </div>
+          <PageNumber current={2} total={43} />
         </div>
       </Stack>
     );
@@ -271,10 +257,10 @@ export function WhackAMolePages({ onStepComplete, stepData }: PageProps) {
             <h3 className="text-[28px] font-playfair font-semibold text-[#2E1E72]">
               Activity Complete!
             </h3>
-            <p className="text-lg text-gray-700 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-lg text-[#2E1E72] leading-relaxed max-w-2xl mx-auto">
               You've experienced how banking fees can quickly accumulate when transactions are processed in a certain order.
             </p>
-            <p className="text-base text-gray-600">
+            <p className="text-base text-[#2E1E72]">
               Continue to the next page to explore your reaction to these fees.
             </p>
           </div>
@@ -301,10 +287,7 @@ export function WhackAMolePages({ onStepComplete, stepData }: PageProps) {
           </div>
         </div>
 
-        {/* Desktop Page Number */}
-        <div className="hidden md:block text-center mt-8">
-          <p className="text-sm text-gray-500">Page 2 of 43</p>
-        </div>
+        <PageNumber current={2} total={43} />
       </Stack>
     );
   }
@@ -373,10 +356,7 @@ export function Page3({ onStepComplete }: PageProps) {
         </button>
       </div>
 
-      {/* Desktop Page Number */}
-      <div className="hidden md:block text-center mt-8">
-        <p className="text-sm text-gray-500">Page 3 of 43</p>
-      </div>
+      <PageNumber current={3} total={43} />
     </div>
   );
 }

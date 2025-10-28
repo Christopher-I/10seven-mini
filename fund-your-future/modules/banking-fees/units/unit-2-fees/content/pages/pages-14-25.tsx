@@ -56,9 +56,11 @@ export function Page14({ onStepComplete }: PageProps) {
         />
 
         {/* Desktop Page Number */}
-        <div className="hidden md:block text-center mt-8">
-          <p className="text-sm text-gray-500">Page 14 of 43</p>
-        </div>
+        {process.env.NODE_ENV === 'development' && (
+          <div className="hidden md:block text-center mt-8">
+            <p className="text-sm text-gray-500">Page 14 of 43</p>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -91,9 +93,11 @@ export function Page15({ onStepComplete }: PageProps) {
       />
 
       {/* Desktop Page Number */}
-      <div className="hidden md:block text-center mt-8">
-        <p className="text-sm text-gray-500">Page 15 of 43</p>
-      </div>
+      {process.env.NODE_ENV === 'development' && (
+        <div className="hidden md:block text-center mt-8">
+          <p className="text-sm text-gray-500">Page 15 of 43</p>
+        </div>
+      )}
     </div>
   );
 }
@@ -234,9 +238,11 @@ export function Page16({ onStepComplete }: PageProps) {
       />
 
       {/* Desktop Page Number */}
-      <div className="hidden md:block text-center mt-8">
-        <p className="text-sm text-gray-500">Page 16 of 43</p>
-      </div>
+      {process.env.NODE_ENV === 'development' && (
+        <div className="hidden md:block text-center mt-8">
+          <p className="text-sm text-gray-500">Page 16 of 43</p>
+        </div>
+      )}
     </div>
   );
 }
@@ -299,9 +305,11 @@ export function Page17({ onStepComplete }: PageProps) {
       />
 
       {/* Desktop Page Number */}
-      <div className="hidden md:block text-center mt-8">
-        <p className="text-sm text-gray-500">Page 17 of 43</p>
-      </div>
+      {process.env.NODE_ENV === 'development' && (
+        <div className="hidden md:block text-center mt-8">
+          <p className="text-sm text-gray-500">Page 17 of 43</p>
+        </div>
+      )}
     </Stack>
   );
 }
@@ -413,9 +421,11 @@ export function Page18({ onStepComplete }: PageProps) {
       />
 
       {/* Desktop Page Number */}
-      <div className="hidden md:block text-center mt-8">
-        <p className="text-sm text-gray-500">Page 18 of 43</p>
-      </div>
+      {process.env.NODE_ENV === 'development' && (
+        <div className="hidden md:block text-center mt-8">
+          <p className="text-sm text-gray-500">Page 18 of 43</p>
+        </div>
+      )}
     </Stack>
   );
 }
@@ -478,9 +488,11 @@ export function Page19({ onStepComplete }: PageProps) {
       />
 
       {/* Desktop Page Number */}
-      <div className="hidden md:block text-center mt-8">
-        <p className="text-sm text-gray-500">Page 19 of 43</p>
-      </div>
+      {process.env.NODE_ENV === 'development' && (
+        <div className="hidden md:block text-center mt-8">
+          <p className="text-sm text-gray-500">Page 19 of 43</p>
+        </div>
+      )}
     </Stack>
   );
 }
@@ -517,9 +529,11 @@ export function Page20({ onStepComplete }: PageProps) {
       />
 
       {/* Desktop Page Number */}
-      <div className="hidden md:block text-center mt-8">
-        <p className="text-sm text-gray-500">Page 20 of 43</p>
-      </div>
+      {process.env.NODE_ENV === 'development' && (
+        <div className="hidden md:block text-center mt-8">
+          <p className="text-sm text-gray-500">Page 20 of 43</p>
+        </div>
+      )}
     </Stack>
   );
 }
@@ -591,9 +605,11 @@ export function Page21({ onStepComplete }: PageProps) {
       />
 
       {/* Desktop Page Number */}
-      <div className="hidden md:block text-center mt-8">
-        <p className="text-sm text-gray-500">Page 21 of 43</p>
-      </div>
+      {process.env.NODE_ENV === 'development' && (
+        <div className="hidden md:block text-center mt-8">
+          <p className="text-sm text-gray-500">Page 21 of 43</p>
+        </div>
+      )}
     </Stack>
   );
 }
@@ -680,9 +696,11 @@ export function Page22({ onStepComplete }: PageProps) {
       />
 
       {/* Desktop Page Number */}
-      <div className="hidden md:block text-center mt-8">
-        <p className="text-sm text-gray-500">Page 22 of 43</p>
-      </div>
+      {process.env.NODE_ENV === 'development' && (
+        <div className="hidden md:block text-center mt-8">
+          <p className="text-sm text-gray-500">Page 22 of 43</p>
+        </div>
+      )}
     </Stack>
   );
 }
@@ -966,9 +984,11 @@ export function Page23({ onStepComplete, stepData }: PageProps) {
         </ContentBox>
 
         {/* Desktop Page Number */}
-        <div className="hidden md:block text-center mt-8">
-          <p className="text-sm text-gray-500">Page 23 of 43</p>
-        </div>
+        {process.env.NODE_ENV === 'development' && (
+          <div className="hidden md:block text-center mt-8">
+            <p className="text-sm text-gray-500">Page 23 of 43</p>
+          </div>
+        )}
       </Stack>
     </div>
   );
@@ -1000,9 +1020,11 @@ export function Page24({ onStepComplete }: PageProps) {
         />
 
         {/* Desktop Page Number */}
-        <div className="hidden md:block text-center mt-8">
-          <p className="text-sm text-gray-500">Page 24 of 43</p>
-        </div>
+        {process.env.NODE_ENV === 'development' && (
+          <div className="hidden md:block text-center mt-8">
+            <p className="text-sm text-gray-500">Page 24 of 43</p>
+          </div>
+        )}
       </Stack>
     </div>
   );
@@ -1082,9 +1104,11 @@ export function Page25({ onStepComplete }: PageProps) {
       />
 
       {/* Desktop Page Number */}
-      <div className="hidden md:block text-center mt-8">
-        <p className="text-sm text-gray-500">Page 25 of 43</p>
-      </div>
+      {process.env.NODE_ENV === 'development' && (
+        <div className="hidden md:block text-center mt-8">
+          <p className="text-sm text-gray-500">Page 25 of 43</p>
+        </div>
+      )}
     </Stack>
   );
 }
