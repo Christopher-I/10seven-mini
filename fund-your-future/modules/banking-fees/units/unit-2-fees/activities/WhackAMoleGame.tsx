@@ -277,7 +277,7 @@ export function WhackAMoleGame({
       {/* Game Status */}
       <div className="rounded-lg border border-[#8577B7] bg-white p-4 shadow-sm">
         {/* Mobile: Stacked Layout */}
-        <div className="flex flex-col gap-3 sm:hidden">
+        <div className="flex flex-col gap-2 sm:hidden">
           <div className="flex items-center justify-between">
             <span className="text-base font-semibold text-[#2E1E72]">
               {currentDay === 'T' ? '📅 Thursday' : '📅 Friday'}
@@ -288,9 +288,9 @@ export function WhackAMoleGame({
               </span>
             )}
           </div>
-          <div className="text-center">
+          <div className="text-left">
             <span className="text-lg font-bold text-[#2E1E72]">
-              {gameState.fridayDeposit ? 'Balance: ' : 'Balance: '}
+              {gameState.fridayDeposit ? 'Available Balance: ' : 'Balance: '}
               ${gameState.fridayDeposit ? (gameState.balance - 500).toFixed(2) : gameState.balance.toFixed(2)}
             </span>
           </div>
