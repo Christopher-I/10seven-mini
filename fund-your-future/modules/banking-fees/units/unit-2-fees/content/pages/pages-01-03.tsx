@@ -252,7 +252,7 @@ export function WhackAMolePages({ onStepComplete, stepData }: PageProps) {
   if (currentView === 'completed') {
     return (
       <Stack spacing="lg">
-        <div className="text-center space-y-6">
+        <div className="text-center space-y-6 px-4 pb-48 md:pb-6">
           <div className="space-y-4">
             <h3 className="text-[28px] font-playfair font-semibold text-[#2E1E72]">
               Activity Complete!
@@ -271,7 +271,7 @@ export function WhackAMolePages({ onStepComplete, stepData }: PageProps) {
             <div className="fixed bottom-6 left-4 right-4 md:relative md:bottom-auto md:left-auto md:right-auto z-50 space-y-3">
               <button
                 onClick={() => onStepComplete?.({ gameCompleted: true, statementViewed: true, transactions: gameTransactions })}
-                className="w-full py-4 px-8 rounded-full font-medium text-lg bg-[#2E1E72] text-white hover:bg-[#3B2A8F] transition-all duration-200 cursor-pointer"
+                className="w-full py-4 px-8 rounded-full font-medium text-base md:text-lg bg-[#2E1E72] text-white hover:bg-[#3B2A8F] transition-all duration-200 cursor-pointer shadow-lg md:shadow-none"
               >
                 Next
               </button>
@@ -279,7 +279,7 @@ export function WhackAMolePages({ onStepComplete, stepData }: PageProps) {
               {/* Restart button - now visible on both mobile and desktop */}
               <button
                 onClick={() => setCurrentView('intro')}
-                className="w-full py-4 px-8 rounded-full font-medium text-lg border-2 border-[#2E1E72] bg-white text-[#2E1E72] hover:bg-[#E5DEEF] transition-all duration-200 cursor-pointer"
+                className="w-full py-4 px-8 rounded-full font-medium text-base md:text-lg border-2 border-[#2E1E72] bg-white text-[#2E1E72] hover:bg-[#E5DEEF] transition-all duration-200 cursor-pointer shadow-sm"
               >
                 Restart Game
               </button>
