@@ -176,16 +176,16 @@ export function WhackAMoleGame({
   if (gameState.gameCompleted) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#E5DEEF' }}>
-        <div className="max-w-md w-full text-center space-y-6">
-          <div className="text-6xl">😰</div>
-          <h3 className="text-2xl font-bold text-[#2E1E72]" style={{ fontFamily: 'Playfair Display' }}>
+        <div className="max-w-md w-full text-center space-y-4 md:space-y-6 px-4">
+          <div className="text-5xl md:text-6xl">😰</div>
+          <h3 className="text-xl md:text-2xl font-bold text-[#2E1E72]" style={{ fontFamily: 'Playfair Display' }}>
             Game Complete!
           </h3>
-          <p className="text-xl text-[#2E1E72]" style={{ fontFamily: 'Red Hat Display' }}>
+          <p className="text-lg md:text-xl text-[#2E1E72]" style={{ fontFamily: 'Red Hat Display' }}>
             Your final balance:{' '}
             <span className="font-bold">${gameState.balance.toFixed(2)}</span>
           </p>
-          <p className="text-lg text-[#2E1E72]" style={{ fontFamily: 'Red Hat Display' }}>
+          <p className="text-base md:text-lg text-[#2E1E72]" style={{ fontFamily: 'Red Hat Display' }}>
             Wait... where did all that money go? Let's look at your statement to
             find out!
           </p>
@@ -195,7 +195,7 @@ export function WhackAMoleGame({
               onComplete(gameState.transactions);
               setGameState((prev) => ({ ...prev, callbackCalled: true }));
             }}
-            className="w-full max-w-sm bg-[#2E1E72] hover:bg-[#3B2A8F] text-white font-bold py-4 px-8 rounded-full text-lg transition-colors cursor-pointer"
+            className="w-full max-w-sm bg-[#2E1E72] hover:bg-[#3B2A8F] text-white font-bold py-4 px-8 rounded-full text-base md:text-lg transition-colors cursor-pointer shadow-lg"
           >
             Next
           </button>
@@ -208,10 +208,10 @@ export function WhackAMoleGame({
   if (gameState.showFridayMessage) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#E5DEEF' }}>
-        <div className="max-w-md w-full text-center space-y-8">
+        <div className="max-w-md w-full text-center space-y-6 md:space-y-8 px-4">
           {/* Bank building icon */}
           <div className="flex justify-center">
-            <svg width="182" height="200" viewBox="0 0 182 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg className="w-36 h-40 md:w-44 md:h-48" viewBox="0 0 182 200" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M91.985 74.8357C96.6911 81.5789 104.277 72.0596 106.642 75.4385C108.418 78.0001 103.228 81.1993 99.8294 81.5673C96.9982 81.9498 98.0907 85.8068 100.56 85.4359C102.608 85.1838 104.283 84.4535 105.831 83.5291L106.88 85.0331C108.247 86.9891 111.25 85.0012 109.847 82.9611L108.729 81.3587C111.818 78.3102 111.971 74.9893 110.244 72.5204C105.663 65.9511 98.027 75.453 95.645 72.0567C93.8657 69.5067 97.9342 66.661 101.226 66.1279C104.002 65.7164 103.324 62.3317 100.948 62.4245C99.3483 62.4129 97.8299 62.9461 96.4129 63.6908L95.3552 62.1724C93.9642 60.1816 91.0114 62.2535 92.3878 64.2443L93.5093 65.8526C90.2782 68.9271 90.2551 72.3552 91.985 74.8357Z" fill="#2E1E72"/>
               <mask id="mask0_90_1177" style={{maskType:"luminance"}} maskUnits="userSpaceOnUse" x="0" y="177" width="177" height="23">
                 <path d="M0.165527 177.893H176.366V200H0.165527V177.893Z" fill="white"/>
@@ -247,7 +247,7 @@ export function WhackAMoleGame({
           </div>
 
           {/* Message text - exact from documentation */}
-          <p className="text-xl text-[#2E1E72] px-4" style={{ fontFamily: 'Playfair Display' }}>
+          <p className="text-base md:text-xl text-[#2E1E72] px-2" style={{ fontFamily: 'Playfair Display' }}>
             It's Friday afternoon! You've been checking your bank account and see that your <strong>available balance</strong> is $200, and the $500 from your dog walking side hustle was deposited after 3:00pm. Your <strong>current balance</strong> is $700.
           </p>
 
@@ -263,7 +263,7 @@ export function WhackAMoleGame({
                 showFridayMessage: false,
               }));
             }}
-            className="w-full max-w-sm bg-[#2E1E72] hover:bg-[#3B2A8F] text-white font-bold py-4 px-8 rounded-full text-lg transition-colors cursor-pointer"
+            className="w-full max-w-sm bg-[#2E1E72] hover:bg-[#3B2A8F] text-white font-bold py-4 px-8 rounded-full text-base md:text-lg transition-colors cursor-pointer shadow-lg"
           >
             Next
           </button>
@@ -273,37 +273,58 @@ export function WhackAMoleGame({
   }
 
   return (
-    <div className="w-full max-w-full space-y-3 py-8 sm:space-y-6 sm:py-12">
+    <div className="w-full max-w-full space-y-3 py-4 sm:py-8 sm:space-y-6 sm:py-12">
       {/* Game Status */}
-      <div className="rounded-lg border border-[#8577B7] bg-white p-3 shadow-sm sm:p-4">
-        <div className="mb-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
-          <span className="text-lg font-semibold text-[#2E1E72] sm:text-xl">
+      <div className="rounded-lg border border-[#8577B7] bg-white p-4 shadow-sm">
+        {/* Mobile: Stacked Layout */}
+        <div className="flex flex-col gap-3 sm:hidden">
+          <div className="flex items-center justify-between">
+            <span className="text-base font-semibold text-[#2E1E72]">
+              {currentDay === 'T' ? '📅 Thursday' : '📅 Friday'}
+            </span>
+            {gameState.fridayDeposit && (
+              <span className="rounded bg-green-50 px-2 py-1 text-sm text-green-800 whitespace-nowrap">
+                $500 pending
+              </span>
+            )}
+          </div>
+          <div className="text-center">
+            <span className="text-lg font-bold text-[#2E1E72]">
+              {gameState.fridayDeposit ? 'Balance: ' : 'Balance: '}
+              ${gameState.fridayDeposit ? (gameState.balance - 500).toFixed(2) : gameState.balance.toFixed(2)}
+            </span>
+          </div>
+        </div>
+
+        {/* Desktop: Horizontal Layout */}
+        <div className="hidden sm:flex items-center justify-between gap-4">
+          <span className="text-xl font-semibold text-[#2E1E72]">
             {currentDay === 'T' ? '📅 Thursday' : '📅 Friday'}
           </span>
-        </div>
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
-          <span className="text-xl font-bold text-[#2E1E72] sm:text-2xl">
-            {gameState.fridayDeposit ? 'Available Balance: ' : 'Balance: '}
-            ${gameState.fridayDeposit ? (gameState.balance - 500).toFixed(2) : gameState.balance.toFixed(2)}
-          </span>
-          {gameState.fridayDeposit && (
-            <span className="rounded bg-green-50 px-2 py-1 text-base text-green-800 sm:text-lg">
-              $500 pending
+          <div className="flex items-center gap-3">
+            <span className="text-2xl font-bold text-[#2E1E72]">
+              {gameState.fridayDeposit ? 'Available Balance: ' : 'Balance: '}
+              ${gameState.fridayDeposit ? (gameState.balance - 500).toFixed(2) : gameState.balance.toFixed(2)}
             </span>
-          )}
+            {gameState.fridayDeposit && (
+              <span className="rounded bg-green-50 px-2 py-1 text-lg text-green-800 whitespace-nowrap">
+                $500 pending
+              </span>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Current Expense Display - matches design mockup */}
+      {/* Current Expense Display */}
       {currentExpense && (
-        <div className="text-center mb-4">
-          <div className="text-[#8577B7] text-sm font-medium mb-1">
+        <div className="text-center mb-2 px-2">
+          <div className="text-[#8577B7] text-xs sm:text-sm font-medium mb-1 line-clamp-2">
             {currentExpense.description}
           </div>
-          <div className="text-[#2E1E72] text-lg font-bold">
+          <div className="text-[#2E1E72] text-base sm:text-lg font-bold">
             ${currentExpense.amount}
             {currentExpense.fee && (
-              <span className="text-red-600 text-sm ml-1">
+              <span className="text-red-600 text-xs sm:text-sm ml-1">
                 + ${currentExpense.fee} fee
               </span>
             )}
@@ -312,8 +333,8 @@ export function WhackAMoleGame({
       )}
 
       {/* Clean 3x3 Game Grid */}
-      <div className="mx-auto max-w-md bg-transparent p-4">
-        <div className="grid grid-cols-3 gap-4">
+      <div className="mx-auto w-full sm:max-w-md bg-transparent p-2 sm:p-4">
+        <div className="grid grid-cols-3 gap-2 sm:gap-4">
           {Array.from({ length: 9 }, (_, index) => (
             <div
               key={index}
@@ -340,12 +361,12 @@ export function WhackAMoleGame({
                     }}
                   >
                     <svg
-                      width="80"
-                      height="80"
+                      width="60"
+                      height="60"
                       viewBox="0 0 74 76"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      className="mole-svg"
+                      className="mole-svg w-14 h-14 sm:w-20 sm:h-20"
                       style={{ display: 'block' }}
                     >
                       <mask id={`mask0_90_1007_${index}`} style={{maskType: 'luminance'}} maskUnits="userSpaceOnUse" x="0" y="64" width="74" height="12">
@@ -376,12 +397,12 @@ export function WhackAMoleGame({
                   // Mole DOWN state - show empty hole with subtle animation
                   <div className="hole-container">
                     <svg
-                      width="80"
-                      height="30"
+                      width="60"
+                      height="25"
                       viewBox="0 0 75 30"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      className="hole-svg"
+                      className="hole-svg w-14 h-7 sm:w-20 sm:h-8"
                       style={{ display: 'block' }}
                     >
                       <mask id={`mask0_90_947_${index}`} style={{maskType: 'luminance'}} maskUnits="userSpaceOnUse" x="0" y="19" width="75" height="11">
@@ -402,7 +423,7 @@ export function WhackAMoleGame({
       </div>
 
       {/* Simple Progress Bar */}
-      <div className="relative h-4 overflow-hidden rounded-full bg-gray-200">
+      <div className="relative h-6 sm:h-4 overflow-hidden rounded-full bg-gray-200 shadow-sm">
         <div
           className="h-full rounded-full transition-all duration-500 ease-out"
           style={{

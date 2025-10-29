@@ -137,11 +137,11 @@ export function WhackAMolePages({ onStepComplete, stepData }: PageProps) {
   if (currentView === 'intro') {
     return (
       <Stack spacing="lg">
-        <div className="max-w-4xl mx-auto text-center">
-          <UnifiedHeading level="h2" variant="default" className="mb-6">
+        <div className="max-w-4xl mx-auto text-center pt-4 pb-32 md:pb-6 px-4">
+          <UnifiedHeading level="h2" variant="default" className="mb-4 md:mb-6">
             Whack-A-Mole
           </UnifiedHeading>
-          <div className="text-lg text-[#2E1E72] space-y-4 mb-8">
+          <div className="text-base md:text-lg text-[#2E1E72] space-y-3 md:space-y-4 mb-24 md:mb-8">
             <p>
               Woohoo! It's Thursday, and you just got paid.
             </p>
@@ -156,7 +156,7 @@ export function WhackAMolePages({ onStepComplete, stepData }: PageProps) {
           <div className="fixed bottom-6 left-4 right-4 md:relative md:bottom-auto md:left-auto md:right-auto md:max-w-md md:mx-auto z-50 space-y-3">
             <button
               onClick={() => setCurrentView('game')}
-              className="w-full py-4 px-8 rounded-full font-medium text-lg bg-[#2E1E72] text-white hover:bg-[#3B2A8F] transition-all duration-200 cursor-pointer"
+              className="w-full py-4 px-8 rounded-full font-medium text-base md:text-lg bg-[#2E1E72] text-white hover:bg-[#3B2A8F] transition-all duration-200 cursor-pointer shadow-lg md:shadow-none"
             >
               Start
             </button>
@@ -164,7 +164,7 @@ export function WhackAMolePages({ onStepComplete, stepData }: PageProps) {
             {/* Back Button */}
             <button
               onClick={() => onStepComplete?.({ goBackOnePage: true })}
-              className="w-full py-4 px-8 rounded-full font-medium text-lg border-2 border-[#2E1E72] bg-white text-[#2E1E72] hover:bg-[#E5DEEF] transition-all duration-200 cursor-pointer shadow-sm"
+              className="w-full py-4 px-8 rounded-full font-medium text-base md:text-lg border-2 border-[#2E1E72] bg-white text-[#2E1E72] hover:bg-[#E5DEEF] transition-all duration-200 cursor-pointer shadow-sm"
             >
               Back
             </button>

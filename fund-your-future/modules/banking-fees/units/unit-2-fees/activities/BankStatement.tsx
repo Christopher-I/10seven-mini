@@ -22,7 +22,7 @@ interface BankStatementProps {
 }
 
 export function BankStatement({ onContinue }: BankStatementProps) {
-  const [hoveredFee, setHoveredFee] = useState<number | null>(null);
+  const [selectedFee, setSelectedFee] = useState<number | null>(null);
 
   // Fee definitions with citations
   const atmFeeNote = "This is the average ATM fee in the United States as of 2025 (Bennet, 2025). You had to withdraw from an out-of-network ATM in a pinch, and your bank charges a fee for that.";
@@ -48,34 +48,114 @@ export function BankStatement({ onContinue }: BankStatementProps) {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
+    <div className="max-w-4xl mx-auto p-4 pb-32 md:pb-6">
       {/* Intro Heading */}
-      <h2 className="text-[28px] font-playfair font-semibold text-gray-900 mb-6 text-center">
+      <h2 className="text-2xl md:text-[28px] font-playfair font-semibold text-[#2E1E72] mb-4 md:mb-6 text-center">
         Here's your latest statement!
       </h2>
 
       {/* Bank Header */}
-      <div className="bg-[#2E1E72] text-white p-4 rounded-t-lg">
-        <h3 className="text-xl font-bold">Your Bank Statement</h3>
-        <p className="text-sm opacity-90 mt-1">Thursday - Friday</p>
+      <div className="bg-[#2E1E72] text-white p-3 md:p-4 rounded-t-lg">
+        <h3 className="text-lg md:text-xl font-bold">Your Bank Statement</h3>
+        <p className="text-xs md:text-sm opacity-90 mt-1">Thursday - Friday</p>
       </div>
 
-      {/* Statement Table */}
-      <div className="bg-white border border-gray-200 rounded-b-lg overflow-hidden">
+      {/* Mobile: Card Layout */}
+      <div className="md:hidden bg-white border-x border-gray-200">
+        <div className="max-h-[60vh] overflow-y-auto">
+          <div className="divide-y divide-gray-200">
+            {transactions.map((transaction, index) => (
+              <div
+                key={index}
+                className={`p-4 ${
+                  transaction.type === 'fee' ? 'bg-red-50' :
+                  transaction.balance < 0 ? 'bg-orange-50' : 'bg-white'
+                }`}
+              >
+                {/* Top Row: Date and Amount */}
+                <div className="flex justify-between items-start mb-2">
+                  <span className="text-xs font-medium text-gray-600">
+                    {transaction.date}
+                  </span>
+                  <span className={`text-base font-bold ${
+                    transaction.amount < 0 ? 'text-red-600' : 'text-green-600'
+                  }`}>
+                    {transaction.amount < 0 ? '-' : '+'}${Math.abs(transaction.amount).toFixed(2)}
+                  </span>
+                </div>
+
+                {/* Description */}
+                <div className="mb-2">
+                  <p className="text-sm font-medium text-gray-900">
+                    {transaction.description}
+                  </p>
+                  {transaction.type === 'fee' && (
+                    <button
+                      onClick={() => setSelectedFee(selectedFee === index ? null : index)}
+                      className="mt-1 text-xs text-red-600 font-semibold cursor-pointer hover:text-red-700 underline"
+                    >
+                      FEE * (Tap for details)
+                    </button>
+                  )}
+                  {selectedFee === index && transaction.feeNote && (
+                    <div className="mt-2 p-3 bg-white border-2 border-[#2E1E72] rounded-lg text-xs text-gray-900">
+                      {transaction.feeNote}
+                    </div>
+                  )}
+                </div>
+
+                {/* Balance */}
+                <div className="flex justify-between items-center pt-2 border-t border-gray-200">
+                  <span className="text-xs font-medium text-gray-600">Balance:</span>
+                  <span className={`text-sm font-bold ${
+                    transaction.balance < 0 ? 'text-red-600' : 'text-gray-900'
+                  }`}>
+                    ${transaction.balance.toFixed(2)}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Mobile Summary */}
+        <div className="p-4 bg-gray-50 border-t">
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm">
+              <span className="text-[#2E1E72] font-medium">Total Fees:</span>
+              <span className="font-semibold text-red-600">-$85.77</span>
+            </div>
+            <div className="flex justify-between text-base font-bold pt-2 border-t">
+              <span className="text-[#2E1E72]">Available Balance:</span>
+              <span className="text-red-600">-$185.77</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Fee Note */}
+        <div className="p-3 bg-blue-50 border-t border-blue-200">
+          <p className="text-xs text-[#2E1E72]">
+            <span className="text-red-600 font-semibold">* Tap on fees</span> to see explanations and sources
+          </p>
+        </div>
+      </div>
+
+      {/* Desktop: Table Layout */}
+      <div className="hidden md:block bg-white border border-gray-200 rounded-b-lg overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b">
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-[#2E1E72] uppercase tracking-wider">
                   Date
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-[#2E1E72] uppercase tracking-wider">
                   Description
                 </th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">
+                <th className="px-4 py-3 text-right text-xs font-medium text-[#2E1E72] uppercase tracking-wider">
                   Amount
                 </th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">
+                <th className="px-4 py-3 text-right text-xs font-medium text-[#2E1E72] uppercase tracking-wider">
                   Balance
                 </th>
               </tr>
@@ -89,21 +169,20 @@ export function BankStatement({ onContinue }: BankStatementProps) {
                     transaction.balance < 0 ? 'bg-orange-50' : ''
                   }
                 >
-                  <td className="px-4 py-2 text-sm text-gray-700">
+                  <td className="px-4 py-2 text-sm text-gray-700 whitespace-nowrap">
                     {transaction.date}
                   </td>
                   <td className="px-4 py-2 text-sm text-gray-900 relative">
-                    {transaction.description}
+                    <span>{transaction.description}</span>
                     {transaction.type === 'fee' && (
                       <>
-                        <span
-                          className="ml-2 text-xs text-red-600 font-semibold cursor-help"
-                          onMouseEnter={() => setHoveredFee(index)}
-                          onMouseLeave={() => setHoveredFee(null)}
+                        <button
+                          onClick={() => setSelectedFee(selectedFee === index ? null : index)}
+                          className="ml-2 text-xs text-red-600 font-semibold cursor-pointer hover:text-red-700"
                         >
                           FEE *
-                        </span>
-                        {hoveredFee === index && transaction.feeNote && (
+                        </button>
+                        {selectedFee === index && transaction.feeNote && (
                           <div className="absolute z-10 w-80 p-3 mt-2 bg-white border-2 border-[#2E1E72] rounded-lg shadow-xl left-0 top-full">
                             <p className="text-xs text-gray-900">{transaction.feeNote}</p>
                           </div>
@@ -111,12 +190,12 @@ export function BankStatement({ onContinue }: BankStatementProps) {
                       </>
                     )}
                   </td>
-                  <td className={`px-4 py-2 text-sm text-right font-medium ${
+                  <td className={`px-4 py-2 text-sm text-right font-medium whitespace-nowrap ${
                     transaction.amount < 0 ? 'text-red-600' : 'text-green-600'
                   }`}>
                     {transaction.amount < 0 ? '-' : '+'}${Math.abs(transaction.amount).toFixed(2)}
                   </td>
-                  <td className={`px-4 py-2 text-sm text-right font-bold ${
+                  <td className={`px-4 py-2 text-sm text-right font-bold whitespace-nowrap ${
                     transaction.balance < 0 ? 'text-red-600' : 'text-gray-900'
                   }`}>
                     ${transaction.balance.toFixed(2)}
@@ -127,34 +206,34 @@ export function BankStatement({ onContinue }: BankStatementProps) {
           </table>
         </div>
 
-        {/* Summary Section */}
+        {/* Desktop Summary */}
         <div className="p-4 bg-gray-50 border-t">
           <div className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-600">Total Fees:</span>
+            <div className="flex justify-between text-base">
+              <span className="text-[#2E1E72] font-medium">Total Fees:</span>
               <span className="font-semibold text-red-600">-$85.77</span>
             </div>
-            <div className="flex justify-between text-base font-bold pt-2 border-t">
-              <span className="text-gray-900">Available Balance:</span>
+            <div className="flex justify-between text-lg font-bold pt-2 border-t">
+              <span className="text-[#2E1E72]">Available Balance:</span>
               <span className="text-red-600">-$185.77</span>
             </div>
           </div>
         </div>
 
-        {/* Fee Note */}
+        {/* Desktop Fee Note */}
         <div className="p-4 bg-blue-50 border-t border-blue-200">
-          <p className="text-sm text-gray-700">
-            <span className="text-red-600 font-semibold">* Hover over fees</span> to see explanations and sources
+          <p className="text-sm text-[#2E1E72]">
+            <span className="text-red-600 font-semibold">* Click on fees</span> to see explanations and sources
           </p>
         </div>
       </div>
 
-      {/* Continue Button - only show if onContinue is provided */}
+      {/* Continue Button - Mobile First Design */}
       {onContinue && (
-        <div className="mt-6 text-center">
+        <div className="fixed bottom-6 left-4 right-4 md:relative md:bottom-auto md:left-auto md:right-auto md:mt-6 z-50">
           <button
             onClick={onContinue}
-            className="bg-[#2E1E72] hover:bg-[#3B2A8F] text-white font-semibold py-3 px-8 rounded-lg transition-colors"
+            className="w-full bg-[#2E1E72] hover:bg-[#3B2A8F] text-white font-semibold py-4 px-8 rounded-full md:rounded-lg transition-colors cursor-pointer shadow-lg md:shadow-none"
           >
             Continue
           </button>
