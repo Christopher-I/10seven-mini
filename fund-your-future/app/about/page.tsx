@@ -88,14 +88,7 @@ export default function AboutPage() {
 
             <div className="prose prose-lg max-w-none">
               <p className="font-red-hat leading-relaxed text-gray-700">
-                The Conway Center Innovation and Entrepreneurship Center at
-                Smith College is dedicated to fostering innovation, creativity,
-                and entrepreneurial thinking among students. Our mission is to
-                empower students with the knowledge, skills, and resources they
-                need to create meaningful change in the world. Through innovative programs, workshops, and educational
-                initiatives, we help students develop financial literacy,
-                business acumen, and the entrepreneurial mindset necessary to
-                succeed in today&apos;s economy.
+                The Conway Center Innovation and Entrepreneurship Center is dedicated to fostering innovation, creativity, and entrepreneurial thinking at Smith College. Our mission is to empower students to navigate life&apos;s complexities by equipping you with the skills to move forward intentionally, manage resources ethically, and take financially sustainable action. Through workshops, courses, and practical experiences, we help students develop the financial acumen and entrepreneurial mindset necessary to succeed in today&apos;s economy.
               </p>
             </div>
           </section>
