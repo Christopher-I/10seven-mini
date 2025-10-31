@@ -6,10 +6,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { WhackAMolePages } from '@/modules/banking-fees/units/unit-2-fees/content/pages/pages-01-03';
+import { Page1, WhackAMolePages } from '@/modules/banking-fees/units/unit-2-fees/content/pages/pages-01-03';
 import { GameNavigation } from '@/components/demo/GameNavigation';
 
 export default function WhackamolePage() {
+  const [currentPage, setCurrentPage] = useState<'intro' | 'game'>('intro');
   const [gameData, setGameData] = useState<unknown>(null);
 
   useEffect(() => {
@@ -19,6 +20,10 @@ export default function WhackamolePage() {
       localStorage.setItem('demo-progress', '2');
     }
   }, []);
+
+  const handleIntroComplete = () => {
+    setCurrentPage('game');
+  };
 
   const handleStepComplete = (data: unknown) => {
     console.log('Game step completed:', data);
@@ -48,10 +53,14 @@ export default function WhackamolePage() {
       {/* Game Container */}
       <main className="mx-auto max-w-[1200px] px-6 py-8">
         <div className="bg-white rounded-2xl shadow-lg p-8">
-          <WhackAMolePages
-            onStepComplete={handleStepComplete}
-            stepData={gameData}
-          />
+          {currentPage === 'intro' ? (
+            <Page1 onStepComplete={handleIntroComplete} />
+          ) : (
+            <WhackAMolePages
+              onStepComplete={handleStepComplete}
+              stepData={gameData}
+            />
+          )}
         </div>
       </main>
     </div>
