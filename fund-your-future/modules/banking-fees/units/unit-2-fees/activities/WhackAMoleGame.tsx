@@ -174,6 +174,7 @@ export function WhackAMoleGame({
   const currentExpense = expenses[gameState.currentExpenseIndex];
 
   if (gameState.gameCompleted) {
+    const finalAvailableBalance = gameState.fridayDeposit ? gameState.balance - 500 : gameState.balance;
     return (
       <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#E5DEEF' }}>
         <div className="max-w-md w-full text-center space-y-4 md:space-y-6 px-4">
@@ -182,8 +183,8 @@ export function WhackAMoleGame({
             Game Complete!
           </h3>
           <p className="text-lg md:text-xl text-[#2E1E72]" style={{ fontFamily: 'Red Hat Display' }}>
-            Your final balance:{' '}
-            <span className="font-bold">${gameState.balance.toFixed(2)}</span>
+            Your final available balance:{' '}
+            <span className="font-bold">${finalAvailableBalance.toFixed(2)}</span>
           </p>
           <p className="text-base md:text-lg text-[#2E1E72]" style={{ fontFamily: 'Red Hat Display' }}>
             Wait... where did all that money go? Let's look at your statement to
