@@ -34,7 +34,7 @@ export const MODULES: Module[] = [
     id: 'intro-fund-your-future',
     title: 'Intro to Fund Your Future',
     description:
-      'Get started with financial literacy fundamentals and set your goals for the course.',
+      'Explore the fundamentals of wealth justice and what you'll gain from this course.',
     color: 'slate',
     icon: 'rocket',
     estimatedHours: 1,
@@ -65,7 +65,7 @@ export const MODULES: Module[] = [
     id: 'banking-fees',
     title: "It's a Big Bank World",
     description:
-      'Learn about banking fees and how they impact your finances through interactive activities.',
+      'Explore how banking institutions work, what drives their practices, and how to navigate them.',
     color: 'stone',
     icon: 'bank',
     estimatedHours: 2.5,
@@ -138,7 +138,7 @@ export const MODULES: Module[] = [
   {
     id: 'credit-building',
     title: 'The Credit System',
-    description: 'Build and maintain healthy credit with practical strategies.',
+    description: 'Unpack the credit system and its impact on your financial life.',
     color: 'gray',
     icon: 'trending-up',
     estimatedHours: 3,
