@@ -321,7 +321,7 @@ export function WhackAMoleGame({
           <div className="text-[#8577B7] text-xs sm:text-sm font-medium mb-1 line-clamp-2">
             {currentExpense.description}
           </div>
-          <div className="text-[#2E1E72] text-base sm:text-lg font-bold">
+          <div className="text-[#2E1E72] text-lg sm:text-2xl font-bold">
             ${currentExpense.amount}
             {currentExpense.fee && (
               <span className="text-red-600 text-xs sm:text-sm ml-1">
