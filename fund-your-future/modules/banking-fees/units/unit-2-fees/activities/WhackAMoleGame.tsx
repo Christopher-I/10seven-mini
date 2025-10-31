@@ -318,10 +318,10 @@ export function WhackAMoleGame({
       {/* Current Expense Display */}
       {currentExpense && (
         <div className="text-center mb-2 px-2">
-          <div className="text-[#8577B7] text-xs sm:text-sm font-medium mb-1 line-clamp-2">
+          <div className="text-[#8577B7] text-base sm:text-lg font-medium mb-1 line-clamp-2">
             {currentExpense.description}
           </div>
-          <div className="text-[#2E1E72] text-lg sm:text-2xl font-bold">
+          <div className="text-[#2E1E72] text-xl sm:text-3xl font-bold">
             ${currentExpense.amount}
             {currentExpense.fee && (
               <span className="text-red-600 text-xs sm:text-sm ml-1">
