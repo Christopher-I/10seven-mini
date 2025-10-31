@@ -290,8 +290,7 @@ export function WhackAMoleGame({
           </div>
           <div className="text-left">
             <span className="text-lg font-bold text-[#2E1E72]">
-              {gameState.fridayDeposit ? 'Available Balance: ' : 'Balance: '}
-              ${gameState.fridayDeposit ? (gameState.balance - 500).toFixed(2) : gameState.balance.toFixed(2)}
+              Available Balance: ${gameState.fridayDeposit ? (gameState.balance - 500).toFixed(2) : gameState.balance.toFixed(2)}
             </span>
           </div>
         </div>
@@ -303,8 +302,7 @@ export function WhackAMoleGame({
           </span>
           <div className="flex items-center gap-3">
             <span className="text-2xl font-bold text-[#2E1E72]">
-              {gameState.fridayDeposit ? 'Available Balance: ' : 'Balance: '}
-              ${gameState.fridayDeposit ? (gameState.balance - 500).toFixed(2) : gameState.balance.toFixed(2)}
+              Available Balance: ${gameState.fridayDeposit ? (gameState.balance - 500).toFixed(2) : gameState.balance.toFixed(2)}
             </span>
             {gameState.fridayDeposit && (
               <span className="rounded bg-green-50 px-2 py-1 text-lg text-green-800 whitespace-nowrap">
