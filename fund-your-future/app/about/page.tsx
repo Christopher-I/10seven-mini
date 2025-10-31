@@ -124,7 +124,7 @@ export default function AboutPage() {
                 systemic levels. We develop educational programming and robust
                 research that targets wealth justice from all angles.
               </p>
-
+<br/>
               <p className="font-red-hat leading-relaxed text-gray-700">
                 In collaboration with the Conway Center, we are bringing
                 financial education to all students—whether you&apos;re just
@@ -378,20 +378,24 @@ export default function AboutPage() {
               </p>
 
               <div className="flex flex-col justify-center gap-4 sm:flex-row">
-                <Link
-                  href="/book-appointment"
+                <a
+                  href="https://www.smith.edu/academics/integrative-learning/conway-innovation-entrepreneurship-center/money-matters#meet-with-a-money-mentor-0"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center rounded-lg px-6 py-3 font-red-hat font-semibold text-gray-900 transition-all hover:scale-105"
                   style={{ backgroundColor: '#DBE250' }}
                 >
-                  Schedule Consultation
-                </Link>
-                <Link
-                  href="/events"
+                  Schedule Time With a Money Mentor
+                </a>
+                <a
+                  href="https://socialnetwork.smith.edu/organization/conwaycenter"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center rounded-lg border-2 px-6 py-3 font-red-hat font-semibold text-white transition-all hover:scale-105"
                   style={{ borderColor: '#DBE250' }}
                 >
                   View Upcoming Events
-                </Link>
+                </a>
               </div>
             </div>
           </section>
