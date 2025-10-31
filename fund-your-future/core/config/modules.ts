@@ -34,7 +34,7 @@ export const MODULES: Module[] = [
     id: 'intro-fund-your-future',
     title: 'Intro to Fund Your Future',
     description:
-      'Explore the fundamentals of wealth justice and what you'll gain from this course.',
+      'Explore the fundamentals of wealth justice and what you\'ll gain from this course.',
     color: 'slate',
     icon: 'rocket',
     estimatedHours: 1,
