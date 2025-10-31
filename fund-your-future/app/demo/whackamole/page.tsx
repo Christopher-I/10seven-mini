@@ -25,8 +25,15 @@ export default function WhackamolePage() {
     setCurrentPage('game');
   };
 
-  const handleStepComplete = (data: unknown) => {
+  const handleStepComplete = (data: any) => {
     console.log('Game step completed:', data);
+
+    // Handle back navigation
+    if (data?.goBackOnePage) {
+      setCurrentPage('intro');
+      return;
+    }
+
     setGameData(data);
 
     // Mark step 3 as complete when game finishes
